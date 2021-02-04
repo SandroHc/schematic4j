@@ -66,59 +66,59 @@ public class TagUtils {
 
 
 
-	public static int getIntRequired(CompoundTag tag, String key) {
+	public static int getIntOrThrow(CompoundTag tag, String key) {
 		return getInt(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, IntTag.class));
 	}
 
-	public static short getShortRequired(CompoundTag tag, String key) {
+	public static short getShortOrThrow(CompoundTag tag, String key) {
 		return getShort(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, ShortTag.class));
 	}
 
-	public static byte getByteRequired(CompoundTag tag, String key) {
+	public static byte getByteOrThrow(CompoundTag tag, String key) {
 		return getByte(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, ByteTag.class));
 	}
 
-	public static long getLongRequired(CompoundTag tag, String key) {
+	public static long getLongOrThrow(CompoundTag tag, String key) {
 		return getLong(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, LongTag.class));
 	}
 
-	public static float getFloatRequired(CompoundTag tag, String key) {
+	public static float getFloatOrThrow(CompoundTag tag, String key) {
 		return getFloat(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, FloatTag.class));
 	}
 
-	public static double getDoubleRequired(CompoundTag tag, String key) {
+	public static double getDoubleOrThrow(CompoundTag tag, String key) {
 		return getDouble(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, DoubleTag.class));
 	}
 
-	public static int[] getIntArrayRequired(CompoundTag tag, String key) {
+	public static int[] getIntArrayOrThrow(CompoundTag tag, String key) {
 		return getIntArray(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, IntArrayTag.class));
 	}
 
-	public static byte[] getByteArrayRequired(CompoundTag tag, String key) {
+	public static byte[] getByteArrayOrThrow(CompoundTag tag, String key) {
 		return getByteArray(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, ByteArrayTag.class));
 	}
 
-	public static long[] getLongArrayRequired(CompoundTag tag, String key) {
+	public static long[] getLongArrayOrThrow(CompoundTag tag, String key) {
 		return getLongArray(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, LongArrayTag.class));
 	}
 
-	public static ListTag<FloatTag> getFloatListRequired(CompoundTag tag, String key) {
+	public static ListTag<FloatTag> getFloatListOrThrow(CompoundTag tag, String key) {
 		return getFloatList(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, ListTag.class));
 	}
 
-	public static ListTag<DoubleTag> getDoubleListRequired(CompoundTag tag, String key) {
+	public static ListTag<DoubleTag> getDoubleListOrThrow(CompoundTag tag, String key) {
 		return getDoubleList(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, ListTag.class));
 	}
 
-	public static ListTag<CompoundTag> getCompoundListRequired(CompoundTag tag, String key) {
+	public static ListTag<CompoundTag> getCompoundListOrThrow(CompoundTag tag, String key) {
 		return getCompoundList(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, ListTag.class));
 	}
 
-	public static String getStringRequired(CompoundTag tag, String key) {
+	public static String getStringOrThrow(CompoundTag tag, String key) {
 		return getString(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, StringTag.class));
 	}
 
-	public static CompoundTag getCompoundRequired(CompoundTag tag, String key) {
+	public static CompoundTag getCompoundOrThrow(CompoundTag tag, String key) {
 		return getCompound(tag, key).orElseThrow(() -> new MissingFieldException(tag, key, CompoundTag.class));
 	}
 

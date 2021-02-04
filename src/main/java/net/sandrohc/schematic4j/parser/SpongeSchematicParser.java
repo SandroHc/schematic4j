@@ -69,7 +69,7 @@ public class SpongeSchematicParser implements Parser {
 		final CompoundTag rootTag = (CompoundTag) root.getTag();
 		final SchematicSchem.Builder builder = new SchematicSchem.Builder();
 
-		final int version = getIntRequired(rootTag, NBT_VERSION);
+		final int version = getIntOrThrow(rootTag, NBT_VERSION);
 		if (version > 2)
 			log.warn("Sponge Schematic version {} is not officially supported. Use at your own risk", version);
 
@@ -91,7 +91,7 @@ public class SpongeSchematicParser implements Parser {
 		if (version == 1) {
 			getInt(root, NBT_DATA_VERSION).ifPresent(builder::dataVersion);
 		} else {
-			builder.dataVersion(getIntRequired(root, NBT_DATA_VERSION));
+			builder.dataVersion(getIntOrThrow(root, NBT_DATA_VERSION));
 		}
 	}
 
@@ -156,9 +156,9 @@ public class SpongeSchematicParser implements Parser {
 			return;
 		}
 
-		short width  = getShortRequired(root, NBT_WIDTH);
-		short height = getShortRequired(root, NBT_HEIGHT);
-		short length = getShortRequired(root, NBT_LENGTH);
+		short width  = getShortOrThrow(root, NBT_WIDTH);
+		short height = getShortOrThrow(root, NBT_HEIGHT);
+		short length = getShortOrThrow(root, NBT_LENGTH);
 
 		builder.width(width).height(height).length(length);
 		log.trace("Dimensions: width={}, height={}, length={}", width, height, length);
@@ -178,7 +178,7 @@ public class SpongeSchematicParser implements Parser {
 
 
 		// Load the block data
-		byte[] blockDataRaw = getByteArrayRequired(root, NBT_BLOCK_DATA);
+		byte[] blockDataRaw = getByteArrayOrThrow(root, NBT_BLOCK_DATA);
 		SchematicBlock[][][] blockData = new SchematicBlock[width][height][length];
 
 		int expectedBlocks = width * height * length;
@@ -211,8 +211,8 @@ public class SpongeSchematicParser implements Parser {
 			return;
 		}
 
-		short width  = getShortRequired(root, NBT_WIDTH);
-		short length = getShortRequired(root, NBT_LENGTH);
+		short width  = getShortOrThrow(root, NBT_WIDTH);
+		short length = getShortOrThrow(root, NBT_LENGTH);
 
 		// Load the (optional) palette
 		final CompoundTag palette = root.getCompoundTag(NBT_BIOME_PALETTE);
@@ -229,7 +229,7 @@ public class SpongeSchematicParser implements Parser {
 
 
 		// Load the block data
-		byte[] biomeDataRaw = getByteArrayRequired(root, NBT_BLOCK_DATA);
+		byte[] biomeDataRaw = getByteArrayOrThrow(root, NBT_BLOCK_DATA);
 		SchematicBiome[][] biomeData = new SchematicBiome[width][length];
 
 		int expectedBlocks = width * length;
@@ -263,8 +263,8 @@ public class SpongeSchematicParser implements Parser {
 			blockEntities = new ArrayList<>(blockEntitiesTag.size());
 
 			for (CompoundTag blockEntity : blockEntitiesTag) {
-				final String id = getStringRequired(blockEntity, NBT_BLOCK_ENTITIES_ID);
-				final int[] pos = getIntArrayRequired(blockEntity, NBT_BLOCK_ENTITIES_POS);
+				final String id = getStringOrThrow(blockEntity, NBT_BLOCK_ENTITIES_ID);
+				final int[] pos = getIntArrayOrThrow(blockEntity, NBT_BLOCK_ENTITIES_POS);
 				final Map<String, Object> extra = blockEntity.entrySet().stream()
 						.filter(e -> !e.getKey().equals(NBT_BLOCK_ENTITIES_ID) && !e.getKey().equals(NBT_BLOCK_ENTITIES_POS))
 						.collect(Collectors.toMap(Entry::getKey, e -> unwrap(e.getValue())));
@@ -293,9 +293,9 @@ public class SpongeSchematicParser implements Parser {
 			entities = new ArrayList<>(entitiesTag.size());
 
 			for (CompoundTag entity : entitiesTag) {
-				final String id = getStringRequired(entity, NBT_ENTITIES_ID);
+				final String id = getStringOrThrow(entity, NBT_ENTITIES_ID);
 
-				final ListTag<DoubleTag> pos = getDoubleListRequired(entity, NBT_ENTITIES_POS);
+				final ListTag<DoubleTag> pos = getDoubleListOrThrow(entity, NBT_ENTITIES_POS);
 				final double posX = pos.get(0).asDouble();
 				final double posY = pos.get(1).asDouble();
 				final double posZ = pos.get(2).asDouble();

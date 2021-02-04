@@ -1,8 +1,12 @@
 package net.sandrohc.schematic4j;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -22,9 +26,23 @@ public class SchematicUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(SchematicUtil.class);
 
+
+	public static Schematic load(String file) throws IOException {
+		return load(Paths.get(file));
+	}
+
+	public static Schematic load(File file) throws IOException {
+		return load(file.toPath());
+	}
+
 	public static Schematic load(Path path) throws IOException {
-		final File file = path.toFile();
-		final NamedTag rootTag = NBTUtil.read(file);
+		try (InputStream is = new BufferedInputStream(Files.newInputStream(path))) {
+			return load(is);
+		}
+	}
+
+	public static Schematic load(InputStream is) throws IOException {
+		final NamedTag rootTag = NBTUtil.Reader.read().from(is);
 
 		Parser parser = findParser(rootTag).orElseThrow(NoParserFoundException::new);
 		log.debug("Found parser: {}", parser);
@@ -47,15 +65,6 @@ public class SchematicUtil {
 //		Tag<?> weOriginX = rootTag.get("WEOriginX");
 //		Tag<?> weOriginY = rootTag.get("WEOriginY");
 //		Tag<?> weOriginZ = rootTag.get("WEOriginZ");
-
-
-//		ListTag<CompoundTag> blockEntities = ((ListTag<CompoundTag>) rootTag.get("BlockEntities"));
-//		ListTag<CompoundTag> entities = ((ListTag<CompoundTag>) rootTag.get("Entities"));
-//
-//		int[] offset = ((IntArrayTag) rootTag.get("Offset")).getValue();
-//		int offsetX = offset[0]; // TODO: check if it's the correct index
-//		int offsetY = offset[1]; // TODO: check if it's the correct index
-//		int offsetZ = offset[2]; // TODO: check if it's the correct index
 	}
 
 	private static Optional<Parser> findParser(NamedTag root) {

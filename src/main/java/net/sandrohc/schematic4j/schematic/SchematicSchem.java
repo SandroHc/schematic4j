@@ -63,9 +63,7 @@ public class SchematicSchem implements Schematic {
 
 	@Override
 	public SchematicBlock getBlock(SchematicPos<Integer> pos) {
-		if (pos.x < 1 && pos.x >= width
-			|| pos.y < 1 || pos.y >= height
-			|| pos.z < 1 || pos.z >= length)
+		if ((pos.x < 0 || pos.x >= width) || (pos.y < 0 || pos.y >= height) || (pos.z < 0 || pos.z >= length))
 			throw new ArrayIndexOutOfBoundsException("invalid position");
 
 		return blocks[pos.x][pos.y][pos.z];
@@ -83,8 +81,7 @@ public class SchematicSchem implements Schematic {
 
 	@Override
 	public SchematicBiome getBiome(int x, int z) {
-		if (x < 1 && x >= width
-			|| z < 1 || z >= length)
+		if ((x < 0 || x >= width) || (z < 0 || z >= length))
 			throw new ArrayIndexOutOfBoundsException("invalid position");
 
 		return biomes[x][z];
