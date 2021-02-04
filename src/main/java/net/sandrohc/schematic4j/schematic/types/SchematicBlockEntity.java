@@ -1,14 +1,17 @@
 package net.sandrohc.schematic4j.schematic.types;
 
-import java.util.Objects;
+import java.util.Collections;
+import java.util.Map;
 
 public class SchematicBlockEntity extends SchematicNamed {
 
-	public final SchematicPos pos;
+	public final SchematicPos<Integer> pos;
+	public final Map<String, Object> extra;
 
-	public SchematicBlockEntity(String name, SchematicPos pos) {
+	public SchematicBlockEntity(String name, SchematicPos<Integer> pos, Map<String, Object> extra) {
 		super(name);
 		this.pos = pos;
+		this.extra = Collections.unmodifiableMap(extra);
 	}
 
 	@Override
@@ -19,19 +22,21 @@ public class SchematicBlockEntity extends SchematicNamed {
 
 		SchematicBlockEntity that = (SchematicBlockEntity) o;
 
-		return Objects.equals(pos, that.pos);
+		if (!pos.equals(that.pos)) return false;
+		return extra.equals(that.extra);
 	}
 
 	@Override
 	public int hashCode() {
 		int result = super.hashCode();
-		result = 31 * result + (pos != null ? pos.hashCode() : 0);
+		result = 31 * result + pos.hashCode();
+		result = 31 * result + extra.hashCode();
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "SchematicBlockEntity(name=" + name + ", pos=" + pos + ")";
+		return "SchematicBlockEntity(name=" + name + ", pos=" + pos + ')';
 	}
 
 }

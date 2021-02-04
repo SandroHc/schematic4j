@@ -1,8 +1,8 @@
 package net.sandrohc.schematic4j.schematic.types;
 
-public class SchematicBlock extends SchematicWithBlockState {
+public class SchematicBiome extends SchematicWithBlockState {
 
-	public SchematicBlock(String blockstate) {
+	public SchematicBiome(String blockstate) {
 		super(blockstate);
 	}
 

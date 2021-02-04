@@ -1,27 +1,23 @@
 package net.sandrohc.schematic4j.schematic.types;
 
-public class SchematicPos {
+public abstract class SchematicPos<T> {
 
-	public int x;
-	public int y;
-	public int z;
+	public final T x;
+	public final T y;
+	public final T z;
 
-	public SchematicPos(int x, int y, int z) {
+	public SchematicPos(T x, T y, T z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public static SchematicPos from(int x, int y, int z) {
-		return new SchematicPos(x, y, z);
+	public SchematicPos(T[] pos) {
+		this(pos[0], pos[1], pos[2]);
 	}
 
-	public static SchematicPos from(int[] pos) {
-		return from(pos[0], pos[1], pos[2]);
-	}
-
-	public static SchematicPos from(SchematicPos other) {
-		return new SchematicPos(other.x, other.y, other.z);
+	public SchematicPos(SchematicPos<T> other) {
+		this(other.x, other.y, other.z);
 	}
 
 	@Override
@@ -29,24 +25,24 @@ public class SchematicPos {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		SchematicPos that = (SchematicPos) o;
+		SchematicPos<?> that = (SchematicPos<?>) o;
 
-		if (x != that.x) return false;
-		if (y != that.y) return false;
-		return z == that.z;
+		if (!x.equals(that.x)) return false;
+		if (!y.equals(that.y)) return false;
+		return z.equals(that.z);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = x;
-		result = 31 * result + y;
-		result = 31 * result + z;
+		int result = x.hashCode();
+		result = 31 * result + y.hashCode();
+		result = 31 * result + z.hashCode();
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "SchematicPos(x=" + x + ", y=" + y + ", z=" + z + ')';
+		return "Pos(" + x + ", " + y + ", " + z + ')';
 	}
 
 }
