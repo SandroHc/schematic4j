@@ -1,2 +1,2 @@
-# schematic4j
+# Schematic4j
 Java parser for the .schematic Minecraft format. 🗺

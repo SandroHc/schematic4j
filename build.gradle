@@ -1,0 +1,53 @@
+plugins {
+    id 'java-library'
+}
+
+group 'net.sandrohc'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    withJavadocJar()
+    withSourcesJar()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': 'schematic4j',
+                'Implementation-Version': project.version
+        )
+    }
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io/' }
+}
+
+dependencies {
+    api 'org.slf4j:slf4j-api:1.7.30'
+    runtimeClasspath 'ch.qos.logback:logback-classic:1.2.3'
+
+    implementation 'com.github.Querz:NBT:5.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    // force UTF-8 encoding on Windows machines
+    options.encoding = 'UTF-8'
+}
