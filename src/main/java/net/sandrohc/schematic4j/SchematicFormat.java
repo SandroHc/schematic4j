@@ -7,24 +7,31 @@ import net.sandrohc.schematic4j.parser.Parser;
 import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
 
 public enum SchematicFormat {
-	SPONGE_V1(SpongeSchematicParser::new),
-	SPONGE_V2(SpongeSchematicParser::new),
-	LITEMATICA,
-	SCHEMATICA,
-	WORLD_EDITOR,
-	MCEDIT,
-	MCEDIT_UNIFIED,
-	MCEDIT2,
+	SPONGE_V1      ("schem", SpongeSchematicParser::new),
+	SPONGE_V2      ("schem", SpongeSchematicParser::new),
+	LITEMATICA     ("litematic"),
+	SCHEMATICA     ("schematic"),
+	WORLD_EDITOR   ("schematic"),
+	MCEDIT         ("schematic"),
+	MCEDIT_UNIFIED ("schematic"),
+	MCEDIT2        ("schematic"),
 	UNKNOWN;
 
+
+	public final String fileExtension;
 	private final Supplier<Parser> parserGenerator;
 
-	SchematicFormat(Supplier<Parser> parserGenerator) {
+	SchematicFormat(String fileExtension, Supplier<Parser> parserGenerator) {
+		this.fileExtension = fileExtension;
 		this.parserGenerator = parserGenerator;
 	}
 
+	SchematicFormat(String fileExtension) {
+		this(fileExtension, null);
+	}
+
 	SchematicFormat() {
-		this(null);
+		this(null, null);
 	}
 
 	public Parser createParser() throws NoParserFoundException {
