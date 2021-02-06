@@ -5,12 +5,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.types.*;
 
-public class SchematicSchem implements Schematic {
+public class SchematicSponge implements Schematic {
 
 	private static final int[] DEFAULT_OFFSET = { 0, 0, 0 };
+
+	/** The Sponge Schematic format version. **/
+	private final int version;
 
 	/** The data version, used in world save data. */
 	private final int dataVersion;
@@ -28,7 +32,8 @@ public class SchematicSchem implements Schematic {
 	private final SchematicBiome[][] biomes;
 
 
-	public SchematicSchem(int dataVersion, Metadata metadata, int width, int height, int length, int[] offset, SchematicBlock[][][] blocks, Collection<SchematicBlockEntity> blockEntities, Collection<SchematicEntity> entities, SchematicBiome[][] biomes) {
+	public SchematicSponge(int version, int dataVersion, Metadata metadata, int width, int height, int length, int[] offset, SchematicBlock[][][] blocks, Collection<SchematicBlockEntity> blockEntities, Collection<SchematicEntity> entities, SchematicBiome[][] biomes) {
+		this.version = version;
 		this.dataVersion = dataVersion;
 		this.metadata = metadata != null ? metadata : new Metadata(null, null, null, new String[0], Collections.emptyMap());
 		this.width = width;
@@ -39,6 +44,11 @@ public class SchematicSchem implements Schematic {
 		this.blockEntities = Collections.unmodifiableCollection(blockEntities);
 		this.entities = Collections.unmodifiableCollection(entities);
 		this.biomes = biomes;
+	}
+
+	@Override
+	public SchematicFormat getFormat() {
+		return version == 1 ? SchematicFormat.SPONGE_V1 : SchematicFormat.SPONGE_V2;
 	}
 
 	@Override
@@ -62,11 +72,11 @@ public class SchematicSchem implements Schematic {
 	}
 
 	@Override
-	public SchematicBlock getBlock(SchematicPos<Integer> pos) {
-		if ((pos.x < 0 || pos.x >= width) || (pos.y < 0 || pos.y >= height) || (pos.z < 0 || pos.z >= length))
+	public SchematicBlock getBlock(int x, int y, int z) {
+		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length))
 			throw new ArrayIndexOutOfBoundsException("invalid position");
 
-		return blocks[pos.x][pos.y][pos.z];
+		return blocks[x][y][z];
 	}
 
 	@Override
@@ -110,17 +120,6 @@ public class SchematicSchem implements Schematic {
 		return metadata;
 	}
 
-	@Override
-	public String toString() {
-		return "SchematicImpl(" +
-			   "name=" + getName() +
-			   "author=" + getAuthor() +
-			   "width=" + width +
-			   ", height=" + height +
-			   ", length=" + length +
-			   ')';
-	}
-
 
 	public static class Metadata {
 		/** The name of the schematic. */
@@ -154,8 +153,21 @@ public class SchematicSchem implements Schematic {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "SchematicSponge(" +
+			   "format=" + getFormat() +
+			   ", name=" + getName() +
+			   ", author=" + getAuthor() +
+			   ", width=" + width +
+			   ", height=" + height +
+			   ", length=" + length +
+			   ')';
+	}
+
 	public static class Builder {
 
+		private Integer version;
 		private Integer dataVersion;
 		private Metadata metadata;
 		private Integer width;
@@ -168,6 +180,11 @@ public class SchematicSchem implements Schematic {
 		private SchematicBiome[][] biomes;
 
 		public Builder() {
+		}
+
+		public Builder version(Integer version) {
+			this.version = version;
+			return this;
 		}
 
 		public Builder dataVersion(Integer dataVersion) {
@@ -223,7 +240,9 @@ public class SchematicSchem implements Schematic {
 			return null;
 		}
 
-		public SchematicSchem build() {
+		public SchematicSponge build() {
+			if (version == null)
+				throw new SchematicBuilderException("version must be set");
 			if (dataVersion == null)
 				throw new SchematicBuilderException("dataVersion must be set");
 			if (width == null)
@@ -235,7 +254,7 @@ public class SchematicSchem implements Schematic {
 			if (blocks == null)
 				throw new SchematicBuilderException("blocks must be set");
 
-			return new SchematicSchem(dataVersion, metadata, width, height, length, offset, blocks, blockEntities, entities, biomes);
+			return new SchematicSponge(version, dataVersion, metadata, width, height, length, offset, blocks, blockEntities, entities, biomes);
 		}
 	}
 

@@ -15,6 +15,8 @@ Format | Extension | Links
 ~~Legacy MCEdit~~ 🚧 | .schematic | [Spec](https://github.com/mcedit/pymclevel/blob/master/schematic.py)
 ~~BuilderTools - PocketMine~~ 🚧 | .schematic | [Spec](https://github.com/CzechPMDevs/BuilderTools/blob/default/BuilderTools/src/czechpmdevs/buildertools/async/SchematicCreateTask.php)
 
+**TODO**: Investigate how [Jupisoft's Minecraft Tools](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-tools/2947154-minecraft-tools-in-c-for-1-14-with-full-source) and [Mineways](http://www.realtimerendering.com/erich/minecraft/public/mineways/) convert between pre-1.13 and new format.
+
 ## Installation
 
 Add the following dependency to your build file.

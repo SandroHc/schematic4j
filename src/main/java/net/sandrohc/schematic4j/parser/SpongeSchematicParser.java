@@ -13,10 +13,11 @@ import net.querz.nbt.tag.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.sandrohc.schematic4j.exception.ParsingException;
 import net.sandrohc.schematic4j.schematic.Schematic;
-import net.sandrohc.schematic4j.schematic.SchematicSchem;
-import net.sandrohc.schematic4j.schematic.SchematicSchem.Builder;
-import net.sandrohc.schematic4j.schematic.SchematicSchem.Metadata;
+import net.sandrohc.schematic4j.schematic.SchematicSponge;
+import net.sandrohc.schematic4j.schematic.SchematicSponge.Builder;
+import net.sandrohc.schematic4j.schematic.SchematicSponge.Metadata;
 import net.sandrohc.schematic4j.schematic.types.*;
 
 import static net.sandrohc.schematic4j.SchematicUtil.containsAllTags;
@@ -25,10 +26,10 @@ import static net.sandrohc.schematic4j.utils.TagUtils.*;
 
 /**
  * Parses Sponge Schematic Format (<i>.SCHEM</i>).
- *
+ * <p>
  * The SCHEM format replaced the .SCHEMATIC format in versions 1.13+ of Minecraft Java Edition.
- *
- * Specification:
+ * <p>
+ * Specification:<br>
  *  - https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md
  */
 // TODO: create different parsers for v1 and v2, and extract common code to an abstract intermediate class
@@ -63,13 +64,14 @@ public class SpongeSchematicParser implements Parser {
 
 
 	@Override
-	public Schematic parse(NamedTag root) {
+	public Schematic parse(NamedTag root) throws ParsingException {
 		log.debug("Parsing SCHEM schematic");
 
 		final CompoundTag rootTag = (CompoundTag) root.getTag();
-		final SchematicSchem.Builder builder = new SchematicSchem.Builder();
+		final SchematicSponge.Builder builder = new SchematicSponge.Builder();
 
 		final int version = getIntOrThrow(rootTag, NBT_VERSION);
+		builder.version(version);
 		if (version > 2)
 			log.warn("Sponge Schematic version {} is not officially supported. Use at your own risk", version);
 
@@ -84,7 +86,7 @@ public class SpongeSchematicParser implements Parser {
 		return builder.build();
 	}
 
-	private void parseDataVersion(CompoundTag root, Builder builder, int version) {
+	private void parseDataVersion(CompoundTag root, Builder builder, int version) throws ParsingException {
 		log.trace("Parsing data version");
 
 		// Data Version is optional for v1, but required for v2
@@ -147,7 +149,7 @@ public class SpongeSchematicParser implements Parser {
 		});
 	}
 
-	private void parseBlocks(CompoundTag root, SchematicSchem.Builder builder) {
+	private void parseBlocks(CompoundTag root, SchematicSponge.Builder builder) throws ParsingException {
 		log.trace("Parsing blocks");
 
 		if (!containsAllTags(root, NBT_BLOCK_DATA, NBT_PALETTE)) {
@@ -202,7 +204,7 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} blocks", width * height * length);
 	}
 
-	private void parseBiomes(CompoundTag root, SchematicSchem.Builder builder) {
+	private void parseBiomes(CompoundTag root, SchematicSponge.Builder builder) throws ParsingException {
 		log.trace("Parsing biomes");
 
 		if (!containsAllTags(root, NBT_BIOME_DATA, NBT_BIOME_PALETTE)) {
@@ -251,7 +253,7 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} biomes", width * length);
 	}
 
-	private void parseBlockEntities(CompoundTag root, Builder builder, int version) {
+	private void parseBlockEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
 		log.trace("Parsing block entities");
 
 		final Collection<SchematicBlockEntity> blockEntities;
@@ -281,7 +283,7 @@ public class SpongeSchematicParser implements Parser {
 		builder.blockEntities(blockEntities);
 	}
 
-	private void parseEntities(CompoundTag root, SchematicSchem.Builder builder) {
+	private void parseEntities(CompoundTag root, SchematicSponge.Builder builder) throws ParsingException {
 		log.trace("Parsing entities");
 
 		final Collection<SchematicEntity> entities;

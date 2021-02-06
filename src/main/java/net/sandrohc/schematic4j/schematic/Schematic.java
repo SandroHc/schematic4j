@@ -3,9 +3,12 @@ package net.sandrohc.schematic4j.schematic;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.schematic.types.*;
 
 public interface Schematic {
+
+	SchematicFormat getFormat();
 
 	/**
 	 * The width of the schematic.
@@ -37,11 +40,15 @@ public interface Schematic {
 
 	/**
 	 * The block at the specified block.
+	 * <p>
+	 * Depending on the schematic format, each coordinate can also be negative and is relative to the schematic origin.
 	 *
-	 * @param pos the position
+	 * @param x The X coordinate, can be a negative value
+	 * @param y The X coordinate, can be a negative value
+	 * @param z The X coordinate, can be a negative value
 	 * @return block, or {@code null} if information is not available.
 	 */
-	SchematicBlock getBlock(SchematicPos<Integer> pos);
+	SchematicBlock getBlock(int x, int y, int z);
 
 	/**
 	 * The list of tile/block entities.
