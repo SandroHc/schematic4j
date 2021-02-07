@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.schematic.types.*;
+import net.sandrohc.schematic4j.utils.BiomeIterator;
+import net.sandrohc.schematic4j.utils.BlockIterator;
 
 public interface Schematic {
 
@@ -51,6 +53,13 @@ public interface Schematic {
 	SchematicBlock getBlock(int x, int y, int z);
 
 	/**
+	 * Iterator for iterating over the list of blocks.
+	 *
+	 * @return an iterator
+	 */
+	BlockIterator getBlocks();
+
+	/**
 	 * The list of tile/block entities.
 	 *
 	 * @return list of block entities
@@ -72,6 +81,13 @@ public interface Schematic {
 	 * @return biome, or {@code null} if information is not available.
 	 */
 	SchematicBiome getBiome(int x, int z);
+
+	/**
+	 * Iterator for iterating over the list of biomes.
+	 *
+	 * @return an iterator
+	 */
+	BiomeIterator getBiomes();
 
 	/**
 	 * The name of the schematic.

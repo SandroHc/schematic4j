@@ -8,6 +8,10 @@ import java.util.Map;
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.types.*;
+import net.sandrohc.schematic4j.utils.BiomeIterator;
+import net.sandrohc.schematic4j.utils.BiomeIteratorImpl;
+import net.sandrohc.schematic4j.utils.BlockIterator;
+import net.sandrohc.schematic4j.utils.BlockIteratorImpl;
 
 public class SchematicSponge implements Schematic {
 
@@ -80,6 +84,21 @@ public class SchematicSponge implements Schematic {
 	}
 
 	@Override
+	public BlockIterator getBlocks() {
+		return new BlockIteratorImpl<SchematicBlock[][][]>(blocks, blocks.length, blocks[0].length, blocks[0][0].length) {
+			@Override
+			public SchematicBlock next() {
+				z = i % length;
+				y = (i / length) % height;
+				x = i / (height * length);
+				++i;
+
+				return blocks[x][y][z];
+			}
+		};
+	}
+
+	@Override
 	public Collection<SchematicBlockEntity> getBlockEntities() {
 		return blockEntities;
 	}
@@ -95,6 +114,20 @@ public class SchematicSponge implements Schematic {
 			throw new ArrayIndexOutOfBoundsException("invalid position");
 
 		return biomes[x][z];
+	}
+
+	@Override
+	public BiomeIterator getBiomes() {
+		return new BiomeIteratorImpl<SchematicBiome[][]>(biomes, biomes.length, biomes.length != 0 ? biomes[0].length : 0) {
+			@Override
+			public SchematicBiome next() {
+				x = i / width;
+				z = i % length;
+				++i;
+
+				return arr[x][z];
+			}
+		};
 	}
 
 	@Override
