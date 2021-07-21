@@ -23,28 +23,17 @@ Add the following dependency to your build file.
 
 If using Gradle (`build.gradle`):
 ```groovy
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
-}
 dependencies {
-    implementation 'net.sandrohc:schematic4j:master-SNAPSHOT'
+    implementation 'net.sandrohc:schematic4j:1.0.0-SNAPSHOT'
 }
 ```
 
 If using Maven (`pom.xml`):
 ```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
 <dependency>
     <groupId>net.sandrohc</groupId>
     <artifactId>schematic4j</artifactId>
-    <version>master-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
 

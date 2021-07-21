@@ -1,9 +1,14 @@
 plugins {
     id 'java-library'
+    id 'jacoco'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group 'net.sandrohc'
 version '1.0.0-SNAPSHOT'
+
+ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -47,7 +52,70 @@ test {
     useJUnitPlatform()
 }
 
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+    }
+}
+
 tasks.withType(JavaCompile) {
     // force UTF-8 encoding on Windows machines
     options.encoding = 'UTF-8'
+}
+
+
+publishing {
+    repositories {
+        maven {
+            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = 'Schematic4J'
+                description = 'Java parser for the .schem/.schematic/.litematic Minecraft formats. 🗺'
+                url = 'https://github.com/SandroHc/schematic4j'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'SandroHc'
+                        name = 'Sandro Marques'
+                        email = 'sandro123iv@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/SandroHc/schematic4j.git'
+                    developerConnection = 'scm:git:ssh://github.com/SandroHc/schematic4j.git'
+                    url = 'https://github.com/SandroHc/schematic4j'
+                }
+                issueManagement {
+                    system = 'GitHub'
+                    url = 'https://github.com/SandroHc/schematic4j/issues'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications.maven
+}
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }
