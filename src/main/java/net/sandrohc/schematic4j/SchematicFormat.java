@@ -4,13 +4,14 @@ import java.util.function.Supplier;
 
 import net.sandrohc.schematic4j.exception.NoParserFoundException;
 import net.sandrohc.schematic4j.parser.Parser;
+import net.sandrohc.schematic4j.parser.SchematicaParser;
 import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
 
 public enum SchematicFormat {
 	SPONGE_V1      ("schem", SpongeSchematicParser::new),
 	SPONGE_V2      ("schem", SpongeSchematicParser::new),
 	LITEMATICA     ("litematic"),
-	SCHEMATICA     ("schematic"),
+	SCHEMATICA     ("schematic", SchematicaParser::new),
 	WORLD_EDITOR   ("schematic"),
 	MCEDIT         ("schematic"),
 	MCEDIT_UNIFIED ("schematic"),

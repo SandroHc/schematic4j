@@ -3,10 +3,12 @@ package net.sandrohc.schematic4j.schematic.types;
 public class SchematicItem extends SchematicNamed {
 
 	public final int count;
+	public final int damage;
 
-	public SchematicItem(String name, int count) {
+	public SchematicItem(String name, int count, int damage) {
 		super(name);
 		this.count = count;
+		this.damage = damage;
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class SchematicItem extends SchematicNamed {
 
 	@Override
 	public String toString() {
-		return "SchematicItem(name=" + name + ", count=" + count + ")";
+		return "SchematicItem(name=" + name + ", count=" + count + ", damage=" + damage + ")";
 	}
 
 }

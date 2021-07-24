@@ -8,7 +8,7 @@ public class SchematicBlock extends SchematicWithBlockState {
 
 	@Override
 	public String toString() {
-		return "SchematicBlock(" + name + ", states=" + states + ')';
+		return "SchematicBlock(" + block + ", states=" + states + ')';
 	}
 
 }

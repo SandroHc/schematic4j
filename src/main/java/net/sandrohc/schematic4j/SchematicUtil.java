@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.*;
 
 import net.querz.nbt.io.NBTUtil;
 import net.querz.nbt.io.NamedTag;
@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
 import net.sandrohc.schematic4j.parser.Parser;
+import net.sandrohc.schematic4j.parser.SchematicaParser;
+import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
 import net.sandrohc.schematic4j.schematic.Schematic;
 
 public class SchematicUtil {
@@ -53,26 +55,31 @@ public class SchematicUtil {
 		return parser.parse(root);
 	}
 
+	// TODO: implement candidate system - candidate with most points gets selected
 	public static SchematicFormat detectFormat(NamedTag root) {
-		if (!root.getName().equals(Constants.NBT_ROOT))
-			log.warn("Root tag does not follow the standard. Expected a tag named '{}' but got '{}'", Constants.NBT_ROOT, root.getName());
+		if (!(root.getTag() instanceof CompoundTag))
+			return SchematicFormat.UNKNOWN;
 
-		if (root.getTag() instanceof CompoundTag) {
-			final CompoundTag rootCompound = (CompoundTag) root.getTag();
+		final CompoundTag rootTag = (CompoundTag) root.getTag();
+		final String rootName = root.getName();
 
-			// Check Sponge Schematic format
-			if (containsAllTags(rootCompound, "Version", "Width", "Height", "Length", "BlockData", "Palette")) {
-				final int version = rootCompound.getInt("Version");
-				switch (version) {
-				case 1:
-					return SchematicFormat.SPONGE_V1;
-				case 2:
-					return SchematicFormat.SPONGE_V2;
-				default:
-					log.warn("Found Sponge Schematic with version {}, which is not supported. Using parser for version 2", version);
-					return SchematicFormat.SPONGE_V2;
-				}
+		// Check Sponge Schematic format
+		if (rootName.equals(SpongeSchematicParser.NBT_ROOT) && containsAllTags(rootTag, "Version", "BlockData", "Palette")) {
+			final int version = rootTag.getInt("Version");
+			switch (version) {
+			case 1:
+				return SchematicFormat.SPONGE_V1;
+			case 2:
+				return SchematicFormat.SPONGE_V2;
+			default:
+				log.warn("Found Sponge Schematic with version {}, which is not supported. Using parser for version 2", version);
+				return SchematicFormat.SPONGE_V2;
 			}
+		}
+
+		// Check Schematica format
+		if (rootName.equals(SchematicaParser.NBT_ROOT) && containsAllTags(rootTag, "SchematicaMapping")) {
+			return SchematicFormat.SCHEMATICA;
 		}
 
 		return SchematicFormat.UNKNOWN;
@@ -99,6 +106,20 @@ public class SchematicUtil {
 			return ((ByteArrayTag) value).getValue();
 		} else if (value instanceof LongArrayTag) {
 			return ((LongArrayTag) value).getValue();
+		} else if (value instanceof CompoundTag) {
+			CompoundTag compoundTag = (CompoundTag) value;
+
+			Map<String, Object> map = new LinkedHashMap<>(compoundTag.size());
+			for (Map.Entry<String, Tag<?>> entry : compoundTag) map.put(entry.getKey(), unwrap(entry.getValue()));
+
+			return map;
+		} else if (value instanceof ListTag<?>) {
+			ListTag<?> listTag = (ListTag<?>) value;
+
+			List<Object> list = new ArrayList<>(listTag.size());
+			for (Tag<?> tag : listTag) list.add(unwrap(tag));
+
+			return list;
 		} else {
 			return value;
 		}

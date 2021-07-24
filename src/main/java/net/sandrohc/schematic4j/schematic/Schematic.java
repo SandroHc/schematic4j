@@ -2,11 +2,12 @@ package net.sandrohc.schematic4j.schematic;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.schematic.types.*;
-import net.sandrohc.schematic4j.utils.BiomeIterator;
-import net.sandrohc.schematic4j.utils.BlockIterator;
+import net.sandrohc.schematic4j.utils.iterators.Arr2DIterator;
+import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 public interface Schematic {
 
@@ -57,21 +58,25 @@ public interface Schematic {
 	 *
 	 * @return an iterator
 	 */
-	BlockIterator getBlocks();
+	Arr3DIterator<SchematicBlock> getBlocks();
 
 	/**
 	 * The list of tile/block entities.
 	 *
 	 * @return list of block entities
 	 */
-	Collection<SchematicBlockEntity> getBlockEntities();
+	default Collection<SchematicBlockEntity> getBlockEntities() {
+		return Collections.emptyList();
+	}
 
 	/**
 	 * The list of entities.
 	 *
 	 * @return list of entities
 	 */
-	Collection<SchematicEntity> getEntities();
+	default Collection<SchematicEntity> getEntities() {
+		return Collections.emptyList();
+	}
 
 	/**
 	 * The biome at the specified block.
@@ -80,34 +85,53 @@ public interface Schematic {
 	 * @param z the Z coordinate
 	 * @return biome, or {@code null} if information is not available.
 	 */
-	SchematicBiome getBiome(int x, int z);
+	default SchematicBiome getBiome(int x, int z) {
+		return null;
+	}
 
 	/**
 	 * Iterator for iterating over the list of biomes.
 	 *
 	 * @return an iterator
 	 */
-	BiomeIterator getBiomes();
+	default Arr2DIterator<SchematicBiome> getBiomes() {
+		return new Arr2DIterator<>(null, 0, 0);
+	}
 
 	/**
 	 * The name of the schematic.
 	 *
 	 * @return schematic name, or {@code null} if information is not available.
 	 */
-	String getName();
+	default String getName() {
+		return null;
+	}
 
 	/**
 	 * The name of the author of the schematic.
 	 *
 	 * @return author, or {@code null} if information is not available.
 	 */
-	String getAuthor();
+	default String author() {
+		return null;
+	}
 
 	/**
 	 * The date that this schematic was created on.
 	 *
 	 * @return creation date, or {@code null} if information is not available.
 	 */
-	LocalDateTime date();
+	default LocalDateTime date() {
+		return null;
+	}
+
+	/**
+	 * The icon for representing this schematic. A Minecraft item.
+	 *
+	 * @return icon, or {@code null} if information is not available.
+	 */
+	default SchematicItem icon() {
+		return null;
+	}
 
 }
