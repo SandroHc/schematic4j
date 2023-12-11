@@ -21,8 +21,8 @@ java {
 jar {
     manifest {
         attributes(
-                'Implementation-Title': 'schematic4j',
-                'Implementation-Version': project.version
+            'Implementation-Title': 'schematic4j',
+            'Implementation-Version': project.version
         )
     }
 }
@@ -39,23 +39,23 @@ repositories {
 }
 
 dependencies {
-    api 'org.slf4j:slf4j-api:1.7.30'
-    runtimeClasspath 'ch.qos.logback:logback-classic:1.2.3'
-
+    api 'org.slf4j:slf4j-api:1.7.36'
     implementation 'net.sandrohc:nbt:6.1-SNAPSHOT'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.3.14'
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
     dependsOn test
     reports {
-        xml.enabled true
+        xml.required = true
     }
 }
 
@@ -63,7 +63,6 @@ tasks.withType(JavaCompile) {
     // force UTF-8 encoding on Windows machines
     options.encoding = 'UTF-8'
 }
-
 
 publishing {
     repositories {
