@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
 import net.sandrohc.schematic4j.parser.Parser;
+import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
 import net.sandrohc.schematic4j.schematic.Schematic;
 
 public class SchematicUtil {
@@ -54,8 +55,8 @@ public class SchematicUtil {
 	}
 
 	public static SchematicFormat detectFormat(NamedTag root) {
-		if (!root.getName().equals(Constants.NBT_ROOT))
-			log.warn("Root tag does not follow the standard. Expected a tag named '{}' but got '{}'", Constants.NBT_ROOT, root.getName());
+		if (!root.getName().equals(SpongeSchematicParser.NBT_ROOT))
+			log.warn("Root tag does not follow the standard. Expected a tag named '{}' but got '{}'", SpongeSchematicParser.NBT_ROOT, root.getName());
 
 		if (root.getTag() instanceof CompoundTag) {
 			final CompoundTag rootCompound = (CompoundTag) root.getTag();
@@ -111,5 +112,4 @@ public class SchematicUtil {
 	public static boolean containsTag(CompoundTag tag, String... optionalTags) {
 		return Arrays.stream(optionalTags).anyMatch(tag::containsKey);
 	}
-
 }
