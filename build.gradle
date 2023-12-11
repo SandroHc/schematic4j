@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'net.sandrohc'
-version '1.0.0-SNAPSHOT'
+version '1.0.1'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
@@ -65,13 +65,13 @@ tasks.withType(JavaCompile) {
 publishing {
     repositories {
         maven {
-            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = isReleaseVersion ? releaseRepo : snapshotRepo
-            credentials {
-                username = project.hasProperty('ossrhUsername') ? ossrhUsername : 'unk'
-                password = project.hasProperty('ossrhPassword') ? ossrhPassword : 'unk'
-            }
+            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
+            url = isReleaseVersion ? releasesRepoUrl : snapshotsRepoUrl
+            //credentials {
+            //    username = project.hasProperty('ossrhUsername') ? ossrhUsername : 'unk'
+            //    password = project.hasProperty('ossrhPassword') ? ossrhPassword : 'unk'
+            //}
         }
     }
 
@@ -112,7 +112,4 @@ publishing {
 signing {
     useGpgCmd()
     sign publishing.publications.maven
-}
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
 }
