@@ -187,18 +187,36 @@ public class SpongeSchematicParser implements Parser {
 		if (blockDataRaw.length != expectedBlocks)
 			log.warn("Number of blocks does not match expected. Expected {} blocks, but got {}", expectedBlocks, blockDataRaw.length);
 
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				for (int z = 0; z < length; z++) {
-					final int index = x + z*width + y*width*length; // flatten (x,y,z) into a single dimension
+		// --- Uses code from https://github.com/SpongePowered/Sponge/blob/aa2c8c53b4f9f40297e6a4ee281bee4f4ce7707b/src/main/java/org/spongepowered/common/data/persistence/SchematicTranslator.java#L147-L175
+		int index = 0;
+		int i = 0;
+		int value = 0;
+		int varint_length = 0;
+		while (i < blockDataRaw.length) {
+			value = 0;
+			varint_length = 0;
 
-					final int blockId = blockDataRaw[index] & 0xFF;
-					final SchematicBlock block = blockById.get(blockId);
-
-					blockData[x][y][z] = block;
+			while (true) {
+				value |= (blockDataRaw[i] & 127) << (varint_length++ * 7);
+				if (varint_length > 5) {
+					throw new RuntimeException("VarInt too big (probably corrupted data)");
 				}
+				if ((blockDataRaw[i] & 128) != 128) {
+					i++;
+					break;
+				}
+				i++;
 			}
+			// index = (y * length + z) * width + x
+			int y = index / (width * length);
+			int z = (index % (width * length)) / width;
+			int x = (index % (width * length)) % width;
+			SchematicBlock block = blockById.get(value);
+			blockData[x][y][z] = block;
+
+			index++;
 		}
+		// ---
 
 		builder.blocks(blockData);
 		log.debug("Loaded {} blocks", width * height * length);
