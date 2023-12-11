@@ -9,13 +9,24 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import net.querz.nbt.io.NBTUtil;
-import net.querz.nbt.io.NamedTag;
-import net.querz.nbt.tag.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
+import net.sandrohc.schematic4j.nbt.io.NBTUtil;
+import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.ByteArrayTag;
+import net.sandrohc.schematic4j.nbt.tag.ByteTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
+import net.sandrohc.schematic4j.nbt.tag.DoubleTag;
+import net.sandrohc.schematic4j.nbt.tag.FloatTag;
+import net.sandrohc.schematic4j.nbt.tag.IntArrayTag;
+import net.sandrohc.schematic4j.nbt.tag.IntTag;
+import net.sandrohc.schematic4j.nbt.tag.LongArrayTag;
+import net.sandrohc.schematic4j.nbt.tag.LongTag;
+import net.sandrohc.schematic4j.nbt.tag.ShortTag;
+import net.sandrohc.schematic4j.nbt.tag.StringTag;
+import net.sandrohc.schematic4j.nbt.tag.Tag;
 import net.sandrohc.schematic4j.parser.Parser;
 import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
 import net.sandrohc.schematic4j.schematic.Schematic;

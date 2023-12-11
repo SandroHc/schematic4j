@@ -1,6 +1,6 @@
 package net.sandrohc.schematic4j.exception;
 
-import net.querz.nbt.tag.Tag;
+import net.sandrohc.schematic4j.nbt.tag.Tag;
 
 public class MissingFieldException extends ParsingException {
 

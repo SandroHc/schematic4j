@@ -3,26 +3,50 @@ package net.sandrohc.schematic4j.parser;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import net.querz.nbt.io.NamedTag;
-import net.querz.nbt.tag.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
+import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
+import net.sandrohc.schematic4j.nbt.tag.IntTag;
+import net.sandrohc.schematic4j.nbt.tag.ListTag;
+import net.sandrohc.schematic4j.nbt.tag.LongTag;
+import net.sandrohc.schematic4j.nbt.tag.StringTag;
+import net.sandrohc.schematic4j.nbt.tag.Tag;
 import net.sandrohc.schematic4j.schematic.Schematic;
 import net.sandrohc.schematic4j.schematic.SchematicSponge;
 import net.sandrohc.schematic4j.schematic.SchematicSponge.Builder;
 import net.sandrohc.schematic4j.schematic.SchematicSponge.Metadata;
-import net.sandrohc.schematic4j.schematic.types.*;
+import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicPosDouble;
+import net.sandrohc.schematic4j.schematic.types.SchematicPosInteger;
 
 import static net.sandrohc.schematic4j.SchematicUtil.containsAllTags;
 import static net.sandrohc.schematic4j.SchematicUtil.unwrap;
-import static net.sandrohc.schematic4j.utils.TagUtils.*;
+import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
+import static net.sandrohc.schematic4j.utils.TagUtils.getCompound;
+import static net.sandrohc.schematic4j.utils.TagUtils.getCompoundList;
+import static net.sandrohc.schematic4j.utils.TagUtils.getCompoundOrThrow;
+import static net.sandrohc.schematic4j.utils.TagUtils.getDoubleList;
+import static net.sandrohc.schematic4j.utils.TagUtils.getInt;
+import static net.sandrohc.schematic4j.utils.TagUtils.getIntArray;
+import static net.sandrohc.schematic4j.utils.TagUtils.getIntOrThrow;
+import static net.sandrohc.schematic4j.utils.TagUtils.getShortOrThrow;
+import static net.sandrohc.schematic4j.utils.TagUtils.getStringOrThrow;
 
 /**
  * Parses Sponge Schematic Format (<i>.SCHEM</i>).
@@ -30,7 +54,7 @@ import static net.sandrohc.schematic4j.utils.TagUtils.*;
  * The SCHEM format replaced the .SCHEMATIC format in versions 1.13+ of Minecraft Java Edition.
  * <p>
  * Specification:<br>
- *  - https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md
+ *  - <a href="https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md">https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md</a>
  */
 // TODO: create different parsers for v1 and v2, and extract common code to an abstract intermediate class
 // TODO: implement v3

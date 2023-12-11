@@ -2,9 +2,20 @@ package net.sandrohc.schematic4j.utils;
 
 import java.util.Optional;
 
-import net.querz.nbt.tag.*;
-
 import net.sandrohc.schematic4j.exception.MissingFieldException;
+import net.sandrohc.schematic4j.nbt.tag.ByteArrayTag;
+import net.sandrohc.schematic4j.nbt.tag.ByteTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
+import net.sandrohc.schematic4j.nbt.tag.DoubleTag;
+import net.sandrohc.schematic4j.nbt.tag.FloatTag;
+import net.sandrohc.schematic4j.nbt.tag.IntArrayTag;
+import net.sandrohc.schematic4j.nbt.tag.IntTag;
+import net.sandrohc.schematic4j.nbt.tag.ListTag;
+import net.sandrohc.schematic4j.nbt.tag.LongArrayTag;
+import net.sandrohc.schematic4j.nbt.tag.LongTag;
+import net.sandrohc.schematic4j.nbt.tag.NumberTag;
+import net.sandrohc.schematic4j.nbt.tag.ShortTag;
+import net.sandrohc.schematic4j.nbt.tag.StringTag;
 
 public class TagUtils {
 

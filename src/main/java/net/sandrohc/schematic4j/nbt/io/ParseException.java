@@ -1,0 +1,26 @@
+/* Vendored version of Quertz NBT 6.1 - https://github.com/Querz/NBT */
+package net.sandrohc.schematic4j.nbt.io;
+
+import java.io.IOException;
+
+public class ParseException extends IOException {
+
+	public ParseException(String msg) {
+		super(msg);
+	}
+
+	public ParseException(String msg, String value, int index) {
+		super(msg + " at: " + formatError(value, index));
+	}
+
+	private static String formatError(String value, int index) {
+		StringBuilder builder = new StringBuilder();
+		int i = Math.min(value.length(), index);
+		if (i > 35) {
+			builder.append("...");
+		}
+		builder.append(value, Math.max(0, i - 35), i);
+		builder.append("<--[HERE]");
+		return builder.toString();
+	}
+}

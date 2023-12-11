@@ -35,12 +35,10 @@ javadoc {
 
 repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io/' }
 }
 
 dependencies {
     api 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'net.sandrohc:nbt:6.1-SNAPSHOT'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
