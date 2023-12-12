@@ -5,36 +5,42 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.SchematicBuilderException;
-import net.sandrohc.schematic4j.schematic.types.*;
-import net.sandrohc.schematic4j.utils.iterators.Arr2DIterator;
+import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 public class SchematicSponge implements Schematic {
 
-	private static final int[] DEFAULT_OFFSET = { 0, 0, 0 };
+	public static final int[] DEFAULT_OFFSET = { 0, 0, 0 };
 
 	/** The Sponge Schematic format version. **/
-	private final int version;
+	public final int version;
 
 	/** The data version, used in world save data. */
-	private final int dataVersion;
+	public final int dataVersion;
 
 	/** The optional additional meta information about the schematic. */
-	private final Metadata metadata;
+	public final Metadata metadata;
 
-	private final int width;
-	private final int height;
-	private final int length;
-	private final int[] offset;
-	private final SchematicBlock[][][] blocks;
-	private final Collection<SchematicBlockEntity> blockEntities;
-	private final Collection<SchematicEntity> entities;
-	private final SchematicBiome[][] biomes;
+	public final int width;
+	public final int height;
+	public final int length;
+	public final int[] offset;
+	public final SchematicBlock[][][] blocks;
+	public final Collection<SchematicBlockEntity> blockEntities;
+	public final Collection<SchematicEntity> entities;
+	public final SchematicBiome[][][] biomes;
 
-
-	public SchematicSponge(int version, int dataVersion, Metadata metadata, int width, int height, int length, int[] offset, SchematicBlock[][][] blocks, Collection<SchematicBlockEntity> blockEntities, Collection<SchematicEntity> entities, SchematicBiome[][] biomes) {
+	public SchematicSponge(int version, int dataVersion, Metadata metadata, int width, int height, int length,
+						   int[] offset, SchematicBlock[][][] blocks, Collection<SchematicBlockEntity> blockEntities,
+						   Collection<SchematicEntity> entities, SchematicBiome[][][] biomes) {
 		this.version = version;
 		this.dataVersion = dataVersion;
 		this.metadata = metadata != null ? metadata : new Metadata(null, null, null, new String[0], Collections.emptyMap());
@@ -49,106 +55,125 @@ public class SchematicSponge implements Schematic {
 	}
 
 	@Override
-	public SchematicFormat getFormat() {
+	public @NonNull SchematicFormat format() {
 		return version == 1 ? SchematicFormat.SPONGE_V1 : SchematicFormat.SPONGE_V2;
 	}
 
 	@Override
-	public int getWidth() {
+	public int width() {
 		return width;
 	}
 
 	@Override
-	public int getHeight() {
+	public int height() {
 		return height;
 	}
 
 	@Override
-	public int getLength() {
+	public int length() {
 		return length;
 	}
 
 	@Override
-	public int[] getOffset() {
+	public int[] offset() {
 		return offset;
 	}
 
 	@Override
-	public SchematicBlock getBlock(int x, int y, int z) {
-		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length))
-			throw new ArrayIndexOutOfBoundsException("invalid position");
+	public @Nullable SchematicBlock block(int x, int y, int z) {
+		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
+			throw new ArrayIndexOutOfBoundsException(String.format("position out of bounds: %d, %d, %d", x, y, z));
+		}
 
 		return blocks[x][y][z];
 	}
 
 	@Override
-	public Arr3DIterator<SchematicBlock> getBlocks() {
-		return new Arr3DIterator<>(blocks, blocks.length, blocks[0].length, blocks[0][0].length);
+	public @NonNull Arr3DIterator<SchematicBlock> blocks() {
+		return new Arr3DIterator<>(blocks);
 	}
 
 	@Override
-	public Collection<SchematicBlockEntity> getBlockEntities() {
+	public @NonNull Collection<SchematicBlockEntity> blockEntities() {
 		return blockEntities;
 	}
 
 	@Override
-	public Collection<SchematicEntity> getEntities() {
+	public @NonNull Collection<SchematicEntity> entities() {
 		return entities;
 	}
 
 	@Override
-	public SchematicBiome getBiome(int x, int z) {
-		if ((x < 0 || x >= width) || (z < 0 || z >= length))
-			throw new ArrayIndexOutOfBoundsException("invalid position");
+	public @Nullable SchematicBiome biome(int x, int y, int z) {
+		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
+			throw new ArrayIndexOutOfBoundsException(String.format("position out of bounds: %d, %d, %d", x, y, z));
+		}
 
-		return biomes[x][z];
+		return biomes[x][y][z];
 	}
 
 	@Override
-	public Arr2DIterator<SchematicBiome> getBiomes() {
-		return new Arr2DIterator<>(biomes, biomes.length, biomes.length != 0 ? biomes[0].length : 0);
+	public @NonNull Arr3DIterator<SchematicBiome> biomes() {
+		return new Arr3DIterator<>(biomes);
 	}
 
 	@Override
-	public String getName() {
+	public @Nullable String name() {
 		return metadata.name;
 	}
 
 	@Override
-	public String author() {
+	public @Nullable String author() {
 		return metadata.author;
 	}
 
 	@Override
-	public LocalDateTime date() {
+	public @Nullable LocalDateTime date() {
 		return metadata.date;
 	}
 
-	public int getDataVersion() {
+	public int dataVersion() {
 		return dataVersion;
 	}
 
-	public Metadata getMetadata() {
+	/**
+	 * @deprecated Use {@link SchematicSponge#dataVersion()} instead
+	 */
+	@Deprecated
+	public int getDataVersion() {
+		return dataVersion();
+	}
+
+	public @NonNull Metadata metadata() {
 		return metadata;
+	}
+
+	/**
+	 * @deprecated Use {@link SchematicSponge#metadata()} instead
+	 */
+	@Deprecated
+	public @NonNull Metadata getMetadata() {
+		return metadata();
 	}
 
 
 	public static class Metadata {
 		/** The name of the schematic. */
-		public final String name;
+		public final @Nullable String name;
 
 		/** The name of the author of the schematic. */
-		public final String author;
+		public final @Nullable String author;
 
 		/** The date that this schematic was created on. */
-		public final LocalDateTime date;
+		public final @Nullable LocalDateTime date;
 
 		/** An array of mod IDs. */
-		public final String[] requiredMods;
+		public final @NonNull String[] requiredMods;
 
-		public final Map<String, Object> extra;
+		public final @NonNull Map<String, Object> extra;
 
-		public Metadata(String name, String author, LocalDateTime date, String[] requiredMods, Map<String, Object> extra) {
+		public Metadata(@Nullable String name, @Nullable String author, @Nullable LocalDateTime date,
+						@NonNull String[] requiredMods, @NonNull Map<String, Object> extra) {
 			this.name = name;
 			this.author = author;
 			this.date = date;
@@ -158,27 +183,23 @@ public class SchematicSponge implements Schematic {
 
 		@Override
 		public String toString() {
-			return "Metadata(" +
-				   "name='" + name + '\'' +
-				   ", author='" + author + '\'' +
-				   ')';
+			return "Metadata[name='" + name + "', author='" + author + "']";
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "SchematicSponge(" +
-			   "format=" + getFormat() +
-			   ", name=" + getName() +
+		return "SchematicSponge[" +
+			   "format=" + format() +
+			   ", name=" + name() +
 			   ", author=" + author() +
 			   ", width=" + width +
 			   ", height=" + height +
 			   ", length=" + length +
-			   ')';
+			   ']';
 	}
 
 	public static class Builder {
-
 		private Integer version;
 		private Integer dataVersion;
 		private Metadata metadata;
@@ -189,8 +210,7 @@ public class SchematicSponge implements Schematic {
 		private SchematicBlock[][][] blocks;
 		private Collection<SchematicBlockEntity> blockEntities;
 		private Collection<SchematicEntity> entities;
-		private SchematicBiome[][] biomes;
-
+		private SchematicBiome[][][] biomes;
 
 		public Builder() {
 		}
@@ -248,7 +268,7 @@ public class SchematicSponge implements Schematic {
 			return this;
 		}
 
-		public Builder biomes(SchematicBiome[][] biomes) {
+		public Builder biomes(SchematicBiome[][][] biomes) {
 			this.biomes = biomes;
 			return null;
 		}
@@ -270,5 +290,4 @@ public class SchematicSponge implements Schematic {
 			return new SchematicSponge(version, dataVersion, metadata, width, height, length, offset, blocks, blockEntities, entities, biomes);
 		}
 	}
-
 }

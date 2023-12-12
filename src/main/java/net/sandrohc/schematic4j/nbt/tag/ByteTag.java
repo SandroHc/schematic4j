@@ -6,14 +6,25 @@ public class ByteTag extends NumberTag<Byte> implements Comparable<ByteTag> {
 	public static final byte ID = 1;
 	public static final byte ZERO_VALUE = 0;
 
+	/**
+	 * An empty byte tag.
+	 */
 	public ByteTag() {
 		super(ZERO_VALUE);
 	}
 
+	/**
+	 * A byte tag.
+	 * @param value The inner value
+	 */
 	public ByteTag(byte value) {
 		super(value);
 	}
 
+	/**
+	 * A byte tag.
+	 * @param value The inner value
+	 */
 	public ByteTag(boolean value) {
 		super((byte) (value ? 1 : 0));
 	}

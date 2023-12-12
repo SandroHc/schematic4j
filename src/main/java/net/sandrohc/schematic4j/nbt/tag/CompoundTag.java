@@ -11,10 +11,16 @@ import java.util.function.BiConsumer;
 
 import net.sandrohc.schematic4j.nbt.MaxDepthIO;
 
+/**
+ * A compound tag. Works like a map.
+ */
 public class CompoundTag extends Tag<Map<String, Tag<?>>> implements Iterable<Map.Entry<String, Tag<?>>>, Comparable<CompoundTag>, MaxDepthIO {
 
 	public static final byte ID = 10;
 
+	/**
+	 * An empty compound tag.
+	 */
 	public CompoundTag() {
 		super(createEmptyValue());
 	}

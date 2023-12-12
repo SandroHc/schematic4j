@@ -5,10 +5,4 @@ public class SchematicBlock extends SchematicWithBlockState {
 	public SchematicBlock(String blockstate) {
 		super(blockstate);
 	}
-
-	@Override
-	public String toString() {
-		return "SchematicBlock(" + block + ", states=" + states + ')';
-	}
-
 }

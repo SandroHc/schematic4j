@@ -9,7 +9,10 @@ import java.lang.reflect.Array;
  * @param <T> The array type.
  * */
 public abstract class ArrayTag<T> extends Tag<T> {
-
+	/**
+	 * An array tag.
+	 * @param value The inner array
+	 */
 	public ArrayTag(T value) {
 		super(value);
 		if (!value.getClass().isArray()) {

@@ -1,14 +1,17 @@
 package net.sandrohc.schematic4j.schematic.types;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 public abstract class SchematicNamed {
 
-	public final String name;
+	public final @NonNull String name;
 
-	public SchematicNamed(String name) {
-		if (name == null)
-			throw new IllegalArgumentException("name must not be null");
-
+	public SchematicNamed(@NonNull String name) {
 		this.name = name;
+	}
+
+	public String name() {
+		return name;
 	}
 
 	@Override
@@ -28,6 +31,6 @@ public abstract class SchematicNamed {
 
 	@Override
 	public String toString() {
-		return "SchematicNamed(" + name + ')';
+		return getClass().getSimpleName() + '[' + name + ']';
 	}
 }

@@ -5,13 +5,21 @@ import java.util.Map;
 
 public class SchematicBlockEntity extends SchematicNamed {
 
-	public final SchematicPos<Integer> pos;
+	public final SchematicPosInt pos;
 	public final Map<String, Object> extra;
 
-	public SchematicBlockEntity(String name, SchematicPos<Integer> pos, Map<String, Object> extra) {
+	public SchematicBlockEntity(String name, SchematicPosInt pos, Map<String, Object> extra) {
 		super(name);
 		this.pos = pos;
 		this.extra = Collections.unmodifiableMap(extra);
+	}
+
+	public SchematicPosInt pos() {
+		return pos;
+	}
+
+	public Map<String, Object> extra() {
+		return extra;
 	}
 
 	@Override
@@ -36,7 +44,6 @@ public class SchematicBlockEntity extends SchematicNamed {
 
 	@Override
 	public String toString() {
-		return "SchematicBlockEntity(name=" + name + ", pos=" + pos + ')';
+		return getClass().getSimpleName() + "[name=" + name + ", pos=" + pos + ", extra=" + extra + ']';
 	}
-
 }

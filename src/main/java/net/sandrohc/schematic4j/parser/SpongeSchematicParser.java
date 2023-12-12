@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,11 +33,10 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicPosDouble;
-import net.sandrohc.schematic4j.schematic.types.SchematicPosInteger;
+import net.sandrohc.schematic4j.schematic.types.SchematicPosInt;
 
-import static net.sandrohc.schematic4j.SchematicUtil.containsAllTags;
-import static net.sandrohc.schematic4j.SchematicUtil.unwrap;
 import static net.sandrohc.schematic4j.utils.DateUtils.epochToDate;
+import static net.sandrohc.schematic4j.utils.TagUtils.containsAllTags;
 import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompound;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompoundList;
@@ -46,9 +47,10 @@ import static net.sandrohc.schematic4j.utils.TagUtils.getIntArray;
 import static net.sandrohc.schematic4j.utils.TagUtils.getIntOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.getShortOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.getStringOrThrow;
+import static net.sandrohc.schematic4j.utils.TagUtils.unwrap;
 
 /**
- * Parses Sponge Schematic Format (<i>.SCHEM</i>).
+ * Parses Sponge Schematic files (<i>.schem</i>).
  * <p>
  * The SCHEM format replaced the .SCHEMATIC format in versions 1.13+ of Minecraft Java Edition.
  * <p>
@@ -88,13 +90,16 @@ public class SpongeSchematicParser implements Parser {
 
 	private static final Logger log = LoggerFactory.getLogger(SpongeSchematicParser.class);
 
-
 	@Override
-	public Schematic parse(NamedTag root) throws ParsingException {
+	public @NonNull Schematic parse(@Nullable NamedTag root) throws ParsingException {
 		log.debug("Parsing Sponge schematic");
 
-		final CompoundTag rootTag = (CompoundTag) root.getTag();
 		final SchematicSponge.Builder builder = new SchematicSponge.Builder();
+		if (root == null) {
+			return builder.build();
+		}
+
+		final CompoundTag rootTag = (CompoundTag) root.getTag();
 
 		final int version = getIntOrThrow(rootTag, NBT_VERSION);
 		builder.version(version);
@@ -267,7 +272,7 @@ public class SpongeSchematicParser implements Parser {
 									   !tag.getKey().equals(NBT_ENTITIES_POS))
 						.collect(Collectors.toMap(Entry::getKey, e -> unwrap(e.getValue())));
 
-				blockEntities.add(new SchematicBlockEntity(id, SchematicPosInteger.from(pos), extra));
+				blockEntities.add(new SchematicBlockEntity(id, SchematicPosInt.from(pos), extra));
 			}
 
 			log.debug("Loaded {} block entities", blockEntities.size());
@@ -322,7 +327,7 @@ public class SpongeSchematicParser implements Parser {
 
 		if (!containsAllTags(root, NBT_BIOME_DATA, NBT_BIOME_PALETTE)) {
 			log.trace("Did not have biome data");
-			builder.biomes(new SchematicBiome[0][0]);
+			builder.biomes(new SchematicBiome[0][0][0]);
 			return;
 		}
 
@@ -345,7 +350,7 @@ public class SpongeSchematicParser implements Parser {
 
 		// Load the block data
 		byte[] biomeDataRaw = getByteArrayOrThrow(root, NBT_BLOCK_DATA);
-		SchematicBiome[][] biomeData = new SchematicBiome[width][length];
+		SchematicBiome[][][] biomeData = new SchematicBiome[width][1][length];
 
 		int expectedBlocks = width * length;
 		if (biomeDataRaw.length != expectedBlocks)
@@ -358,7 +363,7 @@ public class SpongeSchematicParser implements Parser {
 				final int blockId = biomeDataRaw[index] & 0xFF;
 				final SchematicBiome block = biomeById.get(blockId);
 
-				biomeData[x][z] = block;
+				biomeData[x][0][z] = block;
 			}
 		}
 

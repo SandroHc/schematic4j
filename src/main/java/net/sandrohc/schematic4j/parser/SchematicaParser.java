@@ -4,26 +4,29 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import net.querz.nbt.io.NamedTag;
-import net.querz.nbt.tag.*;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
+import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
+import net.sandrohc.schematic4j.nbt.tag.ListTag;
+import net.sandrohc.schematic4j.nbt.tag.ShortTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
 import net.sandrohc.schematic4j.schematic.SchematicSchematica.Builder;
 import net.sandrohc.schematic4j.schematic.types.*;
 
-import static net.sandrohc.schematic4j.SchematicUtil.unwrap;
 import static net.sandrohc.schematic4j.utils.TagUtils.*;
 import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
 
 /**
- * Parses Schematica (<i>.SCHEMATIC</i>).
+ * Parses Schematica files (<i>.schematic</i>).
  * <p>
  * Specification:<br>
- *  - https://github.com/Lunatrius/Schematica/blob/master/src/main/java/com/github/lunatrius/schematica/world/schematic/SchematicAlpha.java
  *  - https://minecraft.fandom.com/wiki/Schematic_file_format
+ *  - https://github.com/Lunatrius/Schematica/blob/master/src/main/java/com/github/lunatrius/schematica/world/schematic/SchematicAlpha.java
  */
 public class SchematicaParser implements Parser {
 
@@ -65,11 +68,15 @@ public class SchematicaParser implements Parser {
 
 
 	@Override
-	public Schematic parse(NamedTag root) throws ParsingException {
+	public @NonNull Schematic parse(@Nullable NamedTag root) throws ParsingException {
 		log.debug("Parsing Schematica schematic");
 
-		final CompoundTag rootTag = (CompoundTag) root.getTag();
 		final Builder builder = new Builder();
+		if (root == null) {
+			return builder.build();
+		}
+
+		final CompoundTag rootTag = (CompoundTag) root.getTag();
 
 		parseIcon(rootTag, builder);
 		parseBlocks(rootTag, builder);
@@ -185,7 +192,7 @@ public class SchematicaParser implements Parser {
 									   !tag.getKey().equals(NBT_TILE_ENTITIES_Z))
 						.collect(Collectors.toMap(Entry::getKey, e -> unwrap(e.getValue())));
 
-				blockEntities.add(new SchematicBlockEntity(id, SchematicPosInteger.from(posX, posY, posZ), extra));
+				blockEntities.add(new SchematicBlockEntity(id, SchematicPosInt.from(posX, posY, posZ), extra));
 			}
 
 			log.debug("Loaded {} block entities", blockEntities.size());
@@ -252,7 +259,6 @@ public class SchematicaParser implements Parser {
 
 	@Override
 	public String toString() {
-		return "SchematicaParser()";
+		return "SchematicaParser";
 	}
-
 }

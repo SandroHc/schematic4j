@@ -8,10 +8,17 @@ public class ByteArrayTag extends ArrayTag<byte[]> implements Comparable<ByteArr
 	public static final byte ID = 7;
 	public static final byte[] ZERO_VALUE = new byte[0];
 
+	/**
+	 * An empty byte array tag.
+	 */
 	public ByteArrayTag() {
 		super(ZERO_VALUE);
 	}
 
+	/**
+	 * A byte array tag.
+	 * @param value The inner array
+	 */
 	public ByteArrayTag(byte[] value) {
 		super(value);
 	}

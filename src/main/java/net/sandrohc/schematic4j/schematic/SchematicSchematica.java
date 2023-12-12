@@ -3,6 +3,9 @@ package net.sandrohc.schematic4j.schematic;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
@@ -13,14 +16,13 @@ import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 public class SchematicSchematica implements Schematic {
 
-	private final int width;
-	private final int height;
-	private final int length;
-	private final SchematicBlock[][][] blocks;
-	private final Collection<SchematicBlockEntity> blockEntities;
-	private final Collection<SchematicEntity> entities;
-	private final SchematicItem icon;
-
+	public final int width;
+	public final int height;
+	public final int length;
+	public final SchematicBlock[][][] blocks;
+	public final Collection<SchematicBlockEntity> blockEntities;
+	public final Collection<SchematicEntity> entities;
+	public final SchematicItem icon;
 
 	public SchematicSchematica(int width, int height, int length, SchematicBlock[][][] blocks,
 							   Collection<SchematicBlockEntity> blockEntities, Collection<SchematicEntity> entities,
@@ -36,32 +38,32 @@ public class SchematicSchematica implements Schematic {
 	}
 
 	@Override
-	public SchematicFormat getFormat() {
+	public @NonNull SchematicFormat format() {
 		return SchematicFormat.SCHEMATICA;
 	}
 
 	@Override
-	public int getWidth() {
+	public int width() {
 		return width;
 	}
 
 	@Override
-	public int getHeight() {
+	public int height() {
 		return height;
 	}
 
 	@Override
-	public int getLength() {
+	public int length() {
 		return length;
 	}
 
 	@Override
-	public int[] getOffset() {
+	public int[] offset() {
 		return new int[] { 0, 0, 0 };
 	}
 
 	@Override
-	public SchematicBlock getBlock(int x, int y, int z) {
+	public @Nullable SchematicBlock block(int x, int y, int z) {
 		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length))
 			throw new ArrayIndexOutOfBoundsException("invalid position");
 
@@ -69,37 +71,36 @@ public class SchematicSchematica implements Schematic {
 	}
 
 	@Override
-	public Arr3DIterator<SchematicBlock> getBlocks() {
-		return new Arr3DIterator<>(blocks, blocks.length, blocks[0].length, blocks[0][0].length);
+	public @NonNull Arr3DIterator<SchematicBlock> blocks() {
+		return new Arr3DIterator<>(blocks);
 	}
 
 	@Override
-	public Collection<SchematicBlockEntity> getBlockEntities() {
+	public @NonNull Collection<SchematicBlockEntity> blockEntities() {
 		return blockEntities;
 	}
 
 	@Override
-	public Collection<SchematicEntity> getEntities() {
+	public @NonNull Collection<SchematicEntity> entities() {
 		return entities;
 	}
 
 	@Override
-	public SchematicItem icon() {
+	public @Nullable SchematicItem icon() {
 		return icon;
 	}
 
 	@Override
 	public String toString() {
-		return "SchematicSchematica(" +
+		return "SchematicSchematica[" +
 			   "icon=" + icon +
 			   ", width=" + width +
 			   ", height=" + height +
 			   ", length=" + length +
-			   ')';
+			   ']';
 	}
 
 	public static class Builder {
-
 		private Integer width;
 		private Integer height;
 		private Integer length;
@@ -107,7 +108,6 @@ public class SchematicSchematica implements Schematic {
 		private Collection<SchematicBlockEntity> blockEntities;
 		private Collection<SchematicEntity> entities;
 		private SchematicItem icon;
-
 
 		public Builder() {
 		}
@@ -160,5 +160,4 @@ public class SchematicSchematica implements Schematic {
 			return new SchematicSchematica(width, height, length, blocks, blockEntities, entities, icon);
 		}
 	}
-
 }

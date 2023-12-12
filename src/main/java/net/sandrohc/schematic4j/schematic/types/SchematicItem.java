@@ -11,6 +11,14 @@ public class SchematicItem extends SchematicNamed {
 		this.damage = damage;
 	}
 
+	public int count() {
+		return count;
+	}
+
+	public int damage() {
+		return damage;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -31,7 +39,6 @@ public class SchematicItem extends SchematicNamed {
 
 	@Override
 	public String toString() {
-		return "SchematicItem(name=" + name + ", count=" + count + ", damage=" + damage + ")";
+		return getClass().getSimpleName() + "[name=" + name + ", count=" + count + ", damage=" + damage + "]";
 	}
-
 }

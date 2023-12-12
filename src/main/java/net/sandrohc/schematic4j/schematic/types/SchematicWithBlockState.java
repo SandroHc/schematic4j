@@ -37,9 +37,16 @@ public abstract class SchematicWithBlockState extends SchematicNamed {
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "SchematicWithBlockState(" + block + ", states=" + states + ')';
+	public String block() {
+		return block;
 	}
 
+	public Map<String, String> states() {
+		return states;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + '[' + block + ", states=" + states + ']';
+	}
 }

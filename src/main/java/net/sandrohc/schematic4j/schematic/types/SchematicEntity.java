@@ -5,13 +5,21 @@ import java.util.Map;
 
 public class SchematicEntity extends SchematicNamed {
 
-	public final SchematicPos<Double> pos;
+	public final SchematicPosDouble pos;
 	public final Map<String, Object> extra;
 
-	public SchematicEntity(String name, SchematicPos<Double> pos, Map<String, Object> extra) {
+	public SchematicEntity(String name, SchematicPosDouble pos, Map<String, Object> extra) {
 		super(name);
 		this.pos = pos;
 		this.extra = Collections.unmodifiableMap(extra);
+	}
+
+	public SchematicPosDouble pos() {
+		return pos;
+	}
+
+	public Map<String, Object> extra() {
+		return extra;
 	}
 
 	@Override
@@ -36,6 +44,6 @@ public class SchematicEntity extends SchematicNamed {
 
 	@Override
 	public String toString() {
-		return "SchematicEntity(name=" + name + ", pos=" + pos + ')';
+		return "SchematicEntity[name=" + name + ", pos=" + pos + ", extra=" + extra + ']';
 	}
 }

@@ -2,17 +2,22 @@ package net.sandrohc.schematic4j.utils.iterators;
 
 import java.util.Iterator;
 
+/**
+ * Iterates over a 2D array.
+ * @param <T> The item type being iterated over
+ */
 public class Arr2DIterator<T> implements Iterator<T> {
 
+	/** The inner array. */
 	protected final T[][] arr;
 	protected final int width, length, total;
 	protected int x, z, i;
 
-	public Arr2DIterator(T[][] arr, int width, int length) {
+	public Arr2DIterator(T[][] arr) {
 		this.arr = arr;
-		this.width = width;
-		this.length = length;
-		this.total = width * length;
+		this.width = arr != null ? arr.length : 0;
+		this.length = arr != null && arr.length != 0 ? arr[0].length : 0;
+		this.total = this.width * this.length;
 		this.x = 0;
 		this.z = 0;
 		this.i = 0;

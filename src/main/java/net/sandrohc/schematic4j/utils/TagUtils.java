@@ -1,5 +1,10 @@
 package net.sandrohc.schematic4j.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import net.sandrohc.schematic4j.exception.MissingFieldException;
@@ -16,6 +21,7 @@ import net.sandrohc.schematic4j.nbt.tag.LongTag;
 import net.sandrohc.schematic4j.nbt.tag.NumberTag;
 import net.sandrohc.schematic4j.nbt.tag.ShortTag;
 import net.sandrohc.schematic4j.nbt.tag.StringTag;
+import net.sandrohc.schematic4j.nbt.tag.Tag;
 
 /**
  * Collection of utility functions to work with NBT tags.
@@ -23,6 +29,51 @@ import net.sandrohc.schematic4j.nbt.tag.StringTag;
 public class TagUtils {
 
 	private TagUtils() {}
+
+	public static Object unwrap(Tag<?> value) {
+		if (value instanceof StringTag) {
+			return ((StringTag) value).getValue();
+		} else if (value instanceof LongTag) {
+			return ((LongTag) value).asLong();
+		} else if (value instanceof IntTag) {
+			return ((IntTag) value).asInt();
+		} else if (value instanceof ShortTag) {
+			return ((ShortTag) value).asShort();
+		} else if (value instanceof ByteTag) {
+			return ((ByteTag) value).asByte();
+		} else if (value instanceof FloatTag) {
+			return ((FloatTag) value).asFloat();
+		} else if (value instanceof DoubleTag) {
+			return ((DoubleTag) value).asDouble();
+		} else if (value instanceof IntArrayTag) {
+			return ((IntArrayTag) value).getValue();
+		} else if (value instanceof ByteArrayTag) {
+			return ((ByteArrayTag) value).getValue();
+		} else if (value instanceof LongArrayTag) {
+			return ((LongArrayTag) value).getValue();
+		} else if (value instanceof CompoundTag) {
+			CompoundTag compoundTag = (CompoundTag) value;
+			Map<String, Object> map = new LinkedHashMap<>(compoundTag.size());
+			for (Map.Entry<String, Tag<?>> entry : compoundTag) map.put(entry.getKey(), unwrap(entry.getValue()));
+			return map;
+		} else if (value instanceof ListTag<?>) {
+			ListTag<?> listTag = (ListTag<?>) value;
+			List<Object> list = new ArrayList<>(listTag.size());
+			for (Tag<?> tag : listTag) list.add(unwrap(tag));
+			return list;
+		} else {
+			return value;
+		}
+	}
+
+	public static boolean containsAllTags(CompoundTag tag, String... requiredTags) {
+		return Arrays.stream(requiredTags).allMatch(tag::containsKey);
+	}
+
+	public static boolean containsTag(CompoundTag tag, String... optionalTags) {
+		return Arrays.stream(optionalTags).anyMatch(tag::containsKey);
+	}
+
 
 	public static Optional<Integer> getInt(CompoundTag tag, String key) {
 		return Optional.ofNullable(tag.getIntTag(key)).map(NumberTag::asInt);
@@ -79,7 +130,6 @@ public class TagUtils {
 	public static Optional<CompoundTag> getCompound(CompoundTag tag, String key) {
 		return Optional.ofNullable(tag.getCompoundTag(key));
 	}
-
 
 
 	public static int getIntOrThrow(CompoundTag tag, String key) throws MissingFieldException {
