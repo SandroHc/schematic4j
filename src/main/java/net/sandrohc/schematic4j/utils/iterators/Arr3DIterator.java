@@ -1,13 +1,15 @@
-package net.sandrohc.schematic4j.utils;
+package net.sandrohc.schematic4j.utils.iterators;
 
-public abstract class BlockIteratorImpl<T> implements BlockIterator {
+import java.util.Iterator;
 
-	protected final T blocks;
+public class Arr3DIterator<T> implements Iterator<T> {
+
+	protected final T[][][] arr;
 	protected final int width, height, length, total;
 	protected int x, y, z, i;
 
-	public BlockIteratorImpl(T blocks, int width, int height, int length) {
-		this.blocks = blocks;
+	public Arr3DIterator(T[][][] arr, int width, int height, int length) {
+		this.arr = arr;
 		this.width = width;
 		this.height = height;
 		this.length = length;
@@ -24,31 +26,35 @@ public abstract class BlockIteratorImpl<T> implements BlockIterator {
 	}
 
 	@Override
+	public T next() {
+		z = i % length;
+		y = (i / length) % height;
+		x = i / (height * length);
+		++i;
+
+		return arr[x][y][z];
+	}
+
 	public int width() {
 		return width;
 	}
 
-	@Override
 	public int height() {
 		return height;
 	}
 
-	@Override
 	public int length() {
 		return length;
 	}
 
-	@Override
 	public int x() {
 		return x;
 	}
 
-	@Override
 	public int y() {
 		return y;
 	}
 
-	@Override
 	public int z() {
 		return z;
 	}

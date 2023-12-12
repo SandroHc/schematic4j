@@ -1,8 +1,6 @@
 package net.sandrohc.schematic4j.parser;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -37,6 +35,7 @@ import net.sandrohc.schematic4j.schematic.types.SchematicPosInteger;
 
 import static net.sandrohc.schematic4j.SchematicUtil.containsAllTags;
 import static net.sandrohc.schematic4j.SchematicUtil.unwrap;
+import static net.sandrohc.schematic4j.utils.DateUtils.epochToDate;
 import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompound;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompoundList;
@@ -99,8 +98,9 @@ public class SpongeSchematicParser implements Parser {
 
 		final int version = getIntOrThrow(rootTag, NBT_VERSION);
 		builder.version(version);
-		if (version > 2)
+		if (version > 2) {
 			log.warn("Sponge Schematic version {} is not officially supported. Use at your own risk", version);
+		}
 
 		parseDataVersion(rootTag, builder, version);
 		parseMetadata(rootTag, builder);
@@ -148,7 +148,7 @@ public class SpongeSchematicParser implements Parser {
 					break;
 				case NBT_METADATA_DATE:
 					long dateEpochMillis = ((LongTag) tag).asLong(); // milliseconds since the Unix epoch
-					date = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateEpochMillis), ZoneId.systemDefault());
+					date = epochToDate(dateEpochMillis);
 					break;
 				case NBT_METADATA_REQUIRED_MODS:
 					final ListTag<StringTag> stringTags = ((ListTag<?>) tag).asStringTagList();
@@ -217,16 +217,13 @@ public class SpongeSchematicParser implements Parser {
 		// --- Uses code from https://github.com/SpongePowered/Sponge/blob/aa2c8c53b4f9f40297e6a4ee281bee4f4ce7707b/src/main/java/org/spongepowered/common/data/persistence/SchematicTranslator.java#L147-L175
 		int index = 0;
 		int i = 0;
-		int value = 0;
-		int varint_length = 0;
 		while (i < blockDataRaw.length) {
-			value = 0;
-			varint_length = 0;
-
+			int value = 0;
+			int varintLength = 0;
 			while (true) {
-				value |= (blockDataRaw[i] & 127) << (varint_length++ * 7);
-				if (varint_length > 5) {
-					throw new RuntimeException("VarInt too big (probably corrupted data)");
+				value |= (blockDataRaw[i] & 127) << (varintLength++ * 7);
+				if (varintLength > 5) {
+					throw new ParsingException("VarInt too big (probably corrupted data)");
 				}
 				if ((blockDataRaw[i] & 128) != 128) {
 					i++;
@@ -234,6 +231,7 @@ public class SpongeSchematicParser implements Parser {
 				}
 				i++;
 			}
+
 			// index = (y * length + z) * width + x
 			int y = index / (width * length);
 			int z = (index % (width * length)) / width;
@@ -370,7 +368,6 @@ public class SpongeSchematicParser implements Parser {
 
 	@Override
 	public String toString() {
-		return "SpongeSchematicParser()";
+		return "SpongeSchematicParser";
 	}
-
 }

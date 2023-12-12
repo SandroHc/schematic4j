@@ -8,10 +8,8 @@ import java.util.Map;
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.types.*;
-import net.sandrohc.schematic4j.utils.BiomeIterator;
-import net.sandrohc.schematic4j.utils.BiomeIteratorImpl;
-import net.sandrohc.schematic4j.utils.BlockIterator;
-import net.sandrohc.schematic4j.utils.BlockIteratorImpl;
+import net.sandrohc.schematic4j.utils.iterators.Arr2DIterator;
+import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 public class SchematicSponge implements Schematic {
 
@@ -84,18 +82,8 @@ public class SchematicSponge implements Schematic {
 	}
 
 	@Override
-	public BlockIterator getBlocks() {
-		return new BlockIteratorImpl<SchematicBlock[][][]>(blocks, blocks.length, blocks[0].length, blocks[0][0].length) {
-			@Override
-			public SchematicBlock next() {
-				z = i % length;
-				y = (i / length) % height;
-				x = i / (height * length);
-				++i;
-
-				return blocks[x][y][z];
-			}
-		};
+	public Arr3DIterator<SchematicBlock> getBlocks() {
+		return new Arr3DIterator<>(blocks, blocks.length, blocks[0].length, blocks[0][0].length);
 	}
 
 	@Override
@@ -117,17 +105,8 @@ public class SchematicSponge implements Schematic {
 	}
 
 	@Override
-	public BiomeIterator getBiomes() {
-		return new BiomeIteratorImpl<SchematicBiome[][]>(biomes, biomes.length, biomes.length != 0 ? biomes[0].length : 0) {
-			@Override
-			public SchematicBiome next() {
-				x = i / width;
-				z = i % length;
-				++i;
-
-				return arr[x][z];
-			}
-		};
+	public Arr2DIterator<SchematicBiome> getBiomes() {
+		return new Arr2DIterator<>(biomes, biomes.length, biomes.length != 0 ? biomes[0].length : 0);
 	}
 
 	@Override
@@ -136,7 +115,7 @@ public class SchematicSponge implements Schematic {
 	}
 
 	@Override
-	public String getAuthor() {
+	public String author() {
 		return metadata.author;
 	}
 
@@ -191,7 +170,7 @@ public class SchematicSponge implements Schematic {
 		return "SchematicSponge(" +
 			   "format=" + getFormat() +
 			   ", name=" + getName() +
-			   ", author=" + getAuthor() +
+			   ", author=" + author() +
 			   ", width=" + width +
 			   ", height=" + height +
 			   ", length=" + length +
@@ -211,6 +190,7 @@ public class SchematicSponge implements Schematic {
 		private Collection<SchematicBlockEntity> blockEntities;
 		private Collection<SchematicEntity> entities;
 		private SchematicBiome[][] biomes;
+
 
 		public Builder() {
 		}

@@ -17,7 +17,12 @@ import net.sandrohc.schematic4j.nbt.tag.NumberTag;
 import net.sandrohc.schematic4j.nbt.tag.ShortTag;
 import net.sandrohc.schematic4j.nbt.tag.StringTag;
 
+/**
+ * Collection of utility functions to work with NBT tags.
+ */
 public class TagUtils {
+
+	private TagUtils() {}
 
 	public static Optional<Integer> getInt(CompoundTag tag, String key) {
 		return Optional.ofNullable(tag.getIntTag(key)).map(NumberTag::asInt);

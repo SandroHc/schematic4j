@@ -1,12 +1,14 @@
-package net.sandrohc.schematic4j.utils;
+package net.sandrohc.schematic4j.utils.iterators;
 
-public abstract class BiomeIteratorImpl<T> implements BiomeIterator {
+import java.util.Iterator;
 
-	protected final T arr;
+public class Arr2DIterator<T> implements Iterator<T> {
+
+	protected final T[][] arr;
 	protected final int width, length, total;
 	protected int x, z, i;
 
-	public BiomeIteratorImpl(T arr, int width, int length) {
+	public Arr2DIterator(T[][] arr, int width, int length) {
 		this.arr = arr;
 		this.width = width;
 		this.length = length;
@@ -22,21 +24,26 @@ public abstract class BiomeIteratorImpl<T> implements BiomeIterator {
 	}
 
 	@Override
+	public T next() {
+		x = i / width;
+		z = i % length;
+		++i;
+
+		return arr[x][z];
+	}
+
 	public int width() {
 		return width;
 	}
 
-	@Override
 	public int length() {
 		return length;
 	}
 
-	@Override
 	public int x() {
 		return x;
 	}
 
-	@Override
 	public int z() {
 		return z;
 	}
