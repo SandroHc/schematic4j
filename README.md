@@ -14,6 +14,10 @@ Add the following dependency to your build file.
 
 If using Gradle (`build.gradle`):
 ```groovy
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation 'net.sandrohc:schematic4j:1.0.1'
 }
@@ -28,7 +32,7 @@ If using Maven (`pom.xml`):
 </dependency>
 ```
 
-If you are interested in using development versions, see: https://jitpack.io/#net.sandrohc/schematic4j
+For development builds, please see: https://jitpack.io/#net.sandrohc/schematic4j
 
 ## Usage
 

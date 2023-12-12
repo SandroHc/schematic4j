@@ -10,6 +10,18 @@ version '1.0.1'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api 'org.slf4j:slf4j-api:1.7.36'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.3.14'
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -21,8 +33,8 @@ java {
 jar {
     manifest {
         attributes(
-            'Implementation-Title': 'schematic4j',
-            'Implementation-Version': project.version
+                'Implementation-Title': 'schematic4j',
+                'Implementation-Version': project.version
         )
     }
 }
@@ -31,18 +43,6 @@ javadoc {
     if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    api 'org.slf4j:slf4j-api:1.7.36'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testRuntimeOnly 'ch.qos.logback:logback-classic:1.3.14'
 }
 
 test {
@@ -112,4 +112,7 @@ publishing {
 signing {
     useGpgCmd()
     sign publishing.publications.maven
+}
+tasks.withType(Sign).configureEach {
+    onlyIf { System.env['JITPACK'] == null }
 }
