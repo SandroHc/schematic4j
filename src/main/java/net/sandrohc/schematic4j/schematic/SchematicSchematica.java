@@ -1,7 +1,7 @@
 package net.sandrohc.schematic4j.schematic;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -27,21 +27,21 @@ public class SchematicSchematica implements Schematic {
 	public final int height;
 	public final int length;
 	public final @NonNull SchematicBlock[][][] blocks;
-	public final Collection<SchematicBlockEntity> blockEntities;
-	public final Collection<SchematicEntity> entities;
+	public final SchematicBlockEntity[] blockEntities;
+	public final SchematicEntity[] entities;
 	public final SchematicItem icon;
 	public final String materials;
 
 	public SchematicSchematica(int width, int height, int length, @NonNull SchematicBlock[][][] blocks,
-							   Collection<SchematicBlockEntity> blockEntities, Collection<SchematicEntity> entities,
+							   @NonNull SchematicBlockEntity[] blockEntities, @NonNull SchematicEntity[] entities,
 							   SchematicItem icon, String materials) {
 
 		this.width = width;
 		this.height = height;
 		this.length = length;
 		this.blocks = blocks;
-		this.blockEntities = Collections.unmodifiableCollection(blockEntities);
-		this.entities = Collections.unmodifiableCollection(entities);
+		this.blockEntities = blockEntities;
+		this.entities = entities;
 		this.icon = icon;
 		this.materials = materials;
 	}
@@ -68,7 +68,7 @@ public class SchematicSchematica implements Schematic {
 
 	@Override
 	public int[] offset() {
-		return new int[] { 0, 0, 0 };
+		return new int[]{0, 0, 0};
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class SchematicSchematica implements Schematic {
 	}
 
 	@Override
-	public @NonNull Arr3DIterator<SchematicBlock> blocks() {
+	public @NonNull Iterator<SchematicBlock> blocks() {
 		return new Arr3DIterator<>(blocks);
 	}
 
@@ -89,12 +89,20 @@ public class SchematicSchematica implements Schematic {
 	}
 
 	@Override
-	public @NonNull Collection<SchematicBlockEntity> blockEntities() {
+	public @NonNull Iterator<SchematicBlockEntity> blockEntities() {
+		return Arrays.stream(blockEntities).iterator();
+	}
+
+	public @NonNull SchematicBlockEntity[] blockEntityData() {
 		return blockEntities;
 	}
 
 	@Override
-	public @NonNull Collection<SchematicEntity> entities() {
+	public @NonNull Iterator<SchematicEntity> entities() {
+		return Arrays.stream(entities).iterator();
+	}
+
+	public @NonNull SchematicEntity[] entityData() {
 		return entities;
 	}
 
@@ -110,20 +118,21 @@ public class SchematicSchematica implements Schematic {
 	@Override
 	public String toString() {
 		return "SchematicSchematica[" +
-			   "icon=" + icon +
-			   ", width=" + width +
-			   ", height=" + height +
-			   ", length=" + length +
-			   ']';
+				"name=" + name() +
+				", icon=" + icon +
+				", width=" + width +
+				", height=" + height +
+				", length=" + length +
+				']';
 	}
 
 	public static class Builder {
 		private Integer width;
 		private Integer height;
 		private Integer length;
-		private SchematicBlock[][][] blocks;
-		private Collection<SchematicBlockEntity> blockEntities;
-		private Collection<SchematicEntity> entities;
+		private SchematicBlock[][][] blocks = new SchematicBlock[0][0][0];
+		private SchematicBlockEntity[] blockEntities = new SchematicBlockEntity[0];
+		private SchematicEntity[] entities = new SchematicEntity[0];
 		private SchematicItem icon;
 		private String materials;
 
@@ -150,17 +159,17 @@ public class SchematicSchematica implements Schematic {
 			return this;
 		}
 
-		public Builder blocks(SchematicBlock[][][] blocks) {
+		public Builder blocks(@NonNull SchematicBlock[][][] blocks) {
 			this.blocks = blocks;
 			return this;
 		}
 
-		public Builder blockEntities(Collection<SchematicBlockEntity> blockEntities) {
+		public Builder blockEntities(@NonNull SchematicBlockEntity[] blockEntities) {
 			this.blockEntities = blockEntities;
 			return this;
 		}
 
-		public Builder entities(Collection<SchematicEntity> entities) {
+		public Builder entities(@NonNull SchematicEntity[] entities) {
 			this.entities = entities;
 			return this;
 		}

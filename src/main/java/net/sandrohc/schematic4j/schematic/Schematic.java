@@ -1,15 +1,21 @@
 package net.sandrohc.schematic4j.schematic;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.SchematicFormat;
-import net.sandrohc.schematic4j.schematic.types.*;
-import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
+import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicItem;
 
 /**
  * A generic schematic.
@@ -70,15 +76,17 @@ public interface Schematic {
 	 *
 	 * @return an iterator
 	 */
-	@NonNull Arr3DIterator<SchematicBlock> blocks();
+	default @NonNull Iterator<SchematicBlock> blocks() {
+		return Collections.emptyListIterator();
+	}
 
 	/**
 	 * The list of tile/block entities, like chests and furnaces.
 	 *
 	 * @return list of block entities
 	 */
-	default @NonNull Collection<SchematicBlockEntity> blockEntities() {
-		return Collections.emptyList();
+	default @NonNull Iterator<SchematicBlockEntity> blockEntities() {
+		return Collections.emptyListIterator();
 	}
 
 	/**
@@ -86,8 +94,8 @@ public interface Schematic {
 	 *
 	 * @return list of entities
 	 */
-	default @NonNull Collection<SchematicEntity> entities() {
-		return Collections.emptyList();
+	default @NonNull Iterator<SchematicEntity> entities() {
+		return Collections.emptyListIterator();
 	}
 
 	/**
@@ -107,8 +115,8 @@ public interface Schematic {
 	 *
 	 * @return an iterator
 	 */
-	default @NonNull Arr3DIterator<SchematicBiome> biomes() {
-		return new Arr3DIterator<>(null);
+	default @NonNull Iterator<SchematicBiome> biomes() {
+		return Collections.emptyListIterator();
 	}
 
 	/**
@@ -146,7 +154,6 @@ public interface Schematic {
 	default @Nullable SchematicItem icon() {
 		return null;
 	}
-
 
 	/**
 	 * The schematic format.
@@ -228,7 +235,7 @@ public interface Schematic {
 	 * @deprecated Use {@link Schematic#blocks()} instead
 	 */
 	@Deprecated
-	default Arr3DIterator<SchematicBlock> getBlocks() {
+	default Iterator<SchematicBlock> getBlocks() {
 		return blocks();
 	}
 
@@ -240,7 +247,12 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default Collection<SchematicBlockEntity> getBlockEntities() {
-		return blockEntities();
+		final List<SchematicBlockEntity> items = new ArrayList<>();
+		final Iterator<SchematicBlockEntity> iterator = blockEntities();
+		while (iterator.hasNext()) {
+			items.add(iterator.next());
+		}
+		return items;
 	}
 
 	/**
@@ -251,7 +263,12 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default Collection<SchematicEntity> getEntities() {
-		return entities();
+		final List<SchematicEntity> items = new ArrayList<>();
+		final Iterator<SchematicEntity> iterator = entities();
+		while (iterator.hasNext()) {
+			items.add(iterator.next());
+		}
+		return items;
 	}
 
 	/**
@@ -275,7 +292,7 @@ public interface Schematic {
 	 * @deprecated Use {@link Schematic#biomes()} instead
 	 */
 	@Deprecated
-	default Arr3DIterator<SchematicBiome> getBiomes() {
+	default Iterator<SchematicBiome> getBiomes() {
 		return biomes();
 	}
 

@@ -1,9 +1,6 @@
 package net.sandrohc.schematic4j.parser;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -262,74 +259,71 @@ public class SpongeSchematicParser implements Parser {
 	}
 
 	private void parseBlockEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
-		log.trace("Parsing block entities");
-
-		final Collection<SchematicBlockEntity> blockEntities;
-
 		final CompoundTag blocksTag = getBlocksTag(root, version);
-		final Optional<ListTag<CompoundTag>> blockEntitiesListTag = getCompoundList(blocksTag, version == 1 ? NBT_TILE_ENTITIES : NBT_BLOCK_ENTITIES);
-		if (blockEntitiesListTag.isPresent()) {
-			final ListTag<CompoundTag> blockEntitiesTag = blockEntitiesListTag.get();
+		final String blockEntitiesTagName = version == 1 ? NBT_TILE_ENTITIES : NBT_BLOCK_ENTITIES;
+		final Optional<ListTag<CompoundTag>> blockEntitiesListTag = getCompoundList(blocksTag, blockEntitiesTagName);
 
-			blockEntities = new ArrayList<>(blockEntitiesTag.size());
-
-			for (CompoundTag blockEntity : blockEntitiesTag) {
-				final String id = getStringOrThrow(blockEntity, NBT_BLOCK_ENTITIES_ID);
-				final int[] pos = getIntArray(blockEntity, NBT_BLOCK_ENTITIES_POS).orElseGet(() -> new int[]{0, 0, 0});
-
-				final Map<String, Object> extra = blockEntity.entrySet().stream()
-						.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) &&
-								!tag.getKey().equals(NBT_ENTITIES_POS))
-						.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
-
-				blockEntities.add(new SchematicBlockEntity(id, SchematicPosInt.from(pos), extra));
-			}
-
-			log.debug("Loaded {} block entities", blockEntities.size());
-		} else {
+		if (!blockEntitiesListTag.isPresent()) {
 			log.trace("No block entities found");
-			blockEntities = Collections.emptyList();
+			return;
+		}
+
+		log.trace("Parsing block entities");
+		final ListTag<CompoundTag> blockEntitiesTag = blockEntitiesListTag.get();
+		final SchematicBlockEntity[] blockEntities = new SchematicBlockEntity[blockEntitiesTag.size()];
+
+		int i = 0;
+		for (CompoundTag blockEntity : blockEntitiesTag) {
+			final String id = getStringOrThrow(blockEntity, NBT_BLOCK_ENTITIES_ID);
+			final int[] pos = getIntArray(blockEntity, NBT_BLOCK_ENTITIES_POS).orElseGet(() -> new int[]{0, 0, 0});
+
+			final Map<String, Object> extra = blockEntity.entrySet().stream()
+					.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) &&
+							!tag.getKey().equals(NBT_ENTITIES_POS))
+					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
+
+			blockEntities[i] = new SchematicBlockEntity(id, SchematicPosInt.from(pos), extra);
+			i++;
 		}
 
 		builder.blockEntities(blockEntities);
+		log.debug("Loaded {} block entities", blockEntities.length);
 	}
 
 	private void parseEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
-		log.trace("Parsing entities");
-
-		final Collection<SchematicEntity> entities;
-
 		final Optional<ListTag<CompoundTag>> entitiesListTag = getCompoundList(root, NBT_ENTITIES);
-		if (entitiesListTag.isPresent()) {
-			final ListTag<CompoundTag> entitiesTag = entitiesListTag.get();
-
-			entities = new ArrayList<>(entitiesTag.size());
-
-			for (CompoundTag entity : entitiesTag) {
-				final String id = getStringOrThrow(entity, NBT_ENTITIES_ID);
-
-				final double[] pos = {0, 0, 0};
-				getDoubleList(entity, NBT_ENTITIES_POS).ifPresent(posTag -> {
-					pos[0] = posTag.get(0).asDouble();
-					pos[1] = posTag.get(1).asDouble();
-					pos[2] = posTag.get(2).asDouble();
-				});
-
-				final Map<String, Object> extra = new TreeMap<>();
-				final String extraTagName = version >= 3 ? NBT_V3_DATA : NBT_ENTITIES_EXTRA;
-				getCompound(entity, extraTagName).ifPresent(extraTag -> {
-					entity.entrySet().forEach(e -> extra.put(e.getKey(), unwrap(e.getValue())));
-				});
-				entities.add(new SchematicEntity(id, SchematicPosDouble.from(pos), extra));
-			}
-
-			log.debug("Loaded {} entities", entities.size());
-		} else {
+		if (!entitiesListTag.isPresent()) {
 			log.trace("No entities found");
-			entities = Collections.emptyList();
+			return;
+		}
+
+		log.trace("Parsing entities");
+		final ListTag<CompoundTag> entitiesTag = entitiesListTag.get();
+		final SchematicEntity[] entities = new SchematicEntity[entitiesTag.size()];
+
+		int i = 0;
+		for (CompoundTag entity : entitiesTag) {
+			final String id = getStringOrThrow(entity, NBT_ENTITIES_ID);
+
+			final double[] pos = {0, 0, 0};
+			getDoubleList(entity, NBT_ENTITIES_POS).ifPresent(posTag -> {
+				pos[0] = posTag.get(0).asDouble();
+				pos[1] = posTag.get(1).asDouble();
+				pos[2] = posTag.get(2).asDouble();
+			});
+
+			final Map<String, Object> extra = new TreeMap<>();
+			final String extraTagName = version >= 3 ? NBT_V3_DATA : NBT_ENTITIES_EXTRA;
+			getCompound(entity, extraTagName).ifPresent(extraTag -> {
+				entity.entrySet().forEach(e -> extra.put(e.getKey(), unwrap(e.getValue())));
+			});
+
+			entities[i] = new SchematicEntity(id, SchematicPosDouble.from(pos), extra);
+			i++;
 		}
 
 		builder.entities(entities);
+		log.debug("Loaded {} entities", entities.length);
 	}
 
 	private void parseBiomes(CompoundTag root, SchematicSponge.Builder builder, int version) throws ParsingException {
@@ -337,7 +331,6 @@ public class SpongeSchematicParser implements Parser {
 
 		if (((version == 1 || version == 2) && !containsAllTags(root, NBT_BIOME_DATA, NBT_BIOME_PALETTE)) || (version == 3 && !root.containsKey(NBT_V3_BIOMES))) {
 			log.trace("Did not have biome data");
-			builder.biomes(new SchematicBiome[0][0][0]);
 			return;
 		}
 

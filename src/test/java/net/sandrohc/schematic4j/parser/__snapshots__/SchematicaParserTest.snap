@@ -27,6 +27,47 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
       },
       {
         "extra" : {
+          "Data" : 0,
+          "Item" : "minecraft:air"
+        },
+        "name" : "minecraft:flower_pot",
+        "pos" : {
+          "x" : 5,
+          "y" : 4,
+          "z" : 11
+        }
+      },
+      {
+        "extra" : {
+          "Text1" : "{\"text\":\"\"}",
+          "Text2" : "{\"text\":\"\"}",
+          "Text3" : "{\"text\":\"\"}",
+          "Text4" : "{\"text\":\"\"}"
+        },
+        "name" : "minecraft:sign",
+        "pos" : {
+          "x" : 6,
+          "y" : 3,
+          "z" : 11
+        }
+      },
+      {
+        "extra" : {
+          "BurnTime" : 0,
+          "CookTime" : 0,
+          "CookTimeTotal" : 0,
+          "Items" : [ ],
+          "Lock" : ""
+        },
+        "name" : "minecraft:furnace",
+        "pos" : {
+          "x" : 7,
+          "y" : 4,
+          "z" : 3
+        }
+      },
+      {
+        "extra" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -34,6 +75,18 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         "pos" : {
           "x" : 9,
           "y" : 3,
+          "z" : 5
+        }
+      },
+      {
+        "extra" : {
+          "Data" : 0,
+          "Item" : "minecraft:air"
+        },
+        "name" : "minecraft:flower_pot",
+        "pos" : {
+          "x" : 9,
+          "y" : 6,
           "z" : 5
         }
       },
@@ -47,54 +100,6 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
           "x" : 9,
           "y" : 6,
           "z" : 6
-        }
-      },
-      {
-        "extra" : {
-          "Items" : [ ],
-          "Lock" : ""
-        },
-        "name" : "minecraft:chest",
-        "pos" : {
-          "x" : 9,
-          "y" : 3,
-          "z" : 12
-        }
-      },
-      {
-        "extra" : {
-          "Items" : [ ],
-          "Lock" : ""
-        },
-        "name" : "minecraft:chest",
-        "pos" : {
-          "x" : 9,
-          "y" : 3,
-          "z" : 13
-        }
-      },
-      {
-        "extra" : {
-          "Data" : 0,
-          "Item" : "minecraft:air"
-        },
-        "name" : "minecraft:flower_pot",
-        "pos" : {
-          "x" : 5,
-          "y" : 4,
-          "z" : 11
-        }
-      },
-      {
-        "extra" : {
-          "Data" : 0,
-          "Item" : "minecraft:air"
-        },
-        "name" : "minecraft:flower_pot",
-        "pos" : {
-          "x" : 9,
-          "y" : 6,
-          "z" : 5
         }
       },
       {
@@ -135,6 +140,32 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
       },
       {
         "extra" : {
+          "Items" : [ ],
+          "Lock" : ""
+        },
+        "name" : "minecraft:chest",
+        "pos" : {
+          "x" : 9,
+          "y" : 3,
+          "z" : 12
+        }
+      },
+      {
+        "extra" : {
+          "Text1" : "{\"text\":\"\"}",
+          "Text2" : "{\"text\":\"\"}",
+          "Text3" : "{\"text\":\"\"}",
+          "Text4" : "{\"text\":\"\"}"
+        },
+        "name" : "minecraft:sign",
+        "pos" : {
+          "x" : 6,
+          "y" : 3,
+          "z" : 13
+        }
+      },
+      {
+        "extra" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -171,6 +202,18 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
       },
       {
         "extra" : {
+          "Items" : [ ],
+          "Lock" : ""
+        },
+        "name" : "minecraft:chest",
+        "pos" : {
+          "x" : 9,
+          "y" : 3,
+          "z" : 13
+        }
+      },
+      {
+        "extra" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -178,49 +221,6 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         "pos" : {
           "x" : 9,
           "y" : 5,
-          "z" : 13
-        }
-      },
-      {
-        "extra" : {
-          "BurnTime" : 0,
-          "CookTime" : 0,
-          "CookTimeTotal" : 0,
-          "Items" : [ ],
-          "Lock" : ""
-        },
-        "name" : "minecraft:furnace",
-        "pos" : {
-          "x" : 7,
-          "y" : 4,
-          "z" : 3
-        }
-      },
-      {
-        "extra" : {
-          "Text1" : "{\"text\":\"\"}",
-          "Text2" : "{\"text\":\"\"}",
-          "Text3" : "{\"text\":\"\"}",
-          "Text4" : "{\"text\":\"\"}"
-        },
-        "name" : "minecraft:sign",
-        "pos" : {
-          "x" : 6,
-          "y" : 3,
-          "z" : 11
-        }
-      },
-      {
-        "extra" : {
-          "Text1" : "{\"text\":\"\"}",
-          "Text2" : "{\"text\":\"\"}",
-          "Text3" : "{\"text\":\"\"}",
-          "Text4" : "{\"text\":\"\"}"
-        },
-        "name" : "minecraft:sign",
-        "pos" : {
-          "x" : 6,
-          "y" : 3,
           "z" : 13
         }
       }

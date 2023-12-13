@@ -40,8 +40,8 @@ public class SpongeSchematicParserTest {
 		softly.assertThat(schem.offset()).containsExactly(22, -60, 13);
 		softly.assertThat(schem.block(0, 0, 0)).extracting(o -> o.name).isEqualTo("minecraft:stone");
 		softly.assertThat(schem.blocks()).hasNext();
-		softly.assertThat(schem.blockEntities()).hasSize(1);
-		softly.assertThat(schem.entities()).hasSize(1);
+		softly.assertThat(schem.blockEntities()).hasNext();
+		softly.assertThat(schem.entities()).hasNext();
 		softly.assertThat(schem.biomes()).isExhausted();
 		softly.assertThat(((SchematicSponge) schem).dataVersion()).isEqualTo(2860);
 		softly.assertThat(((SchematicSponge) schem).metadata()).isNotNull();
