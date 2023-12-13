@@ -5,8 +5,6 @@ import au.com.origin.snapshots.junit5.SnapshotExtension;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.ParsingException;
@@ -14,6 +12,7 @@ import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
 import net.sandrohc.schematic4j.schematic.SchematicSchematica;
 
+import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematic;
 import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,13 +36,8 @@ public class SchematicaParserTest {
 		softly.assertAll();
 	}
 
-	@ParameterizedTest
-	@ValueSource(strings = {
-			"/schematics/schematica/9383.schematic",
-	})
-	public void snapshot(String file) throws ParsingException {
-		final NamedTag nbt = nbtFromResource(file);
-		final Schematic schem = new SchematicaParser().parse(nbt);
-		expect.toMatchSnapshot(schem);
+	@Test
+	public void snapshot1() throws ParsingException {
+		assertSchematic(expect, "/schematics/schematica/9383.schematic", new SchematicaParser());
 	}
 }

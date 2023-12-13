@@ -16,34 +16,52 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
+/**
+ * A Sponge schematic. Read more about it at <a href="https://github.com/SpongePowered/Schematic-Specification">https://github.com/SpongePowered/Schematic-Specification</a>.
+ */
 public class SchematicSponge implements Schematic {
 
 	public static final int[] DEFAULT_OFFSET = { 0, 0, 0 };
 
-	/** The Sponge Schematic format version. **/
+	/** The Sponge Schematic format version being used. **/
 	public final int version;
 
-	/** The data version, used in world save data. */
-	public final int dataVersion;
+	/**
+	 * Specifies the data version of Minecraft that was used to create the schematic. This is to allow for block and
+	 * entity data to be validated and auto-converted from older versions. This is dependent on the Minecraft version,
+	 * e.g. Minecraft 1.12.2's data version is <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>. */
+	public final @Nullable Integer dataVersion;
 
-	/** The optional additional meta information about the schematic. */
-	public final Metadata metadata;
+	/** The optional metadata about the schematic. */
+	public final @NonNull Metadata metadata;
 
+	/** The width (the size of the area in the X-axis) of the schematic. */
 	public final int width;
+
+	/** The height (the size of the area in the Y-axis) of the schematic. */
 	public final int height;
+
+	/** The length (the size of the area in the Z-axis) of the schematic. */
 	public final int length;
+
+	/**
+	 * The relative offset of the schematic from the paster. When pasting, if there is a reasonable location to use as
+	 * a base position, implementations SHOULD offset the location of the paste by this vector. The default value if
+	 * not provided is [0, 0, 0]. Example: If a player is pasting from 1, 2, 3, and the offset is 4, 5, 6, then the
+	 * first block should be placed at 5, 7, 9
+	 */
 	public final int[] offset;
-	public final SchematicBlock[][][] blocks;
+	public final @NonNull SchematicBlock[][][] blocks;
 	public final Collection<SchematicBlockEntity> blockEntities;
 	public final Collection<SchematicEntity> entities;
 	public final SchematicBiome[][][] biomes;
 
-	public SchematicSponge(int version, int dataVersion, Metadata metadata, int width, int height, int length,
-						   int[] offset, SchematicBlock[][][] blocks, Collection<SchematicBlockEntity> blockEntities,
+	public SchematicSponge(int version, @Nullable Integer dataVersion, @Nullable Metadata metadata, int width, int height, int length,
+						   int[] offset, @NonNull SchematicBlock[][][] blocks, Collection<SchematicBlockEntity> blockEntities,
 						   Collection<SchematicEntity> entities, SchematicBiome[][][] biomes) {
 		this.version = version;
 		this.dataVersion = dataVersion;
-		this.metadata = metadata != null ? metadata : new Metadata(null, null, null, new String[0], Collections.emptyMap());
+		this.metadata = metadata != null ? metadata : new Metadata();
 		this.width = width;
 		this.height = height;
 		this.length = length;
@@ -56,7 +74,12 @@ public class SchematicSponge implements Schematic {
 
 	@Override
 	public @NonNull SchematicFormat format() {
-		return version == 1 ? SchematicFormat.SPONGE_V1 : SchematicFormat.SPONGE_V2;
+		switch (version) {
+			case 1:	return SchematicFormat.SPONGE_V1;
+			case 2:	return SchematicFormat.SPONGE_V2;
+			default:
+			case 3:	return SchematicFormat.SPONGE_V3;
+		}
 	}
 
 	@Override
@@ -93,6 +116,10 @@ public class SchematicSponge implements Schematic {
 		return new Arr3DIterator<>(blocks);
 	}
 
+	public @NonNull SchematicBlock[][][] blockData() {
+		return blocks;
+	}
+
 	@Override
 	public @NonNull Collection<SchematicBlockEntity> blockEntities() {
 		return blockEntities;
@@ -117,6 +144,10 @@ public class SchematicSponge implements Schematic {
 		return new Arr3DIterator<>(biomes);
 	}
 
+	public SchematicBiome[][][] biomeData() {
+		return biomes;
+	}
+
 	@Override
 	public @Nullable String name() {
 		return metadata.name;
@@ -132,7 +163,7 @@ public class SchematicSponge implements Schematic {
 		return metadata.date;
 	}
 
-	public int dataVersion() {
+	public @Nullable Integer dataVersion() {
 		return dataVersion;
 	}
 
@@ -140,7 +171,7 @@ public class SchematicSponge implements Schematic {
 	 * @deprecated Use {@link SchematicSponge#dataVersion()} instead
 	 */
 	@Deprecated
-	public int getDataVersion() {
+	public @Nullable Integer getDataVersion() {
 		return dataVersion();
 	}
 
@@ -179,6 +210,10 @@ public class SchematicSponge implements Schematic {
 			this.date = date;
 			this.requiredMods = requiredMods;
 			this.extra = Collections.unmodifiableMap(extra);
+		}
+
+		public Metadata() {
+			this(null, null, null, new String[0], Collections.emptyMap());
 		}
 
 		@Override
@@ -276,8 +311,6 @@ public class SchematicSponge implements Schematic {
 		public SchematicSponge build() {
 			if (version == null)
 				throw new SchematicBuilderException("version must be set");
-			if (dataVersion == null)
-				throw new SchematicBuilderException("dataVersion must be set");
 			if (width == null)
 				throw new SchematicBuilderException("width must be set");
 			if (height == null)

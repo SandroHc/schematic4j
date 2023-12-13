@@ -22,6 +22,7 @@ import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
 public enum SchematicFormat {
 	SPONGE_V1      ("schem", SpongeSchematicParser::new),
 	SPONGE_V2      ("schem", SpongeSchematicParser::new),
+	SPONGE_V3      ("schem", SpongeSchematicParser::new),
 	LITEMATICA     ("litematic"),
 	SCHEMATICA     ("schematic", SchematicaParser::new),
 	WORLD_EDITOR   ("schematic"),
@@ -65,58 +66,92 @@ public enum SchematicFormat {
 		if (nbt == null || !(nbt.getTag() instanceof CompoundTag)) {
 			return SchematicFormat.UNKNOWN;
 		}
+
 		final CompoundTag rootTag = (CompoundTag) nbt.getTag();
-
 		final Candidates<SchematicFormat> candidates = new Candidates<>();
-
 		guessSpongeFormat(candidates, nbt, rootTag);
 		guessSchematicaFormat(candidates, nbt, rootTag);
 
-		return candidates.best().orElse(SchematicFormat.UNKNOWN);
+		final SchematicFormat guess = candidates.best().orElse(SchematicFormat.UNKNOWN);
+		log.debug("Guessed {} as the format", guess);
+		return guess;
 	}
 
 	private static void guessSpongeFormat(Candidates<SchematicFormat> candidates, @NonNull NamedTag nbt, CompoundTag rootTag) {
 		if (nbt.getName().equals(SpongeSchematicParser.NBT_ROOT)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
-			candidates.increment(SchematicFormat.SPONGE_V2, 2);
+			candidates.increment(SchematicFormat.SPONGE_V2, 2); // favour v2 in case of a tie
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_VERSION)) {
-			final int version = rootTag.getInt("Version");
+			final int version = rootTag.getInt(SpongeSchematicParser.NBT_VERSION);
 			switch (version) {
 				case 1:
-					candidates.increment(SchematicFormat.SPONGE_V1, 1);
+					candidates.increment(SchematicFormat.SPONGE_V1, 5);
 				case 2:
-					candidates.increment(SchematicFormat.SPONGE_V2, 1);
+					candidates.increment(SchematicFormat.SPONGE_V2, 5);
+				case 3:
+					candidates.increment(SchematicFormat.SPONGE_V3, 5);
 			}
 		} else {
-			candidates.exclude(SchematicFormat.SPONGE_V1);
+			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.exclude(SchematicFormat.SPONGE_V2);
+			candidates.exclude(SchematicFormat.SPONGE_V3);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_DATA_VERSION)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		} else {
 			candidates.exclude(SchematicFormat.SPONGE_V2);
+			candidates.exclude(SchematicFormat.SPONGE_V3);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_WIDTH)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_HEIGHT)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_LENGTH)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_PALETTE)) {
+			candidates.increment(SchematicFormat.SPONGE_V1, 1);
+			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_PALETTE_MAX)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 		}
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_BLOCK_DATA)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_BIOME_DATA)) {
+			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_TILE_ENTITIES)) {
+			candidates.increment(SchematicFormat.SPONGE_V1, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_BLOCK_ENTITIES)) {
+			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_V3_BLOCKS)) {
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_V3_BIOMES)) {
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
+		}
+		if (rootTag.containsKey(SpongeSchematicParser.NBT_METADATA)) {
+			candidates.increment(SchematicFormat.SPONGE_V1, 1);
+			candidates.increment(SchematicFormat.SPONGE_V2, 1);
+			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
 	}
 
@@ -172,10 +207,15 @@ public enum SchematicFormat {
 					return b;
 				}
 			});
-			log.trace("Excluded formats: {}", excluded);
 			log.trace("Format candidates: {}", candidates);
+			log.trace("Excluded formats: {}", excluded);
 			log.trace("Best candidate: {}", best);
 			return best.map(Map.Entry::getKey);
+		}
+
+		@Override
+		public String toString() {
+			return "Candidates[candidates=" + candidates + ", excluded=" + excluded + ']';
 		}
 	}
 }

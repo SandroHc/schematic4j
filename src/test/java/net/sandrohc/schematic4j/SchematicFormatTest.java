@@ -23,7 +23,11 @@ public class SchematicFormatTest {
 
 	private static Stream<Arguments> guessFormatData() {
 		return Stream.of(
-				Arguments.of(SchematicFormat.SPONGE_V2, "/schematics/sponge/issue-1.schem"),
+				Arguments.of(SchematicFormat.SPONGE_V1, "/schematics/sponge/v1/sponge-v1.schem"),
+				Arguments.of(SchematicFormat.SPONGE_V2, "/schematics/sponge/v2/issue-1.schem"),
+				Arguments.of(SchematicFormat.SPONGE_V2, "/schematics/sponge/v2/green-cottage.schem"),
+				Arguments.of(SchematicFormat.SPONGE_V2, "/schematics/sponge/v2/interieur-exterieur-chunk-project.schem"),
+				Arguments.of(SchematicFormat.SPONGE_V3, "/schematics/sponge/v3/sponge-v3.schem"),
 				Arguments.of(SchematicFormat.SCHEMATICA, "/schematics/schematica/9383.schematic"),
 				Arguments.of(SchematicFormat.SCHEMATICA, "/schematics/schematica/12727.schematic")
 		);

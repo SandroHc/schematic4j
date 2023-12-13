@@ -24,21 +24,21 @@ public interface Schematic {
 	@NonNull SchematicFormat format();
 
 	/**
-	 * The width of the schematic.
+	 * The width of the schematic, the X axis.
 	 *
 	 * @return the schematic width
 	 */
 	int width();
 
 	/**
-	 * The height of the schematic.
+	 * The height of the schematic, the Y axis.
 	 *
 	 * @return the schematic height
 	 */
 	int height();
 
 	/**
-	 * The length of the schematic.
+	 * The length of the schematic, the Z axis.
 	 *
 	 * @return the schematic length
 	 */

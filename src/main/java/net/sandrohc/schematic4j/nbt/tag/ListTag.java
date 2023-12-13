@@ -305,7 +305,6 @@ public class ListTag<T extends Tag<?>> extends Tag<List<T>> implements Iterable<
 		return copy;
 	}
 
-	//TODO: make private
 	@SuppressWarnings("unchecked")
 	public void addUnchecked(Tag<?> tag) {
 		if (getTypeClass() != EndTag.class && typeClass != tag.getClass()) {

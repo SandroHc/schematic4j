@@ -88,9 +88,9 @@ public class SchematicaParser implements Parser {
 		log.trace("Parsing icon");
 
 		getCompound(root, NBT_ICON).ifPresent(iconTag -> builder.icon(new SchematicItem(
-				getString(iconTag, NBT_ICON_ID).orElse("(missing id)"),
-				getByte(iconTag, NBT_ICON_COUNT).orElseGet(() -> (byte) 1),
-				getShort(iconTag, NBT_ICON_DAMAGE).orElseGet(() -> (short) 0)
+				getString(iconTag, NBT_ICON_ID).orElse("minecraft:dirt"),
+				getByte(iconTag, NBT_ICON_COUNT).orElse((byte) 1),
+				getShort(iconTag, NBT_ICON_DAMAGE).orElse((short) 0)
 		)));
 	}
 

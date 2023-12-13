@@ -14,6 +14,9 @@ import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicItem;
 import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
+/**
+ * A Schematica schematic. Read more about it at <a href="https://minecraft.fandom.com/wiki/Schematic_file_format">https://minecraft.fandom.com/wiki/Schematic_file_format</a>
+ */
 public class SchematicSchematica implements Schematic {
 
 	public static final String MATERIAL_CLASSIC = "Classic";
@@ -23,13 +26,13 @@ public class SchematicSchematica implements Schematic {
 	public final int width;
 	public final int height;
 	public final int length;
-	public final SchematicBlock[][][] blocks;
+	public final @NonNull SchematicBlock[][][] blocks;
 	public final Collection<SchematicBlockEntity> blockEntities;
 	public final Collection<SchematicEntity> entities;
 	public final SchematicItem icon;
 	public final String materials;
 
-	public SchematicSchematica(int width, int height, int length, SchematicBlock[][][] blocks,
+	public SchematicSchematica(int width, int height, int length, @NonNull SchematicBlock[][][] blocks,
 							   Collection<SchematicBlockEntity> blockEntities, Collection<SchematicEntity> entities,
 							   SchematicItem icon, String materials) {
 
@@ -79,6 +82,10 @@ public class SchematicSchematica implements Schematic {
 	@Override
 	public @NonNull Arr3DIterator<SchematicBlock> blocks() {
 		return new Arr3DIterator<>(blocks);
+	}
+
+	public @NonNull SchematicBlock[][][] blockData() {
+		return blocks;
 	}
 
 	@Override
