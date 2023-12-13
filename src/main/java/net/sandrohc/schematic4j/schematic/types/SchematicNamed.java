@@ -1,8 +1,10 @@
 package net.sandrohc.schematic4j.schematic.types;
 
+import java.util.Comparator;
+
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public abstract class SchematicNamed {
+public abstract class SchematicNamed implements Comparable<SchematicNamed> {
 
 	public final @NonNull String name;
 
@@ -32,5 +34,10 @@ public abstract class SchematicNamed {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + '[' + name + ']';
+	}
+
+	@Override
+	public int compareTo(@NonNull SchematicNamed o) {
+		return Comparator.nullsLast(Comparator.<SchematicNamed, String>comparing(obj -> obj.name)).compare(this, o);
 	}
 }

@@ -1,8 +1,8 @@
 package net.sandrohc.schematic4j.schematic.types;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class SchematicWithBlockState extends SchematicNamed {
 
@@ -17,10 +17,8 @@ public abstract class SchematicWithBlockState extends SchematicNamed {
 		char lastChar = nameAndBlockstate.charAt(nameAndBlockstate.length() - 1);
 		if (openingBracketPos != -1 && lastChar == ']') {
 			this.block = nameAndBlockstate.substring(0, openingBracketPos);
-
+			this.states = new TreeMap<>();
 			final String[] states = nameAndBlockstate.substring(openingBracketPos + 1, nameAndBlockstate.length() - 1).split(",");
-
-			this.states = new HashMap<>(states.length);
 			for (String state : states) {
 				int separatorIndex = state.indexOf('=');
 				if (separatorIndex != -1) {

@@ -1,6 +1,10 @@
 package net.sandrohc.schematic4j.schematic.types;
 
-public class SchematicPosDouble {
+import java.util.Comparator;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+public class SchematicPosDouble implements Comparable<SchematicPosDouble> {
 	public final double x;
 	public final double y;
 	public final double z;
@@ -71,5 +75,14 @@ public class SchematicPosDouble {
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ", " + z + ')';
+	}
+
+	@Override
+	public int compareTo(@NonNull SchematicPosDouble o) {
+		return Comparator.nullsLast(
+						Comparator.<SchematicPosDouble>comparingDouble(obj -> obj.x)
+								.thenComparingDouble(obj -> obj.y)
+								.thenComparingDouble(obj -> obj.z)
+				).compare(this, o);
 	}
 }

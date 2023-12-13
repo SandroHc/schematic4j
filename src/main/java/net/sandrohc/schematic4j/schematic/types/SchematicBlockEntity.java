@@ -1,6 +1,5 @@
 package net.sandrohc.schematic4j.schematic.types;
 
-import java.util.Collections;
 import java.util.Map;
 
 public class SchematicBlockEntity extends SchematicNamed {
@@ -11,7 +10,7 @@ public class SchematicBlockEntity extends SchematicNamed {
 	public SchematicBlockEntity(String name, SchematicPosInt pos, Map<String, Object> extra) {
 		super(name);
 		this.pos = pos;
-		this.extra = Collections.unmodifiableMap(extra);
+		this.extra = extra;
 	}
 
 	public SchematicPosInt pos() {

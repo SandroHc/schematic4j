@@ -1,63 +1,59 @@
 package net.sandrohc.schematic4j.parser;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import au.com.origin.snapshots.Expect;
+import au.com.origin.snapshots.junit5.SnapshotExtension;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sandrohc.schematic4j.SchematicFormat;
-import net.sandrohc.schematic4j.SchematicLoader;
 import net.sandrohc.schematic4j.exception.ParsingException;
+import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
 import net.sandrohc.schematic4j.schematic.SchematicSponge;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(SnapshotExtension.class)
 public class SpongeSchematicParserTest {
 
-	@Test
-	public void load() throws ParsingException, IOException {
-		final InputStream is = this.getClass().getResourceAsStream("/schematics/sponge/issue-1.schem");
-		final Schematic schem = SchematicLoader.load(is);
-		assertNotNull(schem);
-		assertInstanceOf(SchematicSponge.class, schem);
+	private Expect expect;
 
-		final SchematicSponge spongeSchem = (SchematicSponge) schem;
-		assertEquals(SchematicFormat.SPONGE_V2, spongeSchem.format());
-		assertEquals(2860, spongeSchem.dataVersion());
-		assertNotNull(spongeSchem.metadata());
-		assertNull(spongeSchem.name());
-		assertNull(spongeSchem.author());
-		assertNull(spongeSchem.date());
-		assertEquals(1, spongeSchem.width());
-		assertEquals(41, spongeSchem.height());
-		assertEquals(9, spongeSchem.length());
-		assertArrayEquals(new int[]{22, -60, 13}, spongeSchem.offset());
-		assertTrue(spongeSchem.blocks().hasNext());
-		assertTrue(spongeSchem.blockEntities().isEmpty());
-		assertTrue(spongeSchem.entities().isEmpty());
-		assertFalse(spongeSchem.biomes().hasNext());
+	@Test
+	public void parses() throws ParsingException {
+		final NamedTag nbt = nbtFromResource("/schematics/sponge/issue-1.schem");
+		final Schematic schem = new SpongeSchematicParser().parse(nbt);
+		assertThat(schem).isNotNull().isInstanceOf(SchematicSponge.class);
+
+		final SoftAssertions softly = new SoftAssertions();
+		softly.assertThat(schem.format()).isEqualTo(SchematicFormat.SPONGE_V2);
+		softly.assertThat(schem.name()).isNull();
+		softly.assertThat(schem.author()).isNull();
+		softly.assertThat(schem.date()).isNull();
+		softly.assertThat(schem.width()).isEqualTo(1);
+		softly.assertThat(schem.height()).isEqualTo(41);
+		softly.assertThat(schem.length()).isEqualTo(9);
+		softly.assertThat(schem.offset()).containsExactly(22, -60, 13);
+		softly.assertThat(schem.block(0, 0, 0).block).isEqualTo("minecraft:stone");
+		softly.assertThat(schem.blocks()).hasNext();
+		softly.assertThat(schem.blockEntities()).isEmpty();
+		softly.assertThat(schem.entities()).isEmpty();
+		softly.assertThat(schem.biomes()).isExhausted();
+		softly.assertThat(((SchematicSponge) schem).dataVersion()).isEqualTo(2860);
+		softly.assertThat(((SchematicSponge) schem).metadata()).isNotNull();
+		softly.assertAll();
 	}
 
-	@Test
-	public void blockApi() throws ParsingException, IOException {
-		final InputStream is = this.getClass().getResourceAsStream("/schematics/sponge/issue-1.schem");
-		final Schematic schem = SchematicLoader.load(is);
-
-		assertEquals("minecraft:stone", schem.block(0, 0, 0).block);
-//		assertEquals("minecraft:granite", schem.block(0, 1, 0).block);
-//		assertEquals("minecraft:polished_granite", schem.block(0, 2, 0).block);
-//		assertEquals("minecraft:diorite", schem.block(0, 3, 0).block);
-//		assertEquals("minecraft:polished_diorite", schem.block(0, 4, 0).block);
-//		assertEquals("minecraft:andesite", schem.block(0, 5, 0).block);
-//		assertEquals("minecraft:polished_andesite", schem.block(0, 6, 0).block);
-//		assertEquals("minecraft:deepslate", schem.block(0, 7, 0).block);
-//		assertEquals("minecraft:cobbled_deepslate", schem.block(0, 8, 0).block);
+	@ParameterizedTest
+	@ValueSource(strings = {
+			"/schematics/sponge/issue-1.schem",
+	})
+	public void snapshot(String file) throws ParsingException {
+		final NamedTag nbt = nbtFromResource(file);
+		final Schematic schem = new SpongeSchematicParser().parse(nbt);
+		expect.toMatchSnapshot(schem);
 	}
 }

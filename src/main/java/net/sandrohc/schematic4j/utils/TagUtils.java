@@ -2,10 +2,10 @@ package net.sandrohc.schematic4j.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import net.sandrohc.schematic4j.exception.MissingFieldException;
 import net.sandrohc.schematic4j.nbt.tag.ByteArrayTag;
@@ -52,14 +52,18 @@ public class TagUtils {
 		} else if (value instanceof LongArrayTag) {
 			return ((LongArrayTag) value).getValue();
 		} else if (value instanceof CompoundTag) {
-			CompoundTag compoundTag = (CompoundTag) value;
-			Map<String, Object> map = new LinkedHashMap<>(compoundTag.size());
-			for (Map.Entry<String, Tag<?>> entry : compoundTag) map.put(entry.getKey(), unwrap(entry.getValue()));
+			final CompoundTag compoundTag = (CompoundTag) value;
+			final Map<String, Object> map = new TreeMap<>();
+			for (final Map.Entry<String, Tag<?>> entry : compoundTag) {
+				map.put(entry.getKey(), unwrap(entry.getValue()));
+			}
 			return map;
 		} else if (value instanceof ListTag<?>) {
-			ListTag<?> listTag = (ListTag<?>) value;
-			List<Object> list = new ArrayList<>(listTag.size());
-			for (Tag<?> tag : listTag) list.add(unwrap(tag));
+			final ListTag<?> listTag = (ListTag<?>) value;
+			final List<Object> list = new ArrayList<>(listTag.size());
+			for (Tag<?> tag : listTag) {
+				list.add(unwrap(tag));
+			}
 			return list;
 		} else {
 			return value;

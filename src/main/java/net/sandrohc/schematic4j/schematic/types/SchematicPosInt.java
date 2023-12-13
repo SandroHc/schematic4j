@@ -1,6 +1,8 @@
 package net.sandrohc.schematic4j.schematic.types;
 
-public class SchematicPosInt {
+import java.util.Comparator;
+
+public class SchematicPosInt implements Comparable<SchematicPosInt> {
 	public final int x;
 	public final int y;
 	public final int z;
@@ -66,5 +68,14 @@ public class SchematicPosInt {
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ", " + z + ')';
+	}
+
+	@Override
+	public int compareTo(SchematicPosInt o) {
+		return Comparator.nullsLast(
+				Comparator.<SchematicPosInt>comparingInt(obj -> obj.x)
+						.thenComparingInt(obj -> obj.y)
+						.thenComparingInt(obj -> obj.z)
+		).compare(this, o);
 	}
 }

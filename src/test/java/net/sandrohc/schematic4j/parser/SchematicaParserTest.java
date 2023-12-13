@@ -1,27 +1,49 @@
 package net.sandrohc.schematic4j.parser;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import au.com.origin.snapshots.Expect;
+import au.com.origin.snapshots.junit5.SnapshotExtension;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.ParsingException;
-import net.sandrohc.schematic4j.nbt.io.NBTUtil;
 import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
+import net.sandrohc.schematic4j.schematic.SchematicSchematica;
 
+import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(SnapshotExtension.class)
 public class SchematicaParserTest {
 
+	private Expect expect;
+
 	@Test
-	public void load() throws ParsingException, IOException {
-//		InputStream is = this.getClass().getResourceAsStream("/schematics/schematica/9383.schematic");
-		InputStream is = this.getClass().getResourceAsStream("/schematics/schematica/12727.schematic");
-		NamedTag rootTag = NBTUtil.Reader.read().from(is);
+	public void parser() throws ParsingException {
+		final NamedTag nbt = nbtFromResource("/schematics/schematica/12727.schematic");
+		final Schematic schem = new SchematicaParser().parse(nbt);
+		assertThat(schem).isNotNull().isInstanceOf(SchematicSchematica.class);
 
-//		schematic = SchematicUtil.parse(rootTag);
-		final Schematic schematic = new SchematicaParser().parse(rootTag);
-
-//		assertNotNull(schematic);
+		final SoftAssertions softly = new SoftAssertions();
+		softly.assertThat(schem.format()).isEqualTo(SchematicFormat.SCHEMATICA);
+		softly.assertThat(schem.width()).isEqualTo(86);
+		softly.assertThat(schem.height()).isEqualTo(82);
+		softly.assertThat(schem.length()).isEqualTo(101);
+		softly.assertThat(((SchematicSchematica) schem).materials()).isEqualTo(SchematicSchematica.MATERIAL_ALPHA);
+		softly.assertAll();
 	}
 
+	@ParameterizedTest
+	@ValueSource(strings = {
+			"/schematics/schematica/9383.schematic",
+	})
+	public void snapshot(String file) throws ParsingException {
+		final NamedTag nbt = nbtFromResource(file);
+		final Schematic schem = new SchematicaParser().parse(nbt);
+		expect.toMatchSnapshot(schem);
+	}
 }

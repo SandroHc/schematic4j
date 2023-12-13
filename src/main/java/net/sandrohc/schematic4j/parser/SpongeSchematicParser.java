@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.TreeMap;
 import java.util.stream.StreamSupport;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -35,6 +35,7 @@ import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicPosDouble;
 import net.sandrohc.schematic4j.schematic.types.SchematicPosInt;
 
+import static java.util.stream.Collectors.toMap;
 import static net.sandrohc.schematic4j.utils.DateUtils.epochToDate;
 import static net.sandrohc.schematic4j.utils.TagUtils.containsAllTags;
 import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
@@ -201,7 +202,7 @@ public class SpongeSchematicParser implements Parser {
 		final CompoundTag palette = getCompoundOrThrow(root, NBT_PALETTE);
 		log.trace("Palette size: {}", palette.size());
 		Map<Integer, SchematicBlock> blockById = palette.entrySet().stream()
-				.collect(Collectors.toMap(
+				.collect(toMap(
 						entry -> ((IntTag) entry.getValue()).asInt(), // ID
 						entry -> new SchematicBlock(entry.getKey()) // Blockstate
 				));
@@ -214,10 +215,6 @@ public class SpongeSchematicParser implements Parser {
 		// Load the block data
 		byte[] blockDataRaw = getByteArrayOrThrow(root, NBT_BLOCK_DATA);
 		SchematicBlock[][][] blockData = new SchematicBlock[width][height][length];
-
-		int expectedBlocks = width * height * length;
-		if (blockDataRaw.length != expectedBlocks)
-			log.warn("Number of blocks does not match expected. Expected {} blocks, but got {}", expectedBlocks, blockDataRaw.length);
 
 		// --- Uses code from https://github.com/SpongePowered/Sponge/blob/aa2c8c53b4f9f40297e6a4ee281bee4f4ce7707b/src/main/java/org/spongepowered/common/data/persistence/SchematicTranslator.java#L147-L175
 		int index = 0;
@@ -270,7 +267,7 @@ public class SpongeSchematicParser implements Parser {
 				final Map<String, Object> extra = blockEntity.entrySet().stream()
 						.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) &&
 									   !tag.getKey().equals(NBT_ENTITIES_POS))
-						.collect(Collectors.toMap(Entry::getKey, e -> unwrap(e.getValue())));
+						.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
 
 				blockEntities.add(new SchematicBlockEntity(id, SchematicPosInt.from(pos), extra));
 			}
@@ -308,7 +305,7 @@ public class SpongeSchematicParser implements Parser {
 				final Map<String, Object> extra = entity.entrySet().stream()
 						.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) &&
 									   !tag.getKey().equals(NBT_ENTITIES_POS))
-						.collect(Collectors.toMap(Entry::getKey, e -> unwrap(e.getValue())));
+						.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
 
 				entities.add(new SchematicEntity(id, SchematicPosDouble.from(pos), extra));
 			}
@@ -338,7 +335,7 @@ public class SpongeSchematicParser implements Parser {
 		final CompoundTag palette = getCompoundOrThrow(root, NBT_BIOME_PALETTE);
 		log.trace("Biome palette size: {}", palette.size());
 		Map<Integer, SchematicBiome> biomeById = palette.entrySet().stream()
-				.collect(Collectors.toMap(
+				.collect(toMap(
 						entry -> ((IntTag) entry.getValue()).asInt(), // ID
 						entry -> new SchematicBiome(entry.getKey()) // Blockstate
 				));
