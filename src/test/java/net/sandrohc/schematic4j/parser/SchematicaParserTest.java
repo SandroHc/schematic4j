@@ -8,9 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.ParsingException;
-import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
-import net.sandrohc.schematic4j.schematic.SchematicSchematica;
+import net.sandrohc.schematic4j.schematic.SchematicaSchematic;
 
 import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematic;
 import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
@@ -23,16 +23,16 @@ public class SchematicaParserTest {
 
 	@Test
 	public void parser() throws ParsingException {
-		final NamedTag nbt = nbtFromResource("/schematics/schematica/12727.schematic");
+		final CompoundTag nbt = nbtFromResource("/schematics/schematica/12727.schematic");
 		final Schematic schem = new SchematicaParser().parse(nbt);
-		assertThat(schem).isNotNull().isInstanceOf(SchematicSchematica.class);
+		assertThat(schem).isNotNull().isInstanceOf(SchematicaSchematic.class);
 
 		final SoftAssertions softly = new SoftAssertions();
 		softly.assertThat(schem.format()).isEqualTo(SchematicFormat.SCHEMATICA);
 		softly.assertThat(schem.width()).isEqualTo(86);
 		softly.assertThat(schem.height()).isEqualTo(82);
 		softly.assertThat(schem.length()).isEqualTo(101);
-		softly.assertThat(((SchematicSchematica) schem).materials()).isEqualTo(SchematicSchematica.MATERIAL_ALPHA);
+		softly.assertThat(((SchematicaSchematic) schem).materials()).isEqualTo(SchematicaSchematic.MATERIAL_ALPHA);
 		softly.assertAll();
 	}
 

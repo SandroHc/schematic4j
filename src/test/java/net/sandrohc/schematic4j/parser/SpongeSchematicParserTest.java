@@ -10,9 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.ParsingException;
-import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
-import net.sandrohc.schematic4j.schematic.SchematicSponge;
+import net.sandrohc.schematic4j.schematic.SpongeSchematic;
 
 import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematic;
 import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
@@ -25,9 +25,9 @@ public class SpongeSchematicParserTest {
 
 	@Test
 	public void parses() throws ParsingException {
-		final NamedTag nbt = nbtFromResource("/schematics/sponge/v2/issue-1.schem");
+		final CompoundTag nbt = nbtFromResource("/schematics/sponge/v2/issue-1.schem");
 		final Schematic schem = new SpongeSchematicParser().parse(nbt);
-		assertThat(schem).isNotNull().isInstanceOf(SchematicSponge.class);
+		assertThat(schem).isNotNull().isInstanceOf(SpongeSchematic.class);
 
 		final SoftAssertions softly = new SoftAssertions();
 		softly.assertThat(schem.format()).isEqualTo(SchematicFormat.SPONGE_V2);
@@ -43,8 +43,8 @@ public class SpongeSchematicParserTest {
 		softly.assertThat(schem.blockEntities()).hasNext();
 		softly.assertThat(schem.entities()).hasNext();
 		softly.assertThat(schem.biomes()).isExhausted();
-		softly.assertThat(((SchematicSponge) schem).dataVersion()).isEqualTo(2860);
-		softly.assertThat(((SchematicSponge) schem).metadata()).isNotNull();
+		softly.assertThat(((SpongeSchematic) schem).dataVersion()).isEqualTo(2860);
+		softly.assertThat(((SpongeSchematic) schem).metadata()).isNotNull();
 		softly.assertAll();
 	}
 

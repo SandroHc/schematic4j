@@ -20,7 +20,7 @@ import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 /**
  * A Sponge schematic. Read more about it at <a href="https://github.com/SpongePowered/Schematic-Specification">https://github.com/SpongePowered/Schematic-Specification</a>.
  */
-public class SchematicSponge implements Schematic {
+public class SpongeSchematic implements Schematic {
 
 	public static final int[] DEFAULT_OFFSET = {0, 0, 0};
 
@@ -69,7 +69,7 @@ public class SchematicSponge implements Schematic {
 	public final SchematicEntity[] entities;
 	public final SchematicBiome[][][] biomes;
 
-	public SchematicSponge(int version, @Nullable Integer dataVersion, @Nullable Metadata metadata, int width,
+	public SpongeSchematic(int version, @Nullable Integer dataVersion, @Nullable Metadata metadata, int width,
 						   int height, int length, int[] offset, @NonNull SchematicBlock[][][] blocks,
 						   @NonNull SchematicBlockEntity[] blockEntities, @NonNull SchematicEntity[] entities,
 						   @NonNull SchematicBiome[][][] biomes) {
@@ -193,7 +193,7 @@ public class SchematicSponge implements Schematic {
 	}
 
 	/**
-	 * @deprecated Use {@link SchematicSponge#dataVersion()} instead
+	 * @deprecated Use {@link SpongeSchematic#dataVersion()} instead
 	 */
 	@Deprecated
 	public @Nullable Integer getDataVersion() {
@@ -205,7 +205,7 @@ public class SchematicSponge implements Schematic {
 	}
 
 	/**
-	 * @deprecated Use {@link SchematicSponge#metadata()} instead
+	 * @deprecated Use {@link SpongeSchematic#metadata()} instead
 	 */
 	@Deprecated
 	public @NonNull Metadata getMetadata() {
@@ -346,7 +346,7 @@ public class SchematicSponge implements Schematic {
 			return null;
 		}
 
-		public SchematicSponge build() {
+		public SpongeSchematic build() {
 			if (version == null)
 				throw new SchematicBuilderException("version must be set");
 			if (width == null)
@@ -358,7 +358,7 @@ public class SchematicSponge implements Schematic {
 			if (blocks == null)
 				throw new SchematicBuilderException("blocks must be set");
 
-			return new SchematicSponge(version, dataVersion, metadata, width, height, length, offset, blocks, blockEntities, entities, biomes);
+			return new SpongeSchematic(version, dataVersion, metadata, width, height, length, offset, blocks, blockEntities, entities, biomes);
 		}
 	}
 }

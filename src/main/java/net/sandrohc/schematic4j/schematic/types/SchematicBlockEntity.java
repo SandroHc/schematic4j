@@ -4,16 +4,16 @@ import java.util.Map;
 
 public class SchematicBlockEntity extends SchematicNamed {
 
-	public final SchematicPosInt pos;
+	public final SchematicBlockPos pos;
 	public final Map<String, Object> extra;
 
-	public SchematicBlockEntity(String name, SchematicPosInt pos, Map<String, Object> extra) {
+	public SchematicBlockEntity(String name, SchematicBlockPos pos, Map<String, Object> extra) {
 		super(name);
 		this.pos = pos;
 		this.extra = extra;
 	}
 
-	public SchematicPosInt pos() {
+	public SchematicBlockPos pos() {
 		return pos;
 	}
 

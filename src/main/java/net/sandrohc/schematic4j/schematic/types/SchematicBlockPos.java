@@ -2,35 +2,35 @@ package net.sandrohc.schematic4j.schematic.types;
 
 import java.util.Comparator;
 
-public class SchematicPosInt implements Comparable<SchematicPosInt> {
+public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
 	public final int x;
 	public final int y;
 	public final int z;
 
-	public SchematicPosInt(int x, int y, int z) {
+	public SchematicBlockPos(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public SchematicPosInt(int[] pos) {
+	public SchematicBlockPos(int[] pos) {
 		this(pos[0], pos[1], pos[2]);
 	}
 
-	public SchematicPosInt(SchematicPosInt other) {
+	public SchematicBlockPos(SchematicBlockPos other) {
 		this(other.x, other.y, other.z);
 	}
 
-	public static SchematicPosInt from(int x, int y, int z) {
-		return new SchematicPosInt(x, y, z);
+	public static SchematicBlockPos from(int x, int y, int z) {
+		return new SchematicBlockPos(x, y, z);
 	}
 
-	public static SchematicPosInt from(int[] pos) {
+	public static SchematicBlockPos from(int[] pos) {
 		return from(pos[0], pos[1], pos[2]);
 	}
 
-	public static SchematicPosInt from(SchematicPosInt other) {
-		return new SchematicPosInt(other);
+	public static SchematicBlockPos from(SchematicBlockPos other) {
+		return new SchematicBlockPos(other);
 	}
 
 	public int x() {
@@ -50,7 +50,7 @@ public class SchematicPosInt implements Comparable<SchematicPosInt> {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		SchematicPosInt that = (SchematicPosInt) o;
+		SchematicBlockPos that = (SchematicBlockPos) o;
 
 		if (x != that.x) return false;
 		if (y != that.y) return false;
@@ -71,9 +71,9 @@ public class SchematicPosInt implements Comparable<SchematicPosInt> {
 	}
 
 	@Override
-	public int compareTo(SchematicPosInt o) {
+	public int compareTo(SchematicBlockPos o) {
 		return Comparator.nullsLast(
-				Comparator.<SchematicPosInt>comparingInt(obj -> obj.x)
+				Comparator.<SchematicBlockPos>comparingInt(obj -> obj.x)
 						.thenComparingInt(obj -> obj.y)
 						.thenComparingInt(obj -> obj.z)
 		).compare(this, o);

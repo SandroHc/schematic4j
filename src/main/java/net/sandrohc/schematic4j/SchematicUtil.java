@@ -10,11 +10,19 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
 import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
 
+/**
+ * A collection of utility methods to work with schematics.
+ *
+ * @deprecated Use {@link SchematicLoader} instead.
+ */
+@Deprecated
 public class SchematicUtil {
 
-	private SchematicUtil() {}
+	private SchematicUtil() {
+	}
 
 	/**
 	 * Load a schematic from an input stream.
@@ -22,7 +30,7 @@ public class SchematicUtil {
 	 * @param is The input stream to load the schematic from.
 	 * @return The loaded and parsed schematic
 	 * @throws ParsingException in case no supported parses was found or there was a parsing error
-	 * @throws IOException in case of I/O error
+	 * @throws IOException      in case of I/O error
 	 * @see SchematicLoader#load(Path)
 	 * @see SchematicLoader#load(File)
 	 * @see SchematicLoader#load(String)
@@ -39,7 +47,7 @@ public class SchematicUtil {
 	 * @param path The file to load the schematic from.
 	 * @return The loaded and parsed schematic
 	 * @throws ParsingException in case no supported parses was found or there was a parsing error
-	 * @throws IOException in case of I/O error
+	 * @throws IOException      in case of I/O error
 	 * @see SchematicLoader#load(InputStream)
 	 * @see SchematicLoader#load(File)
 	 * @see SchematicLoader#load(String)
@@ -56,7 +64,7 @@ public class SchematicUtil {
 	 * @param file The file to load the schematic from.
 	 * @return The loaded and parsed schematic
 	 * @throws ParsingException in case no supported parses was found or there was a parsing error
-	 * @throws IOException in case of I/O error
+	 * @throws IOException      in case of I/O error
 	 * @see SchematicLoader#load(InputStream)
 	 * @see SchematicLoader#load(Path)
 	 * @see SchematicLoader#load(String)
@@ -73,7 +81,7 @@ public class SchematicUtil {
 	 * @param filePath The file path to load the schematic from.
 	 * @return The loaded and parsed schematic
 	 * @throws ParsingException in case no supported parses was found or there was a parsing error
-	 * @throws IOException in case of I/O error
+	 * @throws IOException      in case of I/O error
 	 * @see SchematicLoader#load(InputStream)
 	 * @see SchematicLoader#load(Path)
 	 * @see SchematicLoader#load(File)
@@ -104,11 +112,12 @@ public class SchematicUtil {
 	 *
 	 * @param input The NBT input to check
 	 * @return The format guesses from looking at the input, or {@link SchematicFormat#UNKNOWN} if no known format was found.
-	 * @deprecated Use {@link SchematicFormat#guessFormat(NamedTag)} instead
- 	 */
+	 * @deprecated Use {@link SchematicFormat#guessFormat(CompoundTag)} instead
+	 */
 	@Deprecated
 	@NonNull
 	public static SchematicFormat detectFormat(@Nullable NamedTag input) {
-		return SchematicFormat.guessFormat(input);
+		final CompoundTag nbt = input != null && input.getTag() instanceof CompoundTag ? (CompoundTag) input.getTag() : null;
+		return SchematicFormat.guessFormat(nbt);
 	}
 }

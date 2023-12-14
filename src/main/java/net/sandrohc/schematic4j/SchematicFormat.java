@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.NoParserFoundException;
-import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.parser.Parser;
 import net.sandrohc.schematic4j.parser.SchematicaParser;
@@ -62,27 +61,21 @@ public enum SchematicFormat {
 	 * @param nbt The NBT input to check
 	 * @return The format guesses from looking at the input, or {@link SchematicFormat#UNKNOWN} if no known format was found.
 	 */
-	public static @NonNull SchematicFormat guessFormat(@Nullable NamedTag nbt) {
-		if (nbt == null || !(nbt.getTag() instanceof CompoundTag)) {
+	public static @NonNull SchematicFormat guessFormat(@Nullable CompoundTag nbt) {
+		if (nbt == null) {
 			return SchematicFormat.UNKNOWN;
 		}
 
-		final CompoundTag rootTag = (CompoundTag) nbt.getTag();
 		final Candidates<SchematicFormat> candidates = new Candidates<>();
-		guessSpongeFormat(candidates, nbt, rootTag);
-		guessSchematicaFormat(candidates, nbt, rootTag);
+		guessSpongeFormat(candidates, nbt);
+		guessSchematicaFormat(candidates, nbt);
 
 		final SchematicFormat guess = candidates.best().orElse(SchematicFormat.UNKNOWN);
 		log.debug("Guessed {} as the format", guess);
 		return guess;
 	}
 
-	private static void guessSpongeFormat(Candidates<SchematicFormat> candidates, @NonNull NamedTag nbt, CompoundTag rootTag) {
-		if (nbt.getName().equals(SpongeSchematicParser.NBT_ROOT)) {
-			candidates.increment(SchematicFormat.SPONGE_V1, 1);
-			candidates.increment(SchematicFormat.SPONGE_V2, 2); // favour v2 in case of a tie
-			candidates.increment(SchematicFormat.SPONGE_V3, 1);
-		}
+	private static void guessSpongeFormat(Candidates<SchematicFormat> candidates, @NonNull CompoundTag rootTag) {
 		if (rootTag.containsKey(SpongeSchematicParser.NBT_VERSION)) {
 			final int version = rootTag.getInt(SpongeSchematicParser.NBT_VERSION);
 			switch (version) {
@@ -155,26 +148,23 @@ public enum SchematicFormat {
 		}
 	}
 
-	private static void guessSchematicaFormat(Candidates<SchematicFormat> candidates, @NonNull NamedTag nbt, CompoundTag rootTag) {
-		if (nbt.getName().equals(SchematicaParser.NBT_ROOT)) {
-			candidates.increment(SchematicFormat.SCHEMATICA, 1);
-		}
-		if (rootTag.containsKey(SchematicaParser.NBT_MAPPING_SCHEMATICA)) {
+	private static void guessSchematicaFormat(Candidates<SchematicFormat> candidates, @NonNull CompoundTag nbt) {
+		if (nbt.containsKey(SchematicaParser.NBT_MAPPING_SCHEMATICA)) {
 			candidates.increment(SchematicFormat.SCHEMATICA, 10);
 		} else {
 			candidates.exclude(SchematicFormat.SCHEMATICA);
 		}
-		if (rootTag.containsKey(SchematicaParser.NBT_WIDTH)) {
+		if (nbt.containsKey(SchematicaParser.NBT_WIDTH)) {
 			candidates.increment(SchematicFormat.SCHEMATICA, 1);
 		} else {
 			candidates.exclude(SchematicFormat.SCHEMATICA);
 		}
-		if (rootTag.containsKey(SchematicaParser.NBT_HEIGHT)) {
+		if (nbt.containsKey(SchematicaParser.NBT_HEIGHT)) {
 			candidates.increment(SchematicFormat.SCHEMATICA, 1);
 		} else {
 			candidates.exclude(SchematicFormat.SCHEMATICA);
 		}
-		if (rootTag.containsKey(SchematicaParser.NBT_LENGTH)) {
+		if (nbt.containsKey(SchematicaParser.NBT_LENGTH)) {
 			candidates.increment(SchematicFormat.SCHEMATICA, 1);
 		} else {
 			candidates.exclude(SchematicFormat.SCHEMATICA);

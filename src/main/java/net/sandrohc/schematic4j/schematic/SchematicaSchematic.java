@@ -16,8 +16,18 @@ import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 /**
  * A Schematica schematic. Read more about it at <a href="https://minecraft.fandom.com/wiki/Schematic_file_format">https://minecraft.fandom.com/wiki/Schematic_file_format</a>
+ * <br>
+ * <h2>Implementations</h2>
+ * <ul>
+ *     <li><a href="https://github.com/EngineHub/WorldEdit/blob/master/worldedit-core/src/main/java/com/sk89q/worldedit/extent/clipboard/io/MCEditSchematicReader.java">WorldEdit</a></li>
+ *     <li><a href="https://github.com/mcedit/pymclevel/blob/master/schematic.py">MCEdit</a></li>
+ *     <li><a href="https://github.com/mcedit/mcedit2/blob/master/src/mceditlib/schematic.py">MCEdit2</a></li>
+ *     <li><a href="https://github.com/Khroki/MCEdit-Unified/blob/master/pymclevel/schematic.py">MCEdit-Unified</a></li>
+ *     <li><a href="https://github.com/Lunatrius/Schematica/blob/master/src/main/java/com/github/lunatrius/schematica/world/schematic/SchematicAlpha.java">Schematica</a></li>
+ *     <li><a href="https://github.com/CzechPMDevs/BuilderTools">BuilderTools - PocketMine</a></li>
+ * </ul>
  */
-public class SchematicSchematica implements Schematic {
+public class SchematicaSchematic implements Schematic {
 
 	public static final String MATERIAL_CLASSIC = "Classic";
 	public static final String MATERIAL_ALPHA = "Alpha";
@@ -32,7 +42,7 @@ public class SchematicSchematica implements Schematic {
 	public final SchematicItem icon;
 	public final String materials;
 
-	public SchematicSchematica(int width, int height, int length, @NonNull SchematicBlock[][][] blocks,
+	public SchematicaSchematic(int width, int height, int length, @NonNull SchematicBlock[][][] blocks,
 							   @NonNull SchematicBlockEntity[] blockEntities, @NonNull SchematicEntity[] entities,
 							   SchematicItem icon, String materials) {
 
@@ -179,7 +189,7 @@ public class SchematicSchematica implements Schematic {
 			return this;
 		}
 
-		public SchematicSchematica build() {
+		public SchematicaSchematic build() {
 			if (width == null)
 				throw new SchematicBuilderException("width must be set");
 			if (height == null)
@@ -189,7 +199,7 @@ public class SchematicSchematica implements Schematic {
 			if (blocks == null)
 				throw new SchematicBuilderException("blocks must be set");
 
-			return new SchematicSchematica(width, height, length, blocks, blockEntities, entities, icon, materials);
+			return new SchematicaSchematic(width, height, length, blocks, blockEntities, entities, icon, materials);
 		}
 	}
 }

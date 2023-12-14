@@ -9,12 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
-import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.nbt.tag.ListTag;
 import net.sandrohc.schematic4j.nbt.tag.ShortTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
-import net.sandrohc.schematic4j.schematic.SchematicSchematica.Builder;
+import net.sandrohc.schematic4j.schematic.SchematicaSchematic.Builder;
 import net.sandrohc.schematic4j.schematic.types.*;
 
 import static java.util.stream.Collectors.toMap;
@@ -31,8 +30,6 @@ import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
 public class SchematicaParser implements Parser {
 
 	private static final Logger log = LoggerFactory.getLogger(SchematicaParser.class);
-
-	public static final String NBT_ROOT = "Schematic";
 
 	public static final String NBT_MATERIALS = "Materials";
 
@@ -65,21 +62,19 @@ public class SchematicaParser implements Parser {
 
 
 	@Override
-	public @NonNull Schematic parse(@Nullable NamedTag root) throws ParsingException {
+	public @NonNull Schematic parse(@Nullable CompoundTag nbt) throws ParsingException {
 		log.debug("Parsing Schematica schematic");
 
 		final Builder builder = new Builder();
-		if (root == null) {
+		if (nbt == null) {
 			return builder.build();
 		}
 
-		final CompoundTag rootTag = (CompoundTag) root.getTag();
-
-		parseIcon(rootTag, builder);
-		parseBlocks(rootTag, builder);
-		parseBlockEntities(rootTag, builder);
-		parseEntities(rootTag, builder);
-		parseMaterials(rootTag, builder);
+		parseIcon(nbt, builder);
+		parseBlocks(nbt, builder);
+		parseBlockEntities(nbt, builder);
+		parseEntities(nbt, builder);
+		parseMaterials(nbt, builder);
 
 		return builder.build();
 	}
@@ -191,7 +186,7 @@ public class SchematicaParser implements Parser {
 							!tag.getKey().equals(NBT_TILE_ENTITIES_Z))
 					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
 
-			blockEntities[i] = new SchematicBlockEntity(id, SchematicPosInt.from(posX, posY, posZ), extra);
+			blockEntities[i] = new SchematicBlockEntity(id, SchematicBlockPos.from(posX, posY, posZ), extra);
 			i++;
 		}
 

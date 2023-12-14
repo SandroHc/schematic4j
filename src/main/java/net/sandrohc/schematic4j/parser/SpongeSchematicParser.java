@@ -14,23 +14,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.ParsingException;
-import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.nbt.tag.IntTag;
 import net.sandrohc.schematic4j.nbt.tag.ListTag;
-import net.sandrohc.schematic4j.nbt.tag.LongTag;
+import net.sandrohc.schematic4j.nbt.tag.NumberTag;
 import net.sandrohc.schematic4j.nbt.tag.StringTag;
 import net.sandrohc.schematic4j.nbt.tag.Tag;
 import net.sandrohc.schematic4j.schematic.Schematic;
-import net.sandrohc.schematic4j.schematic.SchematicSponge;
-import net.sandrohc.schematic4j.schematic.SchematicSponge.Builder;
-import net.sandrohc.schematic4j.schematic.SchematicSponge.Metadata;
+import net.sandrohc.schematic4j.schematic.SpongeSchematic;
+import net.sandrohc.schematic4j.schematic.SpongeSchematic.Builder;
+import net.sandrohc.schematic4j.schematic.SpongeSchematic.Metadata;
 import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicPosDouble;
-import net.sandrohc.schematic4j.schematic.types.SchematicPosInt;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 
 import static java.util.stream.Collectors.toMap;
 import static net.sandrohc.schematic4j.utils.DateUtils.epochToDate;
@@ -56,8 +55,6 @@ import static net.sandrohc.schematic4j.utils.TagUtils.unwrap;
  * - <a href="https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md">https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md</a>
  */
 public class SpongeSchematicParser implements Parser {
-
-	public static final String NBT_ROOT = "Schematic";
 
 	public static final String NBT_VERSION = "Version";
 	public static final String NBT_DATA_VERSION = "DataVersion";
@@ -91,39 +88,37 @@ public class SpongeSchematicParser implements Parser {
 	private static final Logger log = LoggerFactory.getLogger(SpongeSchematicParser.class);
 
 	@Override
-	public @NonNull Schematic parse(@Nullable NamedTag root) throws ParsingException {
+	public @NonNull Schematic parse(@Nullable CompoundTag nbt) throws ParsingException {
 		log.debug("Parsing Sponge schematic");
 
-		final SchematicSponge.Builder builder = new SchematicSponge.Builder();
-		if (root == null) {
+		final SpongeSchematic.Builder builder = new SpongeSchematic.Builder();
+		if (nbt == null) {
 			return builder.build();
 		}
 
-		final CompoundTag rootTag = (CompoundTag) root.getTag();
-
-		final int version = getVersion(rootTag);
+		final int version = parseVersion(nbt);
 		builder.version(version);
 		if (version > 3) {
 			log.warn("Sponge Schematic version {} is not officially supported. Use at your own risk", version);
 		}
 
-		parseDataVersion(rootTag, builder, version);
-		parseMetadata(rootTag, builder);
-		parseOffset(rootTag, builder);
-		parseBlocks(rootTag, builder, version);
-		parseBlockEntities(rootTag, builder, version);
-		parseEntities(rootTag, builder, version);
-		parseBiomes(rootTag, builder, version);
+		parseDataVersion(nbt, builder, version);
+		parseMetadata(nbt, builder);
+		parseOffset(nbt, builder);
+		parseBlocks(nbt, builder, version);
+		parseBlockEntities(nbt, builder, version);
+		parseEntities(nbt, builder, version);
+		parseBiomes(nbt, builder, version);
 
 		return builder.build();
 	}
 
-	private static int getVersion(CompoundTag rootTag) {
+	protected int parseVersion(CompoundTag rootTag) {
 		// Default to version 1 if none provided
 		return getInt(rootTag, NBT_VERSION).orElse(1);
 	}
 
-	private void parseDataVersion(CompoundTag root, Builder builder, int version) throws ParsingException {
+	protected void parseDataVersion(CompoundTag root, Builder builder, int version) throws ParsingException {
 		log.trace("Parsing data version");
 
 		// Data Version is optional for v1, but required for v2 and v3
@@ -134,7 +129,13 @@ public class SpongeSchematicParser implements Parser {
 		}
 	}
 
-	private void parseMetadata(CompoundTag root, Builder builder) {
+	protected void parseMetadata(CompoundTag root, Builder builder) {
+		final CompoundTag metadataTag = getCompound(root, NBT_METADATA).orElse(null);
+		if (metadataTag == null) {
+			log.debug("No metadata found");
+			return;
+		}
+
 		log.trace("Parsing metadata");
 
 		String name = null;
@@ -143,41 +144,36 @@ public class SpongeSchematicParser implements Parser {
 		String[] requiredMods = new String[0];
 		Map<String, Object> extra = new LinkedHashMap<>();
 
-		final Optional<CompoundTag> metadataTag = getCompound(root, NBT_METADATA);
-		if (metadataTag.isPresent()) {
-			for (Entry<String, Tag<?>> entry : metadataTag.get()) {
-				final String key = entry.getKey();
-				final Tag<?> tag = entry.getValue();
+		for (final Entry<String, Tag<?>> entry : metadataTag) {
+			final String key = entry.getKey();
+			final Tag<?> tag = entry.getValue();
 
-				switch (key) {
-					case NBT_METADATA_NAME:
-						name = ((StringTag) tag).getValue();
-						break;
-					case NBT_METADATA_AUTHOR:
-						author = ((StringTag) tag).getValue();
-						break;
-					case NBT_METADATA_DATE:
-						long dateEpochMillis = ((LongTag) tag).asLong(); // milliseconds since the Unix epoch
-						date = epochToDate(dateEpochMillis);
-						break;
-					case NBT_METADATA_REQUIRED_MODS:
-						final ListTag<StringTag> stringTags = ((ListTag<?>) tag).asStringTagList();
-						requiredMods = StreamSupport.stream(stringTags.spliterator(), false)
-								.map(StringTag::getValue)
-								.toArray(String[]::new);
-						break;
-					default:
-						extra.put(key, unwrap(tag));
-				}
+			switch (key) {
+				case NBT_METADATA_NAME:
+					name = ((StringTag) tag).getValue();
+					break;
+				case NBT_METADATA_AUTHOR:
+					author = ((StringTag) tag).getValue();
+					break;
+				case NBT_METADATA_DATE:
+					long dateEpochMillis = ((NumberTag<?>) tag).asLong();
+					date = epochToDate(dateEpochMillis);
+					break;
+				case NBT_METADATA_REQUIRED_MODS:
+					final ListTag<StringTag> stringTags = ((ListTag<?>) tag).asStringTagList();
+					requiredMods = StreamSupport.stream(stringTags.spliterator(), false)
+							.map(StringTag::getValue)
+							.toArray(String[]::new);
+					break;
+				default:
+					extra.put(key, unwrap(tag));
 			}
-		} else {
-			log.debug("No metadata found");
 		}
 
 		builder.metadata(new Metadata(name, author, date, requiredMods, extra));
 	}
 
-	private void parseOffset(CompoundTag root, Builder builder) {
+	protected void parseOffset(CompoundTag root, Builder builder) {
 		log.trace("Parsing offset");
 
 		getIntArray(root, NBT_OFFSET).ifPresent(offset -> {
@@ -186,7 +182,7 @@ public class SpongeSchematicParser implements Parser {
 		});
 	}
 
-	private void parseBlocks(CompoundTag root, SchematicSponge.Builder builder, int version) throws ParsingException {
+	protected void parseBlocks(CompoundTag root, SpongeSchematic.Builder builder, int version) throws ParsingException {
 		log.trace("Parsing blocks");
 
 		final short width = getShortOrThrow(root, NBT_WIDTH);
@@ -250,7 +246,7 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} blocks", width * height * length);
 	}
 
-	private static CompoundTag getBlocksTag(CompoundTag root, int version) {
+	protected static CompoundTag getBlocksTag(CompoundTag root, int version) {
 		if (version >= 3) {
 			return root.getCompoundTag(NBT_V3_BLOCKS);
 		} else {
@@ -258,7 +254,7 @@ public class SpongeSchematicParser implements Parser {
 		}
 	}
 
-	private void parseBlockEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
+	protected void parseBlockEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
 		final CompoundTag blocksTag = getBlocksTag(root, version);
 		final String blockEntitiesTagName = version == 1 ? NBT_TILE_ENTITIES : NBT_BLOCK_ENTITIES;
 		final Optional<ListTag<CompoundTag>> blockEntitiesListTag = getCompoundList(blocksTag, blockEntitiesTagName);
@@ -282,7 +278,7 @@ public class SpongeSchematicParser implements Parser {
 							!tag.getKey().equals(NBT_ENTITIES_POS))
 					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
 
-			blockEntities[i] = new SchematicBlockEntity(id, SchematicPosInt.from(pos), extra);
+			blockEntities[i] = new SchematicBlockEntity(id, SchematicBlockPos.from(pos), extra);
 			i++;
 		}
 
@@ -290,7 +286,7 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} block entities", blockEntities.length);
 	}
 
-	private void parseEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
+	protected void parseEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
 		final Optional<ListTag<CompoundTag>> entitiesListTag = getCompoundList(root, NBT_ENTITIES);
 		if (!entitiesListTag.isPresent()) {
 			log.trace("No entities found");
@@ -326,7 +322,7 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} entities", entities.length);
 	}
 
-	private void parseBiomes(CompoundTag root, SchematicSponge.Builder builder, int version) throws ParsingException {
+	protected void parseBiomes(CompoundTag root, SpongeSchematic.Builder builder, int version) throws ParsingException {
 		log.trace("Parsing biomes");
 
 		if (((version == 1 || version == 2) && !containsAllTags(root, NBT_BIOME_DATA, NBT_BIOME_PALETTE)) || (version == 3 && !root.containsKey(NBT_V3_BIOMES))) {
@@ -396,7 +392,7 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} biomes", width * length);
 	}
 
-	private static CompoundTag getBiomesTag(CompoundTag root, int version) {
+	protected static CompoundTag getBiomesTag(CompoundTag root, int version) {
 		if (version >= 3) {
 			return root.getCompoundTag(NBT_V3_BIOMES);
 		} else {

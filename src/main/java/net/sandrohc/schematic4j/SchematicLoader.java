@@ -16,9 +16,13 @@ import org.slf4j.LoggerFactory;
 import net.sandrohc.schematic4j.exception.ParsingException;
 import net.sandrohc.schematic4j.nbt.io.NBTUtil;
 import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.parser.Parser;
 import net.sandrohc.schematic4j.schematic.Schematic;
 
+/**
+ * A collection of utility methods to load and parse schematics.
+ */
 public class SchematicLoader {
 
 	private static final Logger log = LoggerFactory.getLogger(SchematicLoader.class);
@@ -93,17 +97,31 @@ public class SchematicLoader {
 	 * <br>
 	 * If you already know the format, consider parsing the NBT tag directly - i.e. {@code SchematicFormat.SPONGE_V2.createParser().parse(nbt)}.
 	 *
-	 * @param input The NBT root tag to parse.
+	 * @param nbt The NBT root tag to parse.
 	 * @return The parsed schematic
 	 * @throws ParsingException in case no supported parses was found or there was a parsing error
 	 */
-	public static @NonNull Schematic parse(@Nullable NamedTag input) throws ParsingException {
-		SchematicFormat format = SchematicFormat.guessFormat(input);
+	public static @NonNull Schematic parse(@Nullable CompoundTag nbt) throws ParsingException {
+		SchematicFormat format = SchematicFormat.guessFormat(nbt);
 		log.info("Found format: {}", format);
 
 		Parser parser = format.createParser();
 		log.debug("Found parser: {}", parser);
 
-		return parser.parse(input);
+		return parser.parse(nbt);
+	}
+
+	/**
+	 * Attempts to guess the schematic format and parse the input.
+	 * <br>
+	 * If you already know the format, consider parsing the NBT tag directly - i.e. {@code SchematicFormat.SPONGE_V2.createParser().parse(nbt)}.
+	 *
+	 * @param input The NBT root tag to parse.
+	 * @return The parsed schematic
+	 * @throws ParsingException in case no supported parses was found or there was a parsing error
+	 */
+	public static @NonNull Schematic parse(@Nullable NamedTag input) throws ParsingException {
+		final CompoundTag nbt = input!=null&& input.getTag() instanceof CompoundTag? (CompoundTag) input.getTag() :null;
+		return parse(nbt);
 	}
 }

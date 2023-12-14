@@ -47,9 +47,16 @@ For development builds, please see: https://jitpack.io/#net.sandrohc/schematic4j
 Here are some examples on how to use this library:
 
 ```java
-Path path = Path.of("your.schem");
-Schematic schematic = SchematicUtil.load(path);
+// Load schematic from a file.
+// Currently supported formats include .schematic, .schem and .litematic.
+Schematic schematic = SchematicLoader.load("/path/to/your.schematic"); 
 
-schematic.getName();
-schematic.getBlock(0, 0, 0).name;
+schematic.name();
+schematic.width();
+schematic.height();
+schematic.lenght();
+schematic.block(0, 0, 0).name;
+schematic.blocks().next();
+schematic.blockEntities().next();
+schematic.entities().next();
 ```
