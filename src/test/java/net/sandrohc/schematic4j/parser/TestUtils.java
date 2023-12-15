@@ -1,6 +1,8 @@
 package net.sandrohc.schematic4j.parser;
 
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import au.com.origin.snapshots.Expect;
 
@@ -9,6 +11,9 @@ import net.sandrohc.schematic4j.nbt.io.NBTUtil;
 import net.sandrohc.schematic4j.nbt.io.NamedTag;
 import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.schematic.Schematic;
+import net.sandrohc.schematic4j.schematic.types.Pair;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 
 public class TestUtils {
 
@@ -34,5 +39,12 @@ public class TestUtils {
 		final CompoundTag nbt = nbtFromResource(file);
 		final Schematic schem = parser.parse(nbt);
 		expect.toMatchSnapshot(schem);
+	}
+
+	public static void assertSchematicBlockIterator(Expect expect, String file, Parser parser) throws ParsingException {
+		final CompoundTag nbt = nbtFromResource(file);
+		final Schematic schem = parser.parse(nbt);
+		final Collection<Pair<SchematicBlockPos, SchematicBlock>> blocks = schem.blocks().collect(Collectors.toList());
+		expect.toMatchSnapshot(blocks);
 	}
 }

@@ -1,3 +1,589 @@
+net.sandrohc.schematic4j.parser.LitematicaParserTest.blockIterator=[
+  [
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:white_wool",
+        "name" : "minecraft:white_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 0,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:red_wool",
+        "name" : "minecraft:red_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 0,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:red_wool",
+        "name" : "minecraft:red_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 0,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_wool",
+        "name" : "minecraft:light_blue_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 0,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:chest",
+        "name" : "minecraft:chest[facing=south,type=single,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "type" : "single",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 0,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 0,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_wool",
+        "name" : "minecraft:light_blue_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 0,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 0,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 0,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 0,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 0,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 0,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:lime_wool",
+        "name" : "minecraft:lime_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 1,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 1,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 1,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 1,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 1,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 1,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 1,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 1,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 1,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 1,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 1,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 1,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:lime_wool",
+        "name" : "minecraft:lime_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 2,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 2,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 2,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 2,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 2,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 2,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 2,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 2,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 2,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 1,
+        "y" : 2,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 2,
+        "y" : 2,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 3,
+        "y" : 2,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:air",
+        "name" : "minecraft:air",
+        "states" : { }
+      }
+    }
+  ]
+]
+
+
 net.sandrohc.schematic4j.parser.LitematicaParserTest.snapshot1=[
   {
     "metadata" : {

@@ -3,15 +3,17 @@ package net.sandrohc.schematic4j.schematic;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.SchematicFormat;
+import net.sandrohc.schematic4j.schematic.types.Pair;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
@@ -80,16 +82,13 @@ public class LitematicaSchematic implements Schematic {
 	}
 
 	@Override
-	public @Nullable SchematicBlock block(int x, int y, int z) {
+	public @NonNull SchematicBlock block(int x, int y, int z) {
 		for (Region region : regions) {
-			if (region.position != null
-					&& region.size != null
-					&& (region.position.x <= x && region.position.x + region.size.x > x)
+			if ((region.position.x <= x && region.position.x + region.size.x > x)
 					&& (region.position.y <= y && region.position.y + region.size.y > y)
 					&& (region.position.z <= z && region.position.z + region.size.z > z)) {
 
-				final int sizeLayer = region.size.x * region.size.z;
-				final int blockStateIndex = (y * sizeLayer) + z * region.size.x + x;
+				final int blockStateIndex = region.posToIndex(x, y, z);
 				final int paletteIndex = region.blockStates[blockStateIndex];
 				return region.blockStatePalette[paletteIndex];
 			}
@@ -99,18 +98,23 @@ public class LitematicaSchematic implements Schematic {
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicBlock> blocks() {
-		return Arrays.stream(regions).flatMap(r -> Arrays.stream(r.blockStates).mapToObj(idx -> r.blockStatePalette[idx])).iterator();
+	public @NonNull Stream<Pair<SchematicBlockPos, SchematicBlock>> blocks() {
+		return Arrays.stream(regions).flatMap(region -> IntStream.range(0, region.blockStates.length).mapToObj(idx -> {
+			final SchematicBlockPos pos = region.indexToPos(idx);
+			final int paletteIdx = region.blockStates[idx];
+			final SchematicBlock block = region.blockStatePalette[paletteIdx];
+			return new Pair<>(pos, block);
+		}));
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicBlockEntity> blockEntities() {
-		return Arrays.stream(regions).flatMap(r -> Arrays.stream(r.blockEntities)).iterator();
+	public @NonNull Stream<SchematicBlockEntity> blockEntities() {
+		return Arrays.stream(regions).flatMap(r -> Arrays.stream(r.blockEntities));
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicEntity> entities() {
-		return Arrays.stream(regions).flatMap(r -> Arrays.stream(r.entities)).iterator();
+	public @NonNull Stream<SchematicEntity> entities() {
+		return Arrays.stream(regions).flatMap(r -> Arrays.stream(r.entities));
 	}
 
 	public @NonNull Region[] regions() {
@@ -224,8 +228,8 @@ public class LitematicaSchematic implements Schematic {
 
 	public static class Region {
 		public @Nullable String name;
-		public @Nullable SchematicBlockPos position;
-		public @Nullable SchematicBlockPos size;
+		public @NonNull SchematicBlockPos position;
+		public @NonNull SchematicBlockPos size;
 		public int @NonNull [] blockStates;
 		public SchematicBlock @NonNull [] blockStatePalette;
 		public SchematicBlockEntity @NonNull [] blockEntities;
@@ -238,8 +242,8 @@ public class LitematicaSchematic implements Schematic {
 					  @Nullable SchematicBlockEntity[] blockEntities, @Nullable SchematicEntity[] entities,
 					  @Nullable PendingTicks[] pendingBlockTicks, @Nullable PendingTicks[] pendingFluidTicks) {
 			this.name = name;
-			this.position = position;
-			this.size = size;
+			this.position = position != null ? position : SchematicBlockPos.ZERO;
+			this.size = size != null ? size : SchematicBlockPos.ZERO;
 			this.blockStates = blockStates != null ? blockStates : new int[0];
 			this.blockStatePalette = blockStatePalette != null ? blockStatePalette : new SchematicBlock[0];
 			this.blockEntities = blockEntities != null ? blockEntities : new SchematicBlockEntity[0];
@@ -252,6 +256,17 @@ public class LitematicaSchematic implements Schematic {
 			this(null, null, null, null, null, null, null, null, null);
 		}
 
+		public int posToIndex(int x, int y, int z) {
+			return (y * size.x * size.z) + (z * size.x) + x;
+		}
+
+		public @NonNull SchematicBlockPos indexToPos(int index) {
+			final int x = index % size.x;
+			final int z = (index / size.x) % size.z;
+			final int y = index / (size.x * size.z);
+			return new SchematicBlockPos(x, y, z);
+		}
+
 		@Override
 		public boolean equals(Object o) {
 			if (this == o) return true;
@@ -260,15 +275,15 @@ public class LitematicaSchematic implements Schematic {
 			Region region = (Region) o;
 
 			if (!Objects.equals(name, region.name)) return false;
-			if (!Objects.equals(position, region.position)) return false;
-			return Objects.equals(size, region.size);
+			if (!position.equals(region.position)) return false;
+			return size.equals(region.size);
 		}
 
 		@Override
 		public int hashCode() {
 			int result = name != null ? name.hashCode() : 0;
-			result = 31 * result + (position != null ? position.hashCode() : 0);
-			result = 31 * result + (size != null ? size.hashCode() : 0);
+			result = 31 * result + position.hashCode();
+			result = 31 * result + size.hashCode();
 			return result;
 		}
 

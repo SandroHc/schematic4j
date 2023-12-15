@@ -274,7 +274,7 @@ public class SpongeParser implements Parser {
 			final String id = blockEntityTag.getString(NBT_BLOCK_ENTITIES_ID);
 			final SchematicBlockPos pos = getIntArray(blockEntityTag, NBT_BLOCK_ENTITIES_POS)
 					.map(SchematicBlockPos::from)
-					.orElseGet(() -> new SchematicBlockPos(0, 0, 0));
+					.orElse(SchematicBlockPos.ZERO);
 			final Map<String, Object> data = blockEntityTag.entrySet().stream()
 					.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) && !tag.getKey().equals(NBT_ENTITIES_POS))
 					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));

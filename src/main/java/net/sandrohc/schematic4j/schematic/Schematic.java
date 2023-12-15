@@ -1,19 +1,21 @@
 package net.sandrohc.schematic4j.schematic;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.SchematicFormat;
+import net.sandrohc.schematic4j.schematic.types.Pair;
 import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicItem;
 
@@ -69,15 +71,22 @@ public interface Schematic {
 	 * @param z The X coordinate, can be a negative value
 	 * @return block, or {@code null} if information is not available.
 	 */
-	@Nullable SchematicBlock block(int x, int y, int z);
+	@NonNull SchematicBlock block(int x, int y, int z);
 
 	/**
-	 * Iterator for iterating over the list of blocks.
+	 * Iterate over the list of blocks. Follows a zigzag pattern: first visits X, then Z, then Y.
 	 *
 	 * @return an iterator
 	 */
-	default @NonNull Iterator<SchematicBlock> blocks() {
-		return Collections.emptyListIterator();
+	default @NonNull Stream<Pair<SchematicBlockPos, SchematicBlock>> blocks() {
+		return IntStream.range(0, width() * length() * height()).mapToObj(index -> {
+			final int x = index % width();
+			final int z = (index / width()) % length();
+			final int y = (index / (width() * length())) % height();
+			final SchematicBlockPos pos = new SchematicBlockPos(x, y, z);
+			final SchematicBlock block = block(x, y, z);
+			return new Pair<>(pos, block);
+		});
 	}
 
 	/**
@@ -85,8 +94,8 @@ public interface Schematic {
 	 *
 	 * @return list of block entities
 	 */
-	default @NonNull Iterator<SchematicBlockEntity> blockEntities() {
-		return Collections.emptyListIterator();
+	default @NonNull Stream<SchematicBlockEntity> blockEntities() {
+		return Stream.empty();
 	}
 
 	/**
@@ -94,8 +103,8 @@ public interface Schematic {
 	 *
 	 * @return list of entities
 	 */
-	default @NonNull Iterator<SchematicEntity> entities() {
-		return Collections.emptyListIterator();
+	default @NonNull Stream<SchematicEntity> entities() {
+		return Stream.empty();
 	}
 
 	/**
@@ -106,17 +115,24 @@ public interface Schematic {
 	 * @param z the Z coordinate
 	 * @return biome, or {@code null} if information is not available.
 	 */
-	default @Nullable SchematicBiome biome(int x, int y, int z) {
-		return null;
+	default @NonNull SchematicBiome biome(int x, int y, int z) {
+		return SchematicBiome.AIR;
 	}
 
 	/**
-	 * Iterator for iterating over the list of biomes.
+	 * Iterate over the list of biomes. Follows a zigzag pattern: first visits X, then Z, then Y.
 	 *
 	 * @return an iterator
 	 */
-	default @NonNull Iterator<SchematicBiome> biomes() {
-		return Collections.emptyListIterator();
+	default @NonNull Stream<Pair<SchematicBlockPos, SchematicBiome>> biomes() {
+		return IntStream.range(0, width() * length() * height()).mapToObj(index -> {
+			final int x = index % width();
+			final int z = (index / width()) % length();
+			final int y = (index / (width() * length())) % height();
+			final SchematicBlockPos pos = new SchematicBlockPos(x, y, z);
+			final SchematicBiome biome = biome(x, y, z);
+			return new Pair<>(pos, biome);
+		});
 	}
 
 	/**
@@ -236,7 +252,7 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default Iterator<SchematicBlock> getBlocks() {
-		return blocks();
+		return blocks().map(pair -> pair.right).iterator();
 	}
 
 	/**
@@ -247,12 +263,7 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default Collection<SchematicBlockEntity> getBlockEntities() {
-		final List<SchematicBlockEntity> items = new ArrayList<>();
-		final Iterator<SchematicBlockEntity> iterator = blockEntities();
-		while (iterator.hasNext()) {
-			items.add(iterator.next());
-		}
-		return items;
+		return blockEntities().collect(Collectors.toList());
 	}
 
 	/**
@@ -263,12 +274,7 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default Collection<SchematicEntity> getEntities() {
-		final List<SchematicEntity> items = new ArrayList<>();
-		final Iterator<SchematicEntity> iterator = entities();
-		while (iterator.hasNext()) {
-			items.add(iterator.next());
-		}
-		return items;
+		return entities().collect(Collectors.toList());
 	}
 
 	/**
@@ -293,7 +299,7 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default Iterator<SchematicBiome> getBiomes() {
-		return biomes();
+		return biomes().map(p -> p.right).iterator();
 	}
 
 	/**

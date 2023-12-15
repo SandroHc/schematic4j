@@ -1,7 +1,7 @@
 package net.sandrohc.schematic4j.schematic;
 
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,7 +12,6 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicItem;
-import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 import static net.sandrohc.schematic4j.schematic.types.SchematicBlock.AIR;
 
@@ -84,7 +83,7 @@ public class SchematicaSchematic implements Schematic {
 	}
 
 	@Override
-	public @Nullable SchematicBlock block(int x, int y, int z) {
+	public @NonNull SchematicBlock block(int x, int y, int z) {
 		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
 			return AIR; // outside bounds
 		}
@@ -92,18 +91,13 @@ public class SchematicaSchematic implements Schematic {
 		return blocks[x][y][z];
 	}
 
-	@Override
-	public @NonNull Iterator<SchematicBlock> blocks() {
-		return new Arr3DIterator<>(blocks);
-	}
-
 	public @NonNull SchematicBlock[][][] blockData() {
 		return blocks;
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicBlockEntity> blockEntities() {
-		return Arrays.stream(blockEntities).iterator();
+	public @NonNull Stream<SchematicBlockEntity> blockEntities() {
+		return Arrays.stream(blockEntities);
 	}
 
 	public @NonNull SchematicBlockEntity[] blockEntityData() {
@@ -111,8 +105,8 @@ public class SchematicaSchematic implements Schematic {
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicEntity> entities() {
-		return Arrays.stream(entities).iterator();
+	public @NonNull Stream<SchematicEntity> entities() {
+		return Arrays.stream(entities);
 	}
 
 	public @NonNull SchematicEntity[] entityData() {

@@ -3,19 +3,21 @@ package net.sandrohc.schematic4j.schematic;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.SchematicBuilderException;
+import net.sandrohc.schematic4j.schematic.types.Pair;
 import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
-import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
 import static net.sandrohc.schematic4j.schematic.types.SchematicBlock.AIR;
 
@@ -29,34 +31,34 @@ public class SpongeSchematic implements Schematic {
 	/**
 	 * The Sponge Schematic format version being used.
 	 **/
-	public final int version;
+	public int version;
 
 	/**
 	 * Specifies the data version of Minecraft that was used to create the schematic. This is to allow for block and
 	 * entity data to be validated and auto-converted from older versions. This is dependent on the Minecraft version,
 	 * e.g. Minecraft 1.12.2's data version is <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
 	 */
-	public final @Nullable Integer dataVersion;
+	public @Nullable Integer dataVersion;
 
 	/**
 	 * The optional metadata about the schematic.
 	 */
-	public final @NonNull Metadata metadata;
+	public @NonNull Metadata metadata;
 
 	/**
 	 * The width (the size of the area in the X-axis) of the schematic.
 	 */
-	public final int width;
+	public int width;
 
 	/**
 	 * The height (the size of the area in the Y-axis) of the schematic.
 	 */
-	public final int height;
+	public int height;
 
 	/**
 	 * The length (the size of the area in the Z-axis) of the schematic.
 	 */
-	public final int length;
+	public int length;
 
 	/**
 	 * The relative offset of the schematic from the paster. When pasting, if there is a reasonable location to use as
@@ -64,12 +66,14 @@ public class SpongeSchematic implements Schematic {
 	 * not provided is [0, 0, 0]. Example: If a player is pasting from 1, 2, 3, and the offset is 4, 5, 6, then the
 	 * first block should be placed at 5, 7, 9
 	 */
-	public final int[] offset;
+	public int[] offset;
 
-	public final @NonNull SchematicBlock[][][] blocks;
-	public final SchematicBlockEntity[] blockEntities;
-	public final SchematicEntity[] entities;
-	public final SchematicBiome[][][] biomes;
+	public @NonNull SchematicBlock[][][] blocks;
+	public SchematicBlockEntity[] blockEntities;
+	public SchematicEntity[] entities;
+	public SchematicBiome[][][] biomes;
+
+	public final int biomeHeight;
 
 	public SpongeSchematic(int version, @Nullable Integer dataVersion, @Nullable Metadata metadata, int width,
 						   int height, int length, int[] offset, @NonNull SchematicBlock[][][] blocks,
@@ -86,6 +90,7 @@ public class SpongeSchematic implements Schematic {
 		this.blockEntities = blockEntities;
 		this.entities = entities;
 		this.biomes = biomes;
+		this.biomeHeight = biomes.length > 0 ? biomes[0].length : 0;
 	}
 
 	@Override
@@ -122,7 +127,7 @@ public class SpongeSchematic implements Schematic {
 	}
 
 	@Override
-	public @Nullable SchematicBlock block(int x, int y, int z) {
+	public @NonNull SchematicBlock block(int x, int y, int z) {
 		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
 			return AIR; // outside bounds
 		}
@@ -130,18 +135,13 @@ public class SpongeSchematic implements Schematic {
 		return blocks[x][y][z];
 	}
 
-	@Override
-	public @NonNull Iterator<SchematicBlock> blocks() {
-		return new Arr3DIterator<>(blocks);
-	}
-
 	public @NonNull SchematicBlock[][][] blockData() {
 		return blocks;
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicBlockEntity> blockEntities() {
-		return Arrays.stream(blockEntities).iterator();
+	public @NonNull Stream<SchematicBlockEntity> blockEntities() {
+		return Arrays.stream(blockEntities);
 	}
 
 	public @NonNull SchematicBlockEntity[] blockEntityData() {
@@ -149,8 +149,8 @@ public class SpongeSchematic implements Schematic {
 	}
 
 	@Override
-	public @NonNull Iterator<SchematicEntity> entities() {
-		return Arrays.stream(entities).iterator();
+	public @NonNull Stream<SchematicEntity> entities() {
+		return Arrays.stream(entities);
 	}
 
 	public @NonNull SchematicEntity[] entityData() {
@@ -158,17 +158,29 @@ public class SpongeSchematic implements Schematic {
 	}
 
 	@Override
-	public @Nullable SchematicBiome biome(int x, int y, int z) {
-		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
-			return new SchematicBiome("minecraft:air"); // outside bounds
+	public @NonNull SchematicBiome biome(int x, int y, int z) {
+		if ((x < 0 || x >= width) || (y < 0 || y >= biomeHeight) || (z < 0 || z >= length)) {
+			return SchematicBiome.AIR; // outside bounds
 		}
 
 		return biomes[x][y][z];
 	}
 
+	/**
+	 * Iterate over the list of biomes. Follows a zigzag pattern: first visits X, then Z, then Y.
+	 *
+	 * @return an iterator
+	 */
 	@Override
-	public @NonNull Iterator<SchematicBiome> biomes() {
-		return new Arr3DIterator<>(biomes);
+	public @NonNull Stream<Pair<SchematicBlockPos, SchematicBiome>> biomes() {
+		return IntStream.range(0, width * length * biomeHeight).mapToObj(index -> {
+			int x = index % width;
+			int z = (index / width) % length;
+			int y = (index / (width * length)) % biomeHeight;
+			SchematicBlockPos pos = new SchematicBlockPos(x, y, z);
+			SchematicBiome biome = biome(x, y, z);
+			return new Pair<>(pos, biome);
+		});
 	}
 
 	public @NonNull SchematicBiome[][][] biomeData() {

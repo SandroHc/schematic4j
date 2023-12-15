@@ -182,8 +182,16 @@ public class LitematicaParser implements Parser {
 	protected Region parseRegion(CompoundTag regionTag, String regionName) {
 		final Region region = new Region();
 		region.name = regionName;
-		region.position = SchematicBlockPos.from(regionTag.getCompoundTag(NBT_REGION_POSITION));
-		region.size = SchematicBlockPos.from(regionTag.getCompoundTag(NBT_REGION_SIZE));
+
+		final SchematicBlockPos position = SchematicBlockPos.from(regionTag.getCompoundTag(NBT_REGION_POSITION));
+		if (position != null) {
+			region.position = position;
+		}
+
+		final SchematicBlockPos size = SchematicBlockPos.from(regionTag.getCompoundTag(NBT_REGION_SIZE));
+		if (size != null) {
+			region.size = size;
+		}
 
 		parseBlocks(regionTag, region);
 		parseBlockEntities(regionTag, region);
@@ -314,12 +322,6 @@ public class LitematicaParser implements Parser {
 	}
 
 	public static @NonNull SchematicBlockPos getRegionSize(Region region) {
-		if (region.size == null) {
-			return new SchematicBlockPos(0, 0, 0);
-		}
-
-		final SchematicBlockPos regionPos = region.position != null ? region.position : new SchematicBlockPos(0, 0, 0);
-
 		int posEndRelX = region.size.x;
 		int posEndRelY = region.size.y;
 		int posEndRelZ = region.size.z;
@@ -327,17 +329,17 @@ public class LitematicaParser implements Parser {
 		posEndRelY = posEndRelY >= 0 ? posEndRelY - 1 : posEndRelY + 1;
 		posEndRelZ = posEndRelZ >= 0 ? posEndRelZ - 1 : posEndRelZ + 1;
 
-		posEndRelX += regionPos.x;
-		posEndRelY += regionPos.y;
-		posEndRelZ += regionPos.z;
+		posEndRelX += region.position.x;
+		posEndRelY += region.position.y;
+		posEndRelZ += region.position.z;
 
-		int posMinX = Math.min(regionPos.x, posEndRelX);
-		int posMinY = Math.min(regionPos.y, posEndRelY);
-		int posMinZ = Math.min(regionPos.z, posEndRelZ);
+		int posMinX = Math.min(region.position.x, posEndRelX);
+		int posMinY = Math.min(region.position.y, posEndRelY);
+		int posMinZ = Math.min(region.position.z, posEndRelZ);
 
-		int posMaxX = Math.max(regionPos.x, posEndRelX);
-		int posMaxY = Math.max(regionPos.y, posEndRelY);
-		int posMaxZ = Math.max(regionPos.z, posEndRelZ);
+		int posMaxX = Math.max(region.position.x, posEndRelX);
+		int posMaxY = Math.max(region.position.y, posEndRelY);
+		int posMaxZ = Math.max(region.position.z, posEndRelZ);
 
 		return new SchematicBlockPos(posMaxX - posMinX + 1, posMaxY - posMinY + 1, posMaxZ - posMinZ + 1);
 	}

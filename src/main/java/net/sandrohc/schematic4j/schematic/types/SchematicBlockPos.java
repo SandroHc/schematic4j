@@ -9,6 +9,9 @@ import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.nbt.tag.Tag;
 
 public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
+
+	public static final SchematicBlockPos ZERO = new SchematicBlockPos(0, 0, 0);
+
 	public final int x;
 	public final int y;
 	public final int z;

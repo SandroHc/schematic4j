@@ -19,6 +19,7 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 
 import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematic;
+import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematicBlockIterator;
 import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -90,6 +91,11 @@ public class LitematicaParserTest {
 		softly.assertThat(schem.block(0, 0, -1)).isEqualTo(new SchematicBlock("minecraft:air"));
 		softly.assertThat(schem.block(1, 1, -1)).isEqualTo(new SchematicBlock("minecraft:air"));
 		softly.assertAll();
+	}
+
+	@Test
+	public void blockIterator() throws ParsingException {
+		assertSchematicBlockIterator(expect, "/schematics/litematica/v6/demo.litematic", new LitematicaParser());
 	}
 
 	/**

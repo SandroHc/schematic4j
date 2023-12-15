@@ -1,5 +1,4912 @@
+net.sandrohc.schematic4j.parser.SpongeParserTest.blockIterator=[
+  [
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:stone",
+        "name" : "minecraft:stone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:granite",
+        "name" : "minecraft:granite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:polished_granite",
+        "name" : "minecraft:polished_granite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:diorite",
+        "name" : "minecraft:diorite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:polished_diorite",
+        "name" : "minecraft:polished_diorite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:andesite",
+        "name" : "minecraft:andesite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:polished_andesite",
+        "name" : "minecraft:polished_andesite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:deepslate",
+        "name" : "minecraft:deepslate[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:cobbled_deepslate",
+        "name" : "minecraft:cobbled_deepslate",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:polished_deepslate",
+        "name" : "minecraft:polished_deepslate",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:calcite",
+        "name" : "minecraft:calcite",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:dirt",
+        "name" : "minecraft:dirt",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:dripstone_block",
+        "name" : "minecraft:dripstone_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:tuff",
+        "name" : "minecraft:tuff",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:dirt",
+        "name" : "minecraft:dirt",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:coarse_dirt",
+        "name" : "minecraft:coarse_dirt",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:podzol",
+        "name" : "minecraft:podzol[snowy=false]",
+        "states" : {
+          "snowy" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 1,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:rooted_dirt",
+        "name" : "minecraft:rooted_dirt",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:netherrack",
+        "name" : "minecraft:netherrack",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:netherrack",
+        "name" : "minecraft:netherrack",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:cobblestone",
+        "name" : "minecraft:cobblestone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:oak_planks",
+        "name" : "minecraft:oak_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:spruce_planks",
+        "name" : "minecraft:spruce_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:birch_planks",
+        "name" : "minecraft:birch_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:jungle_planks",
+        "name" : "minecraft:jungle_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:acacia_planks",
+        "name" : "minecraft:acacia_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 2,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:dark_oak_planks",
+        "name" : "minecraft:dark_oak_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:crimson_planks",
+        "name" : "minecraft:crimson_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:warped_planks",
+        "name" : "minecraft:warped_planks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:bedrock",
+        "name" : "minecraft:bedrock",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:sand",
+        "name" : "minecraft:sand",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:red_sand",
+        "name" : "minecraft:red_sand",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:gravel",
+        "name" : "minecraft:gravel",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:coal_ore",
+        "name" : "minecraft:coal_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_coal_ore",
+        "name" : "minecraft:deepslate_coal_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 3,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:iron_ore",
+        "name" : "minecraft:iron_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_iron_ore",
+        "name" : "minecraft:deepslate_iron_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:copper_ore",
+        "name" : "minecraft:copper_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_copper_ore",
+        "name" : "minecraft:deepslate_copper_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:gold_ore",
+        "name" : "minecraft:gold_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_gold_ore",
+        "name" : "minecraft:deepslate_gold_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:redstone_ore",
+        "name" : "minecraft:redstone_ore[lit=false]",
+        "states" : {
+          "lit" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_redstone_ore",
+        "name" : "minecraft:deepslate_redstone_ore[lit=false]",
+        "states" : {
+          "lit" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:emerald_ore",
+        "name" : "minecraft:emerald_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 4,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_emerald_ore",
+        "name" : "minecraft:deepslate_emerald_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:lapis_ore",
+        "name" : "minecraft:lapis_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_lapis_ore",
+        "name" : "minecraft:deepslate_lapis_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:diamond_ore",
+        "name" : "minecraft:diamond_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_diamond_ore",
+        "name" : "minecraft:deepslate_diamond_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:nether_gold_ore",
+        "name" : "minecraft:nether_gold_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:nether_quartz_ore",
+        "name" : "minecraft:nether_quartz_ore",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:ancient_debris",
+        "name" : "minecraft:ancient_debris",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:coal_block",
+        "name" : "minecraft:coal_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 5,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:raw_iron_block",
+        "name" : "minecraft:raw_iron_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:raw_copper_block",
+        "name" : "minecraft:raw_copper_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:raw_gold_block",
+        "name" : "minecraft:raw_gold_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:amethyst_block",
+        "name" : "minecraft:amethyst_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:budding_amethyst",
+        "name" : "minecraft:budding_amethyst",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:iron_block",
+        "name" : "minecraft:iron_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:copper_block",
+        "name" : "minecraft:copper_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:gold_block",
+        "name" : "minecraft:gold_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:diamond_block",
+        "name" : "minecraft:diamond_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 6,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:netherite_block",
+        "name" : "minecraft:netherite_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:exposed_copper",
+        "name" : "minecraft:exposed_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:weathered_copper",
+        "name" : "minecraft:weathered_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:oxidized_copper",
+        "name" : "minecraft:oxidized_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:exposed_cut_copper",
+        "name" : "minecraft:exposed_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:exposed_cut_copper",
+        "name" : "minecraft:exposed_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:weathered_cut_copper",
+        "name" : "minecraft:weathered_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:oxidized_cut_copper",
+        "name" : "minecraft:oxidized_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cut_copper_stairs",
+        "name" : "minecraft:cut_copper_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 7,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:exposed_cut_copper_stairs",
+        "name" : "minecraft:exposed_cut_copper_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:weathered_cut_copper_stairs",
+        "name" : "minecraft:weathered_cut_copper_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:oxidized_cut_copper_stairs",
+        "name" : "minecraft:oxidized_cut_copper_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "west",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:exposed_cut_copper_slab",
+        "name" : "minecraft:exposed_cut_copper_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:exposed_cut_copper_slab",
+        "name" : "minecraft:exposed_cut_copper_slab[type=double,waterlogged=false]",
+        "states" : {
+          "type" : "double",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:weathered_cut_copper_slab",
+        "name" : "minecraft:weathered_cut_copper_slab[type=top,waterlogged=false]",
+        "states" : {
+          "type" : "top",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:oxidized_cut_copper_slab",
+        "name" : "minecraft:oxidized_cut_copper_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:waxed_copper_block",
+        "name" : "minecraft:waxed_copper_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:waxed_exposed_copper",
+        "name" : "minecraft:waxed_exposed_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 8,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:waxed_weathered_copper",
+        "name" : "minecraft:waxed_weathered_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:waxed_oxidized_copper",
+        "name" : "minecraft:waxed_oxidized_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:waxed_cut_copper",
+        "name" : "minecraft:waxed_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:waxed_exposed_cut_copper",
+        "name" : "minecraft:waxed_exposed_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:waxed_weathered_cut_copper",
+        "name" : "minecraft:waxed_weathered_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:waxed_oxidized_cut_copper",
+        "name" : "minecraft:waxed_oxidized_cut_copper",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:waxed_cut_copper_stairs",
+        "name" : "minecraft:waxed_cut_copper_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "outer_left",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:waxed_exposed_cut_copper_stairs",
+        "name" : "minecraft:waxed_exposed_cut_copper_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:waxed_weathered_cut_copper_stairs",
+        "name" : "minecraft:waxed_weathered_cut_copper_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "outer_right",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 9,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:waxed_oxidized_cut_copper_stairs",
+        "name" : "minecraft:waxed_oxidized_cut_copper_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:waxed_cut_copper_slab",
+        "name" : "minecraft:waxed_cut_copper_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:waxed_exposed_cut_copper_slab",
+        "name" : "minecraft:waxed_exposed_cut_copper_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:waxed_weathered_cut_copper_slab",
+        "name" : "minecraft:waxed_weathered_cut_copper_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:waxed_oxidized_cut_copper_slab",
+        "name" : "minecraft:waxed_oxidized_cut_copper_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:oak_log",
+        "name" : "minecraft:oak_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:spruce_log",
+        "name" : "minecraft:spruce_log[axis=z]",
+        "states" : {
+          "axis" : "z"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:birch_log",
+        "name" : "minecraft:birch_log[axis=x]",
+        "states" : {
+          "axis" : "x"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:jungle_log",
+        "name" : "minecraft:jungle_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 10,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:acacia_log",
+        "name" : "minecraft:acacia_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:dark_oak_log",
+        "name" : "minecraft:dark_oak_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:crimson_stem",
+        "name" : "minecraft:crimson_stem[axis=z]",
+        "states" : {
+          "axis" : "z"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:warped_stem",
+        "name" : "minecraft:warped_stem[axis=z]",
+        "states" : {
+          "axis" : "z"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:stripped_oak_log",
+        "name" : "minecraft:stripped_oak_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:stripped_spruce_log",
+        "name" : "minecraft:stripped_spruce_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:stripped_birch_log",
+        "name" : "minecraft:stripped_birch_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:stripped_jungle_log",
+        "name" : "minecraft:stripped_jungle_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:stripped_acacia_log",
+        "name" : "minecraft:stripped_acacia_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 11,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:stripped_dark_oak_log",
+        "name" : "minecraft:stripped_dark_oak_log[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:stripped_crimson_stem",
+        "name" : "minecraft:stripped_crimson_stem[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:stripped_warped_stem",
+        "name" : "minecraft:stripped_warped_stem[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:stripped_oak_wood",
+        "name" : "minecraft:stripped_oak_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:stripped_spruce_wood",
+        "name" : "minecraft:stripped_spruce_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:stripped_birch_wood",
+        "name" : "minecraft:stripped_birch_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:stripped_jungle_wood",
+        "name" : "minecraft:stripped_jungle_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:stripped_acacia_wood",
+        "name" : "minecraft:stripped_acacia_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:stripped_dark_oak_wood",
+        "name" : "minecraft:stripped_dark_oak_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 12,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:stripped_crimson_hyphae",
+        "name" : "minecraft:stripped_crimson_hyphae[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:stripped_warped_hyphae",
+        "name" : "minecraft:stripped_warped_hyphae[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:oak_wood",
+        "name" : "minecraft:oak_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:spruce_wood",
+        "name" : "minecraft:spruce_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:birch_wood",
+        "name" : "minecraft:birch_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:jungle_wood",
+        "name" : "minecraft:jungle_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:acacia_wood",
+        "name" : "minecraft:acacia_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:dark_oak_wood",
+        "name" : "minecraft:dark_oak_wood[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:crimson_hyphae",
+        "name" : "minecraft:crimson_hyphae[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 13,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:warped_hyphae",
+        "name" : "minecraft:warped_hyphae[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:wet_sponge",
+        "name" : "minecraft:wet_sponge",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:wet_sponge",
+        "name" : "minecraft:wet_sponge",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:glass",
+        "name" : "minecraft:glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:tinted_glass",
+        "name" : "minecraft:tinted_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:lapis_block",
+        "name" : "minecraft:lapis_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:sandstone",
+        "name" : "minecraft:sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:chiseled_sandstone",
+        "name" : "minecraft:chiseled_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cut_sandstone",
+        "name" : "minecraft:cut_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 14,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:white_wool",
+        "name" : "minecraft:white_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:orange_wool",
+        "name" : "minecraft:orange_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:magenta_wool",
+        "name" : "minecraft:magenta_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_wool",
+        "name" : "minecraft:light_blue_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:yellow_wool",
+        "name" : "minecraft:yellow_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:lime_wool",
+        "name" : "minecraft:lime_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:pink_wool",
+        "name" : "minecraft:pink_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:gray_wool",
+        "name" : "minecraft:gray_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:light_gray_wool",
+        "name" : "minecraft:light_gray_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 15,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:cyan_wool",
+        "name" : "minecraft:cyan_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:purple_wool",
+        "name" : "minecraft:purple_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:blue_wool",
+        "name" : "minecraft:blue_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:brown_wool",
+        "name" : "minecraft:brown_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:green_wool",
+        "name" : "minecraft:green_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:red_wool",
+        "name" : "minecraft:red_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:black_wool",
+        "name" : "minecraft:black_wool",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:oak_slab",
+        "name" : "minecraft:oak_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:spruce_slab",
+        "name" : "minecraft:spruce_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 16,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:birch_slab",
+        "name" : "minecraft:birch_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:jungle_slab",
+        "name" : "minecraft:jungle_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:acacia_slab",
+        "name" : "minecraft:acacia_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:dark_oak_slab",
+        "name" : "minecraft:dark_oak_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:crimson_slab",
+        "name" : "minecraft:crimson_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:warped_slab",
+        "name" : "minecraft:warped_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:stone_slab",
+        "name" : "minecraft:stone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:smooth_stone_slab",
+        "name" : "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:sandstone_slab",
+        "name" : "minecraft:sandstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 17,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:cut_sandstone_slab",
+        "name" : "minecraft:cut_sandstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:petrified_oak_slab",
+        "name" : "minecraft:petrified_oak_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:cobblestone_slab",
+        "name" : "minecraft:cobblestone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:brick_slab",
+        "name" : "minecraft:brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:stone_brick_slab",
+        "name" : "minecraft:stone_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:nether_brick_slab",
+        "name" : "minecraft:nether_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:quartz_slab",
+        "name" : "minecraft:quartz_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:red_sandstone_slab",
+        "name" : "minecraft:red_sandstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cut_red_sandstone_slab",
+        "name" : "minecraft:cut_red_sandstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 18,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:purpur_slab",
+        "name" : "minecraft:purpur_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:prismarine_slab",
+        "name" : "minecraft:prismarine_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:prismarine_brick_slab",
+        "name" : "minecraft:prismarine_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:dark_prismarine_slab",
+        "name" : "minecraft:dark_prismarine_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:smooth_quartz",
+        "name" : "minecraft:smooth_quartz",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:smooth_red_sandstone",
+        "name" : "minecraft:smooth_red_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:smooth_sandstone",
+        "name" : "minecraft:smooth_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:smooth_stone",
+        "name" : "minecraft:smooth_stone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:bricks",
+        "name" : "minecraft:bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 19,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:bookshelf",
+        "name" : "minecraft:bookshelf",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:mossy_cobblestone",
+        "name" : "minecraft:mossy_cobblestone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:obsidian",
+        "name" : "minecraft:obsidian",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:purpur_block",
+        "name" : "minecraft:purpur_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:purpur_pillar",
+        "name" : "minecraft:purpur_pillar[axis=z]",
+        "states" : {
+          "axis" : "z"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:purpur_stairs",
+        "name" : "minecraft:purpur_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:oak_stairs",
+        "name" : "minecraft:oak_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "outer_left",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:cobblestone_stairs",
+        "name" : "minecraft:cobblestone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:ice",
+        "name" : "minecraft:ice",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 20,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:snow_block",
+        "name" : "minecraft:snow_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:clay",
+        "name" : "minecraft:clay",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:pumpkin",
+        "name" : "minecraft:pumpkin",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:carved_pumpkin",
+        "name" : "minecraft:carved_pumpkin[facing=south]",
+        "states" : {
+          "facing" : "south"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:jack_o_lantern",
+        "name" : "minecraft:jack_o_lantern[facing=north]",
+        "states" : {
+          "facing" : "north"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:netherrack",
+        "name" : "minecraft:netherrack",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:soul_sand",
+        "name" : "minecraft:soul_sand",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:soul_soil",
+        "name" : "minecraft:soul_soil",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:basalt",
+        "name" : "minecraft:basalt[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 21,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:polished_basalt",
+        "name" : "minecraft:polished_basalt[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:smooth_basalt",
+        "name" : "minecraft:smooth_basalt",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:glowstone",
+        "name" : "minecraft:glowstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:stone_bricks",
+        "name" : "minecraft:stone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:mossy_stone_bricks",
+        "name" : "minecraft:mossy_stone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:cracked_stone_bricks",
+        "name" : "minecraft:cracked_stone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:chiseled_stone_bricks",
+        "name" : "minecraft:chiseled_stone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_bricks",
+        "name" : "minecraft:deepslate_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cracked_deepslate_bricks",
+        "name" : "minecraft:cracked_deepslate_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 22,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_tiles",
+        "name" : "minecraft:deepslate_tiles",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:cracked_deepslate_tiles",
+        "name" : "minecraft:cracked_deepslate_tiles",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:chiseled_deepslate",
+        "name" : "minecraft:chiseled_deepslate",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:melon",
+        "name" : "minecraft:melon",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:brick_stairs",
+        "name" : "minecraft:brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:stone_brick_stairs",
+        "name" : "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:dirt",
+        "name" : "minecraft:dirt",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:nether_bricks",
+        "name" : "minecraft:nether_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cracked_nether_bricks",
+        "name" : "minecraft:cracked_nether_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 23,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:chiseled_nether_bricks",
+        "name" : "minecraft:chiseled_nether_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:nether_brick_stairs",
+        "name" : "minecraft:nether_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:end_stone",
+        "name" : "minecraft:end_stone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:end_stone_bricks",
+        "name" : "minecraft:end_stone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:sandstone_stairs",
+        "name" : "minecraft:sandstone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:emerald_block",
+        "name" : "minecraft:emerald_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:spruce_stairs",
+        "name" : "minecraft:spruce_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:birch_stairs",
+        "name" : "minecraft:birch_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "inner_right",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:jungle_stairs",
+        "name" : "minecraft:jungle_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 24,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:crimson_stairs",
+        "name" : "minecraft:crimson_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "inner_left",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_terracotta",
+        "name" : "minecraft:light_blue_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:yellow_terracotta",
+        "name" : "minecraft:yellow_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:lime_terracotta",
+        "name" : "minecraft:lime_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:pink_terracotta",
+        "name" : "minecraft:pink_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:gray_terracotta",
+        "name" : "minecraft:gray_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:light_gray_terracotta",
+        "name" : "minecraft:light_gray_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:cyan_terracotta",
+        "name" : "minecraft:cyan_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:purple_terracotta",
+        "name" : "minecraft:purple_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 25,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:blue_terracotta",
+        "name" : "minecraft:blue_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:brown_terracotta",
+        "name" : "minecraft:brown_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:green_terracotta",
+        "name" : "minecraft:green_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:red_terracotta",
+        "name" : "minecraft:red_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:black_terracotta",
+        "name" : "minecraft:black_terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:hay_block",
+        "name" : "minecraft:hay_block[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:terracotta",
+        "name" : "minecraft:terracotta",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:packed_ice",
+        "name" : "minecraft:packed_ice",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:acacia_stairs",
+        "name" : "minecraft:acacia_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 26,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:dark_oak_stairs",
+        "name" : "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:white_stained_glass",
+        "name" : "minecraft:white_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:orange_stained_glass",
+        "name" : "minecraft:orange_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:magenta_stained_glass",
+        "name" : "minecraft:magenta_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_stained_glass",
+        "name" : "minecraft:light_blue_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:yellow_stained_glass",
+        "name" : "minecraft:yellow_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:lime_stained_glass",
+        "name" : "minecraft:lime_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:pink_stained_glass",
+        "name" : "minecraft:pink_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:gray_stained_glass",
+        "name" : "minecraft:gray_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 27,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:light_gray_stained_glass",
+        "name" : "minecraft:light_gray_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:cyan_stained_glass",
+        "name" : "minecraft:cyan_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:purple_stained_glass",
+        "name" : "minecraft:purple_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:blue_stained_glass",
+        "name" : "minecraft:blue_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:brown_stained_glass",
+        "name" : "minecraft:brown_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:green_stained_glass",
+        "name" : "minecraft:green_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:red_stained_glass",
+        "name" : "minecraft:red_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:black_stained_glass",
+        "name" : "minecraft:black_stained_glass",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:prismarine",
+        "name" : "minecraft:prismarine",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 28,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:prismarine_bricks",
+        "name" : "minecraft:prismarine_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:dark_prismarine",
+        "name" : "minecraft:dark_prismarine",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:prismarine_stairs",
+        "name" : "minecraft:prismarine_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:prismarine_brick_stairs",
+        "name" : "minecraft:prismarine_brick_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "outer_left",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:dark_prismarine_stairs",
+        "name" : "minecraft:dark_prismarine_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:sea_lantern",
+        "name" : "minecraft:sea_lantern",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:red_sandstone",
+        "name" : "minecraft:red_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:chiseled_red_sandstone",
+        "name" : "minecraft:chiseled_red_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cut_red_sandstone",
+        "name" : "minecraft:cut_red_sandstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 29,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:red_sandstone_stairs",
+        "name" : "minecraft:red_sandstone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:magma_block",
+        "name" : "minecraft:magma_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:nether_wart_block",
+        "name" : "minecraft:nether_wart_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:warped_wart_block",
+        "name" : "minecraft:warped_wart_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:red_nether_bricks",
+        "name" : "minecraft:red_nether_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:bone_block",
+        "name" : "minecraft:bone_block[axis=y]",
+        "states" : {
+          "axis" : "y"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:white_concrete",
+        "name" : "minecraft:white_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:orange_concrete",
+        "name" : "minecraft:orange_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:magenta_concrete",
+        "name" : "minecraft:magenta_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 30,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_concrete",
+        "name" : "minecraft:light_blue_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:yellow_concrete",
+        "name" : "minecraft:yellow_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:lime_concrete",
+        "name" : "minecraft:lime_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:pink_concrete",
+        "name" : "minecraft:pink_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:gray_concrete",
+        "name" : "minecraft:gray_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:light_gray_concrete",
+        "name" : "minecraft:light_gray_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:cyan_concrete",
+        "name" : "minecraft:cyan_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:purple_concrete",
+        "name" : "minecraft:purple_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:blue_concrete",
+        "name" : "minecraft:blue_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 31,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:brown_concrete",
+        "name" : "minecraft:brown_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:green_concrete",
+        "name" : "minecraft:green_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:red_concrete",
+        "name" : "minecraft:red_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:black_concrete",
+        "name" : "minecraft:black_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:white_concrete_powder",
+        "name" : "minecraft:white_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:orange_concrete_powder",
+        "name" : "minecraft:orange_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:magenta_concrete_powder",
+        "name" : "minecraft:magenta_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:light_blue_concrete_powder",
+        "name" : "minecraft:light_blue_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:yellow_concrete_powder",
+        "name" : "minecraft:yellow_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 32,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:lime_concrete_powder",
+        "name" : "minecraft:lime_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:pink_concrete_powder",
+        "name" : "minecraft:pink_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:gray_concrete_powder",
+        "name" : "minecraft:gray_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:light_gray_concrete_powder",
+        "name" : "minecraft:light_gray_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:cyan_concrete_powder",
+        "name" : "minecraft:cyan_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:purple_concrete_powder",
+        "name" : "minecraft:purple_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:blue_concrete_powder",
+        "name" : "minecraft:blue_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:brown_concrete_powder",
+        "name" : "minecraft:brown_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:green_concrete_powder",
+        "name" : "minecraft:green_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 33,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:red_concrete_powder",
+        "name" : "minecraft:red_concrete_powder",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:black_concrete",
+        "name" : "minecraft:black_concrete",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:dead_tube_coral_block",
+        "name" : "minecraft:dead_tube_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:dead_brain_coral_block",
+        "name" : "minecraft:dead_brain_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:dead_bubble_coral_block",
+        "name" : "minecraft:dead_bubble_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:dead_fire_coral_block",
+        "name" : "minecraft:dead_fire_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:dead_horn_coral_block",
+        "name" : "minecraft:dead_horn_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:tube_coral_block",
+        "name" : "minecraft:tube_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:brain_coral_block",
+        "name" : "minecraft:brain_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 34,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:bubble_coral_block",
+        "name" : "minecraft:bubble_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:fire_coral_block",
+        "name" : "minecraft:fire_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:horn_coral_block",
+        "name" : "minecraft:horn_coral_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:blue_ice",
+        "name" : "minecraft:blue_ice",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:polished_granite_stairs",
+        "name" : "minecraft:polished_granite_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]",
+        "states" : {
+          "facing" : "north",
+          "half" : "bottom",
+          "shape" : "inner_right",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:smooth_red_sandstone_stairs",
+        "name" : "minecraft:smooth_red_sandstone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:mossy_stone_brick_stairs",
+        "name" : "minecraft:mossy_stone_brick_stairs[facing=south,half=bottom,shape=outer_right,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "outer_right",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:polished_diorite_stairs",
+        "name" : "minecraft:polished_diorite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "west",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:mossy_cobblestone_stairs",
+        "name" : "minecraft:mossy_cobblestone_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]",
+        "states" : {
+          "facing" : "south",
+          "half" : "bottom",
+          "shape" : "outer_left",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 35,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:end_stone_brick_stairs",
+        "name" : "minecraft:end_stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:stone_stairs",
+        "name" : "minecraft:stone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:smooth_sandstone_stairs",
+        "name" : "minecraft:smooth_sandstone_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "west",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:smooth_quartz_stairs",
+        "name" : "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:granite_stairs",
+        "name" : "minecraft:granite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:andesite_stairs",
+        "name" : "minecraft:andesite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:red_nether_brick_stairs",
+        "name" : "minecraft:red_nether_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:polished_andesite_stairs",
+        "name" : "minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:diorite_stairs",
+        "name" : "minecraft:diorite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 36,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:cobbled_deepslate_stairs",
+        "name" : "minecraft:cobbled_deepslate_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:polished_deepslate_stairs",
+        "name" : "minecraft:polished_deepslate_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_brick_stairs",
+        "name" : "minecraft:deepslate_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_tile_stairs",
+        "name" : "minecraft:deepslate_tile_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:polished_granite_slab",
+        "name" : "minecraft:polished_granite_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:smooth_red_sandstone_slab",
+        "name" : "minecraft:smooth_red_sandstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:mossy_stone_brick_slab",
+        "name" : "minecraft:mossy_stone_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:polished_diorite_slab",
+        "name" : "minecraft:polished_diorite_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:mossy_cobblestone_slab",
+        "name" : "minecraft:mossy_cobblestone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 37,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:end_stone_brick_slab",
+        "name" : "minecraft:end_stone_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:smooth_sandstone_slab",
+        "name" : "minecraft:smooth_sandstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:smooth_quartz_slab",
+        "name" : "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:granite_slab",
+        "name" : "minecraft:granite_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:andesite_slab",
+        "name" : "minecraft:andesite_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:red_nether_brick_slab",
+        "name" : "minecraft:red_nether_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:polished_andesite_slab",
+        "name" : "minecraft:polished_andesite_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:diorite_slab",
+        "name" : "minecraft:diorite_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cobbled_deepslate_slab",
+        "name" : "minecraft:cobbled_deepslate_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 38,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:polished_deepslate_slab",
+        "name" : "minecraft:polished_deepslate_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_brick_slab",
+        "name" : "minecraft:deepslate_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:deepslate_tile_slab",
+        "name" : "minecraft:deepslate_tile_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:dried_kelp_block",
+        "name" : "minecraft:dried_kelp_block",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:crying_obsidian",
+        "name" : "minecraft:crying_obsidian",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:blackstone",
+        "name" : "minecraft:blackstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:blackstone_slab",
+        "name" : "minecraft:blackstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:blackstone_stairs",
+        "name" : "minecraft:blackstone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:gilded_blackstone",
+        "name" : "minecraft:gilded_blackstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 39,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:polished_blackstone",
+        "name" : "minecraft:polished_blackstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 0
+      },
+      "right" : {
+        "block" : "minecraft:polished_blackstone_slab",
+        "name" : "minecraft:polished_blackstone_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 1
+      },
+      "right" : {
+        "block" : "minecraft:polished_blackstone_stairs",
+        "name" : "minecraft:polished_blackstone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 2
+      },
+      "right" : {
+        "block" : "minecraft:chiseled_polished_blackstone",
+        "name" : "minecraft:chiseled_polished_blackstone",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 3
+      },
+      "right" : {
+        "block" : "minecraft:polished_blackstone_bricks",
+        "name" : "minecraft:polished_blackstone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 4
+      },
+      "right" : {
+        "block" : "minecraft:polished_blackstone_brick_slab",
+        "name" : "minecraft:polished_blackstone_brick_slab[type=bottom,waterlogged=false]",
+        "states" : {
+          "type" : "bottom",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 5
+      },
+      "right" : {
+        "block" : "minecraft:polished_blackstone_brick_stairs",
+        "name" : "minecraft:polished_blackstone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "states" : {
+          "facing" : "east",
+          "half" : "bottom",
+          "shape" : "straight",
+          "waterlogged" : "false"
+        }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 6
+      },
+      "right" : {
+        "block" : "minecraft:cracked_polished_blackstone_bricks",
+        "name" : "minecraft:cracked_polished_blackstone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 7
+      },
+      "right" : {
+        "block" : "minecraft:cracked_polished_blackstone_bricks",
+        "name" : "minecraft:cracked_polished_blackstone_bricks",
+        "states" : { }
+      }
+    },
+    {
+      "left" : {
+        "x" : 0,
+        "y" : 40,
+        "z" : 8
+      },
+      "right" : {
+        "block" : "minecraft:cracked_polished_blackstone_bricks",
+        "name" : "minecraft:cracked_polished_blackstone_bricks",
+        "states" : { }
+      }
+    }
+  ]
+]
+
+
 net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot1=[
   {
+    "biomeHeight" : 0,
     "biomes" : [ ],
     "blockEntities" : [
       {
@@ -2484,6 +7391,7 @@ net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot1=[
 
 net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot2=[
   {
+    "biomeHeight" : 0,
     "biomes" : [ ],
     "blockEntities" : [
       {
@@ -16431,6 +21339,7 @@ net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot2=[
 
 net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot3=[
   {
+    "biomeHeight" : 0,
     "biomes" : [ ],
     "blockEntities" : [
       {
@@ -30408,6 +35317,7 @@ net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot3=[
 
 net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot4=[
   {
+    "biomeHeight" : 0,
     "biomes" : [ ],
     "blockEntities" : [
       {

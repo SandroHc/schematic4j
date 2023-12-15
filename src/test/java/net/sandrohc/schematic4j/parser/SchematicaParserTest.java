@@ -15,6 +15,7 @@ import net.sandrohc.schematic4j.schematic.Schematic;
 import net.sandrohc.schematic4j.schematic.SchematicaSchematic;
 
 import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematic;
+import static net.sandrohc.schematic4j.parser.TestUtils.assertSchematicBlockIterator;
 import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +37,11 @@ public class SchematicaParserTest {
 		softly.assertThat(schem.length()).isEqualTo(101);
 		softly.assertThat(((SchematicaSchematic) schem).materials()).isEqualTo(SchematicaSchematic.MATERIAL_ALPHA);
 		softly.assertAll();
+	}
+
+	@Test
+	public void blockIterator() throws ParsingException {
+		assertSchematicBlockIterator(expect, "/schematics/schematica/9383.schematic", new SchematicaParser());
 	}
 
 	/**
