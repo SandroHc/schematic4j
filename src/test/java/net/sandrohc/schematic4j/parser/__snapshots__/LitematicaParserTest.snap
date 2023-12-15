@@ -294,8 +294,8 @@ net.sandrohc.schematic4j.parser.LitematicaParserTest.snapshot2=[
       "extra" : { },
       "name" : "Demo",
       "regionCount" : 1,
-      "timeCreated" : "2021-07-04T21:42:47.048",
-      "timeModified" : "2021-07-04T21:42:47.048",
+      "timeCreated" : "2021-07-04T20:42:47.048",
+      "timeModified" : "2021-07-04T20:42:47.048",
       "totalBlocks" : 101,
       "totalVolume" : 125
     },
@@ -577,8 +577,8 @@ net.sandrohc.schematic4j.parser.LitematicaParserTest.snapshot3=[
       "extra" : { },
       "name" : "A tua mãesão",
       "regionCount" : 1,
-      "timeCreated" : "2021-07-07T23:34:08.393",
-      "timeModified" : "2021-07-07T23:34:08.393",
+      "timeCreated" : "2021-07-07T22:34:08.393",
+      "timeModified" : "2021-07-07T22:34:08.393",
       "totalBlocks" : 7815,
       "totalVolume" : 63960
     },

@@ -16,6 +16,6 @@ public class DateUtils {
 	 * @return The {@linkplain LocalDateTime}
 	 */
 	public static LocalDateTime epochToDate(long epoch) {
-		return LocalDateTime.ofInstant(Instant.ofEpochMilli(epoch), ZoneId.systemDefault());
+		return LocalDateTime.ofInstant(Instant.ofEpochMilli(epoch), ZoneId.of("UTC"));
 	}
 }
