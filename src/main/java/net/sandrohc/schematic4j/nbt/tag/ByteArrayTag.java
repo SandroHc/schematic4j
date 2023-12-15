@@ -3,9 +3,19 @@ package net.sandrohc.schematic4j.nbt.tag;
 
 import java.util.Arrays;
 
+/**
+ * A byte array NBT tag.
+ */
 public class ByteArrayTag extends ArrayTag<byte[]> implements Comparable<ByteArrayTag> {
 
+	/**
+	 * The byte array tag discriminator.
+	 */
 	public static final byte ID = 7;
+
+	/**
+	 * The default value.
+	 */
 	public static final byte[] ZERO_VALUE = new byte[0];
 
 	/**

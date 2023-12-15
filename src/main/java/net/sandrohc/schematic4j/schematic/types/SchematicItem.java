@@ -1,9 +1,19 @@
 package net.sandrohc.schematic4j.schematic.types;
 
+/**
+ * Represents an item, like a stick.
+ */
 public class SchematicItem extends SchematicNamed {
 
-	public final int count;
-	public final int damage;
+	/**
+	 * The item count, like a stack of 64 sticks.
+	 */
+	public int count;
+
+	/**
+	 * The damage amount.
+	 */
+	public int damage;
 
 	public SchematicItem(String name, int count, int damage) {
 		super(name);
@@ -11,10 +21,20 @@ public class SchematicItem extends SchematicNamed {
 		this.damage = damage;
 	}
 
+	/**
+	 * The item count, like a stack of 64 sticks.
+	 *
+	 * @return The item count
+	 */
 	public int count() {
 		return count;
 	}
 
+	/**
+	 * The damage amount.
+	 *
+	 * @return The damage amount
+	 */
 	public int damage() {
 		return damage;
 	}

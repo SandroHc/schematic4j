@@ -19,6 +19,8 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicItem;
 
+import static net.sandrohc.schematic4j.schematic.types.SchematicBlock.AIR;
+
 /**
  * A generic schematic.
  */
@@ -62,21 +64,37 @@ public interface Schematic {
 	int[] offset();
 
 	/**
-	 * The block at the specified block.
+	 * The block at the specified position.
 	 * <p>
 	 * Depending on the schematic format, each coordinate can also be negative and is relative to the schematic origin.
 	 *
 	 * @param x The X coordinate, can be a negative value
-	 * @param y The X coordinate, can be a negative value
-	 * @param z The X coordinate, can be a negative value
+	 * @param y The Y coordinate, can be a negative value
+	 * @param z The Z coordinate, can be a negative value
 	 * @return block, or {@code null} if information is not available.
 	 */
 	@NonNull SchematicBlock block(int x, int y, int z);
 
 	/**
+	 * The block at the specified position.
+	 * <p>
+	 * Depending on the schematic format, each coordinate can also be negative and is relative to the schematic origin.
+	 *
+	 * @param pos The position
+	 * @return block, or {@code null} if information is not available.
+	 * @see Schematic#block(int, int, int)
+	 */
+	default @NonNull SchematicBlock block(@Nullable SchematicBlockPos pos) {
+		if (pos == null) {
+			return AIR;
+		}
+		return block(pos.x, pos.y, pos.z);
+	}
+
+	/**
 	 * Iterate over the list of blocks. Follows a zigzag pattern: first visits X, then Z, then Y.
 	 *
-	 * @return an iterator
+	 * @return An iterator over block and position pairs
 	 */
 	default @NonNull Stream<Pair<SchematicBlockPos, SchematicBlock>> blocks() {
 		return IntStream.range(0, width() * length() * height()).mapToObj(index -> {
@@ -108,12 +126,12 @@ public interface Schematic {
 	}
 
 	/**
-	 * The biome at the specified block.
+	 * The biome at the specified position.
 	 *
 	 * @param x the X coordinate
 	 * @param y the Y coordinate
 	 * @param z the Z coordinate
-	 * @return biome, or {@code null} if information is not available.
+	 * @return biome, or {@code SchematicBiome.AIR} if information is not available.
 	 */
 	default @NonNull SchematicBiome biome(int x, int y, int z) {
 		return SchematicBiome.AIR;
@@ -122,7 +140,7 @@ public interface Schematic {
 	/**
 	 * Iterate over the list of biomes. Follows a zigzag pattern: first visits X, then Z, then Y.
 	 *
-	 * @return an iterator
+	 * @return An iterator over biome and position pairs
 	 */
 	default @NonNull Stream<Pair<SchematicBlockPos, SchematicBiome>> biomes() {
 		return IntStream.range(0, width() * length() * height()).mapToObj(index -> {
@@ -154,7 +172,7 @@ public interface Schematic {
 	}
 
 	/**
-	 * The date that this schematic was created on.
+	 * The date that this schematic was created on. Assumes time is in the UTC timezone.
 	 *
 	 * @return creation date, or {@code null} if information is not available.
 	 */

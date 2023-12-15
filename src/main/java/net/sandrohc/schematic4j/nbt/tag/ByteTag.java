@@ -1,13 +1,23 @@
 /* Vendored version of Quertz NBT 6.1 - https://github.com/Querz/NBT */
 package net.sandrohc.schematic4j.nbt.tag;
 
+/**
+ * A byte NBT tag.
+ */
 public class ByteTag extends NumberTag<Byte> implements Comparable<ByteTag> {
 
+	/**
+	 * The byte tag discriminator.
+	 */
 	public static final byte ID = 1;
+
+	/**
+	 * The default value.
+	 */
 	public static final byte ZERO_VALUE = 0;
 
 	/**
-	 * An empty byte tag.
+	 * A byte tag with the default value.
 	 */
 	public ByteTag() {
 		super(ZERO_VALUE);
@@ -34,10 +44,20 @@ public class ByteTag extends NumberTag<Byte> implements Comparable<ByteTag> {
 		return ID;
 	}
 
+	/**
+	 * Convert this byte into a boolean value. Values greater than zero map to true.
+	 *
+	 * @return {@code true} if greater than 0, {@code false} otherwise
+	 */
 	public boolean asBoolean() {
 		return getValue() > 0;
 	}
 
+	/**
+	 * Sets the inner byte value.
+	 *
+	 * @param value The new value
+	 */
 	public void setValue(byte value) {
 		super.setValue(value);
 	}

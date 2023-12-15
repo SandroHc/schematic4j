@@ -34,9 +34,11 @@ public class SpongeSchematic implements Schematic {
 	public int version;
 
 	/**
-	 * Specifies the data version of Minecraft that was used to create the schematic. This is to allow for block and
-	 * entity data to be validated and auto-converted from older versions. This is dependent on the Minecraft version,
-	 * e.g. Minecraft 1.12.2's data version is <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
+	 * Specifies the data version of Minecraft that was used to create the schematic.
+	 * <p>
+	 * This is to allow for block and entity data to be validated and auto-converted from older versions.
+	 * This is dependent on the Minecraft version, e.g. Minecraft 1.12.2's data version is
+	 * <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
 	 */
 	public @Nullable Integer dataVersion;
 
@@ -66,14 +68,32 @@ public class SpongeSchematic implements Schematic {
 	 * not provided is [0, 0, 0]. Example: If a player is pasting from 1, 2, 3, and the offset is 4, 5, 6, then the
 	 * first block should be placed at 5, 7, 9
 	 */
-	public int[] offset;
+	public int @NonNull [] offset;
 
+	/**
+	 * The unpacked block data.
+	 */
 	public @NonNull SchematicBlock[][][] blocks;
-	public SchematicBlockEntity[] blockEntities;
-	public SchematicEntity[] entities;
-	public SchematicBiome[][][] biomes;
 
-	public final int biomeHeight;
+	/**
+	 * The block/tile entity data.
+	 */
+	public @NonNull SchematicBlockEntity[] blockEntities;
+
+	/**
+	 * The entity data.
+	 */
+	public @NonNull SchematicEntity[] entities;
+
+	/**
+	 * The tile entity data.
+	 */
+	public @NonNull SchematicBiome[][][] biomes;
+
+	/**
+	 * The biome height. In older versions of the specification, only 2D biome data was supported.
+	 */
+	public int biomeHeight;
 
 	public SpongeSchematic(int version, @Nullable Integer dataVersion, @Nullable Metadata metadata, int width,
 						   int height, int length, int[] offset, @NonNull SchematicBlock[][][] blocks,
@@ -135,6 +155,11 @@ public class SpongeSchematic implements Schematic {
 		return blocks[x][y][z];
 	}
 
+	/**
+	 * The raw block data.
+	 *
+	 * @return The raw block data
+	 */
 	public @NonNull SchematicBlock[][][] blockData() {
 		return blocks;
 	}
@@ -144,6 +169,11 @@ public class SpongeSchematic implements Schematic {
 		return Arrays.stream(blockEntities);
 	}
 
+	/**
+	 * The raw block entity data.
+	 *
+	 * @return The raw block data
+	 */
 	public @NonNull SchematicBlockEntity[] blockEntityData() {
 		return blockEntities;
 	}
@@ -153,6 +183,11 @@ public class SpongeSchematic implements Schematic {
 		return Arrays.stream(entities);
 	}
 
+	/**
+	 * The raw entity data.
+	 *
+	 * @return The raw block data
+	 */
 	public @NonNull SchematicEntity[] entityData() {
 		return entities;
 	}
@@ -183,6 +218,11 @@ public class SpongeSchematic implements Schematic {
 		});
 	}
 
+	/**
+	 * The raw biome data.
+	 *
+	 * @return The raw block data
+	 */
 	public @NonNull SchematicBiome[][][] biomeData() {
 		return biomes;
 	}
@@ -202,6 +242,15 @@ public class SpongeSchematic implements Schematic {
 		return metadata.date;
 	}
 
+	/**
+	 * Specifies the data version of Minecraft that was used to create the schematic.
+	 * <p>
+	 * This is to allow for block and entity data to be validated and auto-converted from older versions.
+	 * This is dependent on the Minecraft version, e.g. Minecraft 1.12.2's data version is
+	 * <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
+	 *
+	 * @return The Minecraft data version
+	 */
 	public @Nullable Integer dataVersion() {
 		return dataVersion;
 	}
@@ -214,6 +263,11 @@ public class SpongeSchematic implements Schematic {
 		return dataVersion();
 	}
 
+	/**
+	 * The optional metadata about the schematic.
+	 *
+	 * @return The schematic metadata
+	 */
 	public @NonNull Metadata metadata() {
 		return metadata;
 	}
@@ -237,29 +291,34 @@ public class SpongeSchematic implements Schematic {
 				']';
 	}
 
-
+	/**
+	 * The schematic metadata.
+	 */
 	public static class Metadata {
 		/**
 		 * The name of the schematic.
 		 */
-		public final @Nullable String name;
+		public @Nullable String name;
 
 		/**
 		 * The name of the author of the schematic.
 		 */
-		public final @Nullable String author;
+		public @Nullable String author;
 
 		/**
 		 * The date that this schematic was created on.
 		 */
-		public final @Nullable LocalDateTime date;
+		public @Nullable LocalDateTime date;
 
 		/**
 		 * An array of mod IDs.
 		 */
-		public final @NonNull String[] requiredMods;
+		public @NonNull String[] requiredMods;
 
-		public final @NonNull Map<String, Object> extra;
+		/**
+		 * Extra metadata not represented in the specification.
+		 */
+		public @NonNull Map<String, Object> extra;
 
 		public Metadata(@Nullable String name, @Nullable String author, @Nullable LocalDateTime date,
 						@NonNull String[] requiredMods, @NonNull Map<String, Object> extra) {

@@ -6,13 +6,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 /**
  * A decorator for the Set returned by CompoundTag#entrySet()
  * that disallows setting null values.
  * */
 class NonNullEntrySet<K, V> implements Set<Map.Entry<K, V>> {
 
-	private Set<Map.Entry<K, V>> set;
+	/**
+	 * The inner set.
+	 */
+	private final Set<Map.Entry<K, V>> set;
 
 	NonNullEntrySet(Set<Map.Entry<K, V>> set) {
 		this.set = set;
@@ -34,17 +39,17 @@ class NonNullEntrySet<K, V> implements Set<Map.Entry<K, V>> {
 	}
 
 	@Override
-	public Iterator<Map.Entry<K, V>> iterator() {
+	public @NonNull Iterator<Map.Entry<K, V>> iterator() {
 		return new NonNullEntrySetIterator(set.iterator());
 	}
 
 	@Override
-	public Object[] toArray() {
+	public Object @NonNull [] toArray() {
 		return set.toArray();
 	}
 
 	@Override
-	public <T> T[] toArray(T[] a) {
+	public <T> T @NonNull [] toArray(T @NonNull [] a) {
 		return set.toArray(a);
 	}
 
@@ -59,22 +64,22 @@ class NonNullEntrySet<K, V> implements Set<Map.Entry<K, V>> {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(@NonNull Collection<?> c) {
 		return set.containsAll(c);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Map.Entry<K, V>> c) {
+	public boolean addAll(@NonNull Collection<? extends Map.Entry<K, V>> c) {
 		return set.addAll(c);
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(@NonNull Collection<?> c) {
 		return set.retainAll(c);
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(@NonNull Collection<?> c) {
 		return set.removeAll(c);
 	}
 
@@ -85,7 +90,7 @@ class NonNullEntrySet<K, V> implements Set<Map.Entry<K, V>> {
 
 	class NonNullEntrySetIterator implements Iterator<Map.Entry<K, V>> {
 
-		private Iterator<Map.Entry<K, V>> iterator;
+		private final Iterator<Map.Entry<K, V>> iterator;
 
 		NonNullEntrySetIterator(Iterator<Map.Entry<K, V>> iterator) {
 			this.iterator = iterator;
@@ -104,7 +109,7 @@ class NonNullEntrySet<K, V> implements Set<Map.Entry<K, V>> {
 
 	class NonNullEntry implements Map.Entry<K, V> {
 
-		private Map.Entry<K, V> entry;
+		private final Map.Entry<K, V> entry;
 
 		NonNullEntry(Map.Entry<K, V> entry) {
 			this.entry = entry;

@@ -8,12 +8,26 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
 import net.sandrohc.schematic4j.nbt.tag.Tag;
 
+/**
+ * Represents a block position.
+ */
 public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
 
 	public static final SchematicBlockPos ZERO = new SchematicBlockPos(0, 0, 0);
 
+	/**
+	 * The X coordinate.
+	 */
 	public final int x;
+
+	/**
+	 * The Y coordinate.
+	 */
 	public final int y;
+
+	/**
+	 * The Z coordinate.
+	 */
 	public final int z;
 
 	public SchematicBlockPos(int x, int y, int z) {
@@ -53,14 +67,29 @@ public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
 		return new SchematicBlockPos(other);
 	}
 
+	/**
+	 * The X coordinate.
+	 *
+	 * @return The X coordinate
+	 */
 	public int x() {
 		return x;
 	}
 
+	/**
+	 * The Y coordinate.
+	 *
+	 * @return The Y coordinate
+	 */
 	public int y() {
 		return y;
 	}
 
+	/**
+	 * The Z coordinate.
+	 *
+	 * @return The Z coordinate
+	 */
 	public int z() {
 		return z;
 	}

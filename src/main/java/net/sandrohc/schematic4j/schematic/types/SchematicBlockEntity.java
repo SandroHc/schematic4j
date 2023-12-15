@@ -11,10 +11,20 @@ import net.sandrohc.schematic4j.nbt.tag.Tag;
 import static java.util.stream.Collectors.toMap;
 import static net.sandrohc.schematic4j.utils.TagUtils.unwrap;
 
+/**
+ * Represents a block/tile entity, like a chest or a furnace.
+ */
 public class SchematicBlockEntity extends SchematicNamed {
 
-	public final SchematicBlockPos pos;
-	public final Map<String, Object> data;
+	/**
+	 * The position where they can be found in the schematic.
+	 */
+	public SchematicBlockPos pos;
+
+	/**
+	 * Extra NBT data, like the items stored in a chest, if available.
+	 */
+	public Map<String, Object> data;
 
 	public SchematicBlockEntity(String name, SchematicBlockPos pos, Map<String, Object> data) {
 		super(name);
@@ -40,10 +50,20 @@ public class SchematicBlockEntity extends SchematicNamed {
 		return new SchematicBlockEntity(id, pos, extra);
 	}
 
+	/**
+	 * The position where they can be found in the schematic.
+	 *
+	 * @return The block entity position
+	 */
 	public SchematicBlockPos pos() {
 		return pos;
 	}
 
+	/**
+	 * Extra NBT data, like the items stored in a chest, if available.
+	 *
+	 * @return The NBT data
+	 */
 	public Map<String, Object> extra() {
 		return data;
 	}

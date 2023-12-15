@@ -20,6 +20,10 @@ public abstract class ArrayTag<T> extends Tag<T> {
 		}
 	}
 
+	/**
+	 * Get ghe array length, or size.
+	 * @return The array length
+	 */
 	public int length() {
 		return Array.getLength(getValue());
 	}
@@ -39,6 +43,11 @@ public abstract class ArrayTag<T> extends Tag<T> {
 		return arrayToString("", "");
 	}
 
+	/**
+	 * @param prefix The item prefix
+	 * @param suffix The item suffix
+	 * @return The generated string
+	 */
 	protected String arrayToString(String prefix, String suffix) {
 		StringBuilder sb = new StringBuilder("[").append(prefix).append("".equals(prefix) ? "" : ";");
 		for (int i = 0; i < length(); i++) {

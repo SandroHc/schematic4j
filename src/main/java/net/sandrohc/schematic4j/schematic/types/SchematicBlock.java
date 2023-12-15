@@ -6,12 +6,26 @@ import java.util.TreeMap;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * Represents a block as a resource identifier plus block states, like "minecraft:dirt" or "minecraft:chest[facing=south]".
+ */
 public class SchematicBlock extends SchematicNamed {
 
 	public static final SchematicBlock AIR = new SchematicBlock("minecraft:air");
 
-	public final @NonNull String block;
-	public final @NonNull Map<String, String> states;
+	/**
+	 * The block name excluding block states.
+	 * <br>
+	 * For example, the block state "minecraft:chest[facing=south]" would become just "minecraft:chest".
+	 */
+	public @NonNull String block;
+
+	/**
+	 * The list of block states or properties.
+	 * <br>
+	 * For example, chests have the "facing", "type" and "waterlogged" properties.
+	 */
+	public @NonNull Map<String, String> states;
 
 	public SchematicBlock(@NonNull String block, @NonNull Map<String, String> states) {
 		super(blockNameAndStatesToString(block, states));
@@ -23,10 +37,24 @@ public class SchematicBlock extends SchematicNamed {
 		this(extractBlockName(blockAndStates), extractBlockStates(blockAndStates));
 	}
 
+	/**
+	 * The block name excluding block states.
+	 * <br>
+	 * For example, the block state "minecraft:chest[facing=south]" would become just "minecraft:chest".
+	 *
+	 * @return The block name
+	 */
 	public @NonNull String block() {
 		return block;
 	}
 
+	/**
+	 * The list of block states or properties.
+	 * <br>
+	 * For example, chests have the "facing", "type" and "waterlogged" properties.
+	 *
+	 * @return The block states
+	 */
 	public @NonNull Map<String, String> states() {
 		return states;
 	}

@@ -34,18 +34,56 @@ public class SchematicaSchematic implements Schematic {
 	public static final String MATERIAL_ALPHA = "Alpha";
 	public static final String MATERIAL_STRUCTURE = "Structure";
 
+	/**
+	 * The schematic width, the X axis.
+	 */
 	public final int width;
+
+	/**
+	 * The schematic height, the Y axis.
+	 */
 	public final int height;
+
+	/**
+	 * The schematic length, the Z axis.
+	 */
 	public final int length;
+
+	/**
+	 * The unpacked list of blocks.
+	 */
 	public final @NonNull SchematicBlock[][][] blocks;
-	public final SchematicBlockEntity[] blockEntities;
-	public final SchematicEntity[] entities;
-	public final SchematicItem icon;
-	public final String materials;
+
+	/**
+	 * The list of block/tile entities.
+	 */
+	public final @NonNull SchematicBlockEntity[] blockEntities;
+
+	/**
+	 * The list of entities.
+	 */
+	public final @NonNull SchematicEntity[] entities;
+
+	/**
+	 * The schematic icon, if available.
+	 */
+	public final @Nullable SchematicItem icon;
+
+	/**
+	 * The schematic materials, if available.
+	 * <p>
+	 * One of:
+	 * <ul>
+	 *     <li>{@link SchematicaSchematic#MATERIAL_CLASSIC MATERIAL_CLASSIC}</li>
+	 *     <li>{@link SchematicaSchematic#MATERIAL_ALPHA MATERIAL_ALPHA}</li>
+	 *     <li>{@link SchematicaSchematic#MATERIAL_STRUCTURE MATERIAL_STRUCTURE}</li>
+	 * </ul>
+	 */
+	public final @Nullable String materials;
 
 	public SchematicaSchematic(int width, int height, int length, @NonNull SchematicBlock[][][] blocks,
 							   @NonNull SchematicBlockEntity[] blockEntities, @NonNull SchematicEntity[] entities,
-							   SchematicItem icon, String materials) {
+							   @Nullable SchematicItem icon, @Nullable String materials) {
 
 		this.width = width;
 		this.height = height;
@@ -91,6 +129,11 @@ public class SchematicaSchematic implements Schematic {
 		return blocks[x][y][z];
 	}
 
+	/**
+	 * The raw block data.
+	 *
+	 * @return The raw block data
+	 */
 	public @NonNull SchematicBlock[][][] blockData() {
 		return blocks;
 	}
@@ -100,6 +143,11 @@ public class SchematicaSchematic implements Schematic {
 		return Arrays.stream(blockEntities);
 	}
 
+	/**
+	 * The raw block entity data.
+	 *
+	 * @return The raw block entity data
+	 */
 	public @NonNull SchematicBlockEntity[] blockEntityData() {
 		return blockEntities;
 	}
@@ -109,6 +157,11 @@ public class SchematicaSchematic implements Schematic {
 		return Arrays.stream(entities);
 	}
 
+	/**
+	 * The raw entity data.
+	 *
+	 * @return The raw entity data
+	 */
 	public @NonNull SchematicEntity[] entityData() {
 		return entities;
 	}
@@ -118,6 +171,18 @@ public class SchematicaSchematic implements Schematic {
 		return icon;
 	}
 
+	/**
+	 * The schematic materials, if available.
+	 * <p>
+	 * One of:
+	 * <ul>
+	 *     <li>{@link SchematicaSchematic#MATERIAL_CLASSIC MATERIAL_CLASSIC}</li>
+	 *     <li>{@link SchematicaSchematic#MATERIAL_ALPHA MATERIAL_ALPHA}</li>
+	 *     <li>{@link SchematicaSchematic#MATERIAL_STRUCTURE MATERIAL_STRUCTURE}</li>
+	 * </ul>
+	 *
+	 * @return The schematic materials, if available
+	 */
 	public @Nullable String materials() {
 		return materials;
 	}

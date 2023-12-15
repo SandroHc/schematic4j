@@ -41,6 +41,9 @@ public abstract class Tag<T> implements Cloneable {
 	 * */
 	public static final int DEFAULT_MAX_DEPTH = 512;
 
+	/**
+	 * Map of characters and their escaped counterparts.
+	 */
 	private static final Map<String, String> ESCAPE_CHARACTERS;
 	static {
 		final Map<String, String> temp = new HashMap<>();
@@ -162,7 +165,6 @@ public abstract class Tag<T> implements Cloneable {
 	 * Creates a clone of this Tag.
 	 * @return A clone of this Tag.
 	 * */
-	@SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
 	public abstract Tag<T> clone();
 
 	/**

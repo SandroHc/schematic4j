@@ -20,15 +20,11 @@ import net.sandrohc.schematic4j.parser.SchematicaParser;
 import net.sandrohc.schematic4j.parser.SpongeParser;
 
 public enum SchematicFormat {
-	SPONGE_V1      ("schem", SpongeParser::new),
-	SPONGE_V2      ("schem", SpongeParser::new),
-	SPONGE_V3      ("schem", SpongeParser::new),
-	LITEMATICA     ("litematic"),
-	SCHEMATICA     ("schematic", SchematicaParser::new),
-	WORLD_EDITOR   ("schematic"),
-	MCEDIT         ("schematic"),
-	MCEDIT_UNIFIED ("schematic"),
-	MCEDIT2        ("schematic"),
+	SPONGE_V1("schem", SpongeParser::new),
+	SPONGE_V2("schem", SpongeParser::new),
+	SPONGE_V3("schem", SpongeParser::new),
+	LITEMATICA("litematic", LitematicaParser::new),
+	SCHEMATICA("schematic", SchematicaParser::new),
 	UNKNOWN;
 
 	private static final Logger log = LoggerFactory.getLogger(SchematicFormat.class);

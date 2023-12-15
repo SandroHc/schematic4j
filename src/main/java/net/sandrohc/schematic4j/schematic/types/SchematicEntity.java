@@ -13,10 +13,20 @@ import static java.util.stream.Collectors.toMap;
 import static net.sandrohc.schematic4j.utils.TagUtils.getString;
 import static net.sandrohc.schematic4j.utils.TagUtils.unwrap;
 
+/**
+ * Represents an entity, like a creeper.
+ */
 public class SchematicEntity extends SchematicNamed {
 
-	public final SchematicEntityPos pos;
-	public final Map<String, Object> data;
+	/**
+	 * The position of the entity on the schematic.
+	 */
+	public SchematicEntityPos pos;
+
+	/**
+	 * The extra NBT data the entity is holding, like a wolf's owner.
+	 */
+	public Map<String, Object> data;
 
 	public SchematicEntity(String name, SchematicEntityPos pos, Map<String, Object> data) {
 		super(name);
@@ -39,10 +49,20 @@ public class SchematicEntity extends SchematicNamed {
 		return new SchematicEntity(id, pos, extra);
 	}
 
+	/**
+	 * The position of the entity on the schematic.
+	 *
+	 * @return The position of the entity
+	 */
 	public SchematicEntityPos pos() {
 		return pos;
 	}
 
+	/**
+	 * The extra NBT data the entity is holding, like a wolf's owner.
+	 *
+	 * @return The extra NBT data
+	 */
 	public Map<String, Object> data() {
 		return data;
 	}

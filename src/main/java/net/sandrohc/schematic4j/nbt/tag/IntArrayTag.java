@@ -3,15 +3,32 @@ package net.sandrohc.schematic4j.nbt.tag;
 
 import java.util.Arrays;
 
+/**
+ * An int array NBT tag.
+ */
 public class IntArrayTag extends ArrayTag<int[]> implements Comparable<IntArrayTag> {
 
+	/**
+	 * The int array tag discriminator.
+	 */
 	public static final byte ID = 11;
+
+	/**
+	 * The default value.
+	 */
 	public static final int[] ZERO_VALUE = new int[0];
 
+	/**
+	 * An empty int array tag.
+	 */
 	public IntArrayTag() {
 		super(ZERO_VALUE);
 	}
 
+	/**
+	 * An int array tag.
+	 * @param value The inner value
+	 */
 	public IntArrayTag(int[] value) {
 		super(value);
 	}

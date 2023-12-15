@@ -9,10 +9,25 @@ import net.sandrohc.schematic4j.nbt.tag.DoubleTag;
 import net.sandrohc.schematic4j.nbt.tag.ListTag;
 import net.sandrohc.schematic4j.nbt.tag.Tag;
 
+/**
+ * Represents an entity position with decimal place precision.
+ */
 public class SchematicEntityPos implements Comparable<SchematicEntityPos> {
-	public final double x;
-	public final double y;
-	public final double z;
+
+	/**
+	 * The X coordinate.
+	 */
+	public double x;
+
+	/**
+	 * The Y coordinate.
+	 */
+	public double y;
+
+	/**
+	 * The Z coordinate.
+	 */
+	public double z;
 
 	public SchematicEntityPos(double x, double y, double z) {
 		this.x = x;
@@ -52,14 +67,29 @@ public class SchematicEntityPos implements Comparable<SchematicEntityPos> {
 		return new SchematicEntityPos(other);
 	}
 
+	/**
+	 * The X coordinate.
+	 *
+	 * @return The X coordinate
+	 */
 	public double x() {
 		return x;
 	}
 
+	/**
+	 * The Y coordinate.
+	 *
+	 * @return The Y coordinate
+	 */
 	public double y() {
 		return y;
 	}
 
+	/**
+	 * The Z coordinate.
+	 *
+	 * @return The Z coordinate
+	 */
 	public double z() {
 		return z;
 	}

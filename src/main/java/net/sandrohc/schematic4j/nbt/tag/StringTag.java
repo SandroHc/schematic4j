@@ -1,15 +1,32 @@
 /* Vendored version of Quertz NBT 6.1 - https://github.com/Querz/NBT */
 package net.sandrohc.schematic4j.nbt.tag;
 
+/**
+ * A string NBT tag.
+ */
 public class StringTag extends Tag<String> implements Comparable<StringTag> {
 
+	/**
+	 * The string tag discriminator.
+	 */
 	public static final byte ID = 8;
+
+	/**
+	 * The default value.
+	 */
 	public static final String ZERO_VALUE = "";
 
+	/**
+	 * An empty string tag.
+	 */
 	public StringTag() {
 		super(ZERO_VALUE);
 	}
 
+	/**
+	 * A string tag.
+	 * @param value The inner value
+	 */
 	public StringTag(String value) {
 		super(value);
 	}

@@ -32,9 +32,11 @@ public class LitematicaSchematic implements Schematic {
 	public int version = 1;
 
 	/**
-	 * Specifies the data version of Minecraft that was used to create the schematic. This is to allow for block and
-	 * entity data to be validated and auto-converted from older versions. This is dependent on the Minecraft version,
-	 * e.g. Minecraft 1.12.2's data version is <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
+	 * Specifies the data version of Minecraft that was used to create the schematic.
+	 * <p>
+	 * This is to allow for block and entity data to be validated and auto-converted from older versions.
+	 * This is dependent on the Minecraft version, e.g. Minecraft 1.12.2's data version is
+	 * <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
 	 */
 	public @Nullable Integer minecraftDataVersion;
 
@@ -43,17 +45,35 @@ public class LitematicaSchematic implements Schematic {
 	 */
 	public @NonNull Metadata metadata = new Metadata();
 
+	/**
+	 * The regions that compose this schematic. They can be thought of as their own little schematics.
+	 */
 	public Region @NonNull [] regions = new Region[0];
 
+	/**
+	 * A Litematica schematic.
+	 */
 	public LitematicaSchematic() {
 	}
 
+	/**
+	 * A Litematica schematic
+	 *
+	 * @param version              The schematic version
+	 * @param minecraftDataVersion The schematic Minecraft data version
+	 * @param metadata             The schematic metadata
+	 * @param regions              The schematic regions
+	 */
 	public LitematicaSchematic(int version, @Nullable Integer minecraftDataVersion, @Nullable Metadata metadata,
 							   Region @Nullable [] regions) {
 		this.version = version;
 		this.minecraftDataVersion = minecraftDataVersion;
-		this.metadata = metadata != null ? metadata : new Metadata();
-		this.regions = regions != null ? regions : new Region[0];
+		if (metadata != null) {
+			this.metadata = metadata;
+		}
+		if (regions != null) {
+			this.regions = regions;
+		}
 	}
 
 	@Override
@@ -117,6 +137,11 @@ public class LitematicaSchematic implements Schematic {
 		return Arrays.stream(regions).flatMap(r -> Arrays.stream(r.entities));
 	}
 
+	/**
+	 * The regions that compose this schematic. They can be thought of as their own little schematics.
+	 *
+	 * @return The regions
+	 */
 	public @NonNull Region[] regions() {
 		return regions;
 	}
@@ -136,10 +161,24 @@ public class LitematicaSchematic implements Schematic {
 		return metadata.timeCreated;
 	}
 
+	/**
+	 * Specifies the data version of Minecraft that was used to create the schematic.
+	 * <p>
+	 * This is to allow for block and entity data to be validated and auto-converted from older versions.
+	 * This is dependent on the Minecraft version, e.g. Minecraft 1.12.2's data version is
+	 * <a href="https://minecraft.gamepedia.com/1.12.2">1343</a>.
+	 *
+	 * @return The Minecraft data version
+	 */
 	public @Nullable Integer dataVersion() {
 		return minecraftDataVersion;
 	}
 
+	/**
+	 * The optional metadata about the schematic.
+	 *
+	 * @return The schematic metadata
+	 */
 	public @NonNull Metadata metadata() {
 		return metadata;
 	}
@@ -155,6 +194,9 @@ public class LitematicaSchematic implements Schematic {
 				']';
 	}
 
+	/**
+	 * The schematic metadata.
+	 */
 	public static class Metadata {
 		/**
 		 * The name of the schematic.
@@ -181,16 +223,34 @@ public class LitematicaSchematic implements Schematic {
 		 */
 		public @Nullable LocalDateTime timeModified;
 
+		/**
+		 * The size of the schematic including all regions.
+		 */
 		public @Nullable SchematicBlockPos enclosingSize;
 
+		/**
+		 * The number of regions inside this schematic.
+		 */
 		public @Nullable Integer regionCount;
 
+		/**
+		 * The total number of blocks from all the regions that compose this schematic. Does not include air blocks.
+		 */
 		public @Nullable Long totalBlocks;
 
+		/**
+		 * The total volume of blocks from all the regions that compose this schematic. This includes air blocks.
+		 */
 		public @Nullable Long totalVolume;
 
+		/**
+		 * Schematic thumbnail, if available.
+		 */
 		public int @Nullable [] previewImageData;
 
+		/**
+		 * Extra metadata not represented in the specification.
+		 */
 		public @NonNull Map<String, Object> extra;
 
 		public Metadata(@Nullable String name, @Nullable String description, @Nullable String author,
@@ -226,15 +286,68 @@ public class LitematicaSchematic implements Schematic {
 		}
 	}
 
+	/**
+	 * A schematic region.
+	 * <p>
+	 * It can be thought of as its own little schematics, since it contains a unique size and block palette.
+	 */
 	public static class Region {
+		/**
+		 * The region name.
+		 */
 		public @Nullable String name;
+
+		/**
+		 * The region position in reference to the schematic origin at (0, 0, 0).
+		 */
 		public @NonNull SchematicBlockPos position;
+
+		/**
+		 * The region size.
+		 */
 		public @NonNull SchematicBlockPos size;
+
+		/**
+		 * The encoded (but unpacked) block states. Each index represents a block position and each value represents
+		 * an index in the {@link Region#blockStatePalette}.
+		 * <p>
+		 * Each index is encoded as {@code x + (z * regionSize.x) (y * regionSize.x * regionSize.z)} and can be decoded as follows:
+		 * <pre>
+		 * int x = index % regionSize.x;
+		 * int z = (index / regionSize.x) % regionSize.z;
+		 * int y = index / (regionSize.x * regionSize.z);
+		 * </pre>
+		 *
+		 * @see Region#indexToPos(int) to convert an index to a block position
+		 * @see Region#posToIndex(int, int, int) to convert a block position to an index
+		 */
 		public int @NonNull [] blockStates;
+
+		/**
+		 * The block state palette. Each entry in the array represents a unique block state in this schematic region.
+		 * <p>
+		 * The values in {@link Region#blockStates} are indices to this array.
+		 */
 		public SchematicBlock @NonNull [] blockStatePalette;
+
+		/**
+		 * The block/tile entities in this schematic region.
+		 */
 		public SchematicBlockEntity @NonNull [] blockEntities;
+
+		/**
+		 * The entities in this schematic region.
+		 */
 		public SchematicEntity @NonNull [] entities;
+
+		/**
+		 * The list of blocks with pending tick calculations.
+		 */
 		public PendingTicks @NonNull [] pendingBlockTicks;
+
+		/**
+		 * The list of fluids with pending tick calculations.
+		 */
 		public PendingTicks @NonNull [] pendingFluidTicks;
 
 		public Region(@Nullable String name, @Nullable SchematicBlockPos position, @Nullable SchematicBlockPos size,
@@ -267,6 +380,99 @@ public class LitematicaSchematic implements Schematic {
 			return new SchematicBlockPos(x, y, z);
 		}
 
+		/**
+		 * The region name.
+		 *
+		 * @return The region name
+		 */
+		public @Nullable String name() {
+			return name;
+		}
+
+		/**
+		 * The region position in reference to the schematic origin at (0, 0, 0).
+		 *
+		 * @return The region position
+		 */
+		public @NonNull SchematicBlockPos position() {
+			return position;
+		}
+
+		/**
+		 * The region size.
+		 *
+		 * @return The region size
+		 */
+		public @NonNull SchematicBlockPos size() {
+			return size;
+		}
+
+		/**
+		 * The encoded (but unpacked) block states. Each index represents a block position and each value represents
+		 * an index in the {@link Region#blockStatePalette}.
+		 * <p>
+		 * Each index is encoded as {@code x + (z * regionSize.x) (y * regionSize.x * regionSize.z)} and can be decoded as follows:
+		 * <pre>
+		 * int x = index % regionSize.x;
+		 * int z = (index / regionSize.x) % regionSize.z;
+		 * int y = index / (regionSize.x * regionSize.z);
+		 * </pre>
+		 *
+		 * @return The encoded (but unpacked) block states
+		 * @see Region#indexToPos(int) to convert an index to a block position
+		 * @see Region#posToIndex(int, int, int) to convert a block position to an index
+		 */
+		public int @NonNull [] blockStates() {
+			return blockStates;
+		}
+
+		/**
+		 * The block state palette. Each entry in the array represents a unique block state in this schematic region.
+		 * <p>
+		 * The values in {@link Region#blockStates} are indices to this array.
+		 *
+		 * @return The block state palette
+		 */
+		public SchematicBlock @NonNull [] blockStatePalette() {
+			return blockStatePalette;
+		}
+
+		/**
+		 * The block/tile entities in this schematic region.
+		 *
+		 * @return The block entities in this region
+		 */
+		public SchematicBlockEntity @NonNull [] blockEntities() {
+			return blockEntities;
+		}
+
+		/**
+		 * The entities in this schematic region.
+		 *
+		 * @return The entities in this region
+		 */
+		public SchematicEntity @NonNull [] entities() {
+			return entities;
+		}
+
+		/**
+		 * The list of blocks with pending tick calculations.
+		 *
+		 * @return The blocks pending ticks
+		 */
+		public PendingTicks @NonNull [] pendingBlockTicks() {
+			return pendingBlockTicks;
+		}
+
+		/**
+		 * The list of fluids with pending tick calculations.
+		 *
+		 * @return The fluids pending ticks
+		 */
+		public PendingTicks @NonNull [] pendingFluidTicks() {
+			return pendingFluidTicks;
+		}
+
 		@Override
 		public boolean equals(Object o) {
 			if (this == o) return true;
@@ -297,12 +503,38 @@ public class LitematicaSchematic implements Schematic {
 		}
 	}
 
+	/**
+	 * Represents a block or fluid pending tick calculations.
+	 */
 	public static class PendingTicks {
+		/**
+		 * The pending tick priority.
+		 */
 		public @Nullable Integer priority;
+
+		/**
+		 * The sub-tick.
+		 */
 		public @Nullable Long subTick;
+
+		/**
+		 * The time.
+		 */
 		public @Nullable Integer time;
+
+		/**
+		 * The X coordinate inside the region it is found.
+		 */
 		public @Nullable Integer x;
+
+		/**
+		 * The Y coordinate inside the region it is found.
+		 */
 		public @Nullable Integer y;
+
+		/**
+		 * The Z coordinate inside the region it is found.
+		 */
 		public @Nullable Integer z;
 	}
 }

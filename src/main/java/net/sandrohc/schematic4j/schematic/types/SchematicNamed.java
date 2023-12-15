@@ -6,13 +6,21 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public abstract class SchematicNamed implements Comparable<SchematicNamed> {
 
-	public final @NonNull String name;
+	/**
+	 * The resource name, usually as a resource identifier like "minecraft:dirt".
+	 */
+	public @NonNull String name;
 
 	public SchematicNamed(@NonNull String name) {
 		this.name = name;
 	}
 
-	public String name() {
+	/**
+	 * The resource name.
+	 *
+	 * @return The resource name
+	 */
+	public @NonNull String name() {
 		return name;
 	}
 
