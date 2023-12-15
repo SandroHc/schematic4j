@@ -28,6 +28,11 @@ public class SchematicFormatTest {
 				Arguments.of(SchematicFormat.SPONGE_V2, "/schematics/sponge/v2/green-cottage.schem"),
 				Arguments.of(SchematicFormat.SPONGE_V2, "/schematics/sponge/v2/interieur-exterieur-chunk-project.schem"),
 				Arguments.of(SchematicFormat.SPONGE_V3, "/schematics/sponge/v3/sponge-v3.schem"),
+				Arguments.of(SchematicFormat.LITEMATICA, "/schematics/litematica/v6/demo.litematic"),
+				Arguments.of(SchematicFormat.LITEMATICA, "/schematics/litematica/v5/island.litematic"),
+				Arguments.of(SchematicFormat.LITEMATICA, "/schematics/litematica/v5/mansion.litematic"),
+				Arguments.of(SchematicFormat.LITEMATICA, "/schematics/litematica/v5/simple.litematic"),
+				Arguments.of(SchematicFormat.LITEMATICA, "/schematics/litematica/v5/tower.litematic"),
 				Arguments.of(SchematicFormat.SCHEMATICA, "/schematics/schematica/9383.schematic"),
 				Arguments.of(SchematicFormat.SCHEMATICA, "/schematics/schematica/12727.schematic")
 		);

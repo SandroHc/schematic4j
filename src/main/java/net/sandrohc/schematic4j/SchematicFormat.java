@@ -14,14 +14,15 @@ import org.slf4j.LoggerFactory;
 
 import net.sandrohc.schematic4j.exception.NoParserFoundException;
 import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
+import net.sandrohc.schematic4j.parser.LitematicaParser;
 import net.sandrohc.schematic4j.parser.Parser;
 import net.sandrohc.schematic4j.parser.SchematicaParser;
-import net.sandrohc.schematic4j.parser.SpongeSchematicParser;
+import net.sandrohc.schematic4j.parser.SpongeParser;
 
 public enum SchematicFormat {
-	SPONGE_V1      ("schem", SpongeSchematicParser::new),
-	SPONGE_V2      ("schem", SpongeSchematicParser::new),
-	SPONGE_V3      ("schem", SpongeSchematicParser::new),
+	SPONGE_V1      ("schem", SpongeParser::new),
+	SPONGE_V2      ("schem", SpongeParser::new),
+	SPONGE_V3      ("schem", SpongeParser::new),
 	LITEMATICA     ("litematic"),
 	SCHEMATICA     ("schematic", SchematicaParser::new),
 	WORLD_EDITOR   ("schematic"),
@@ -68,6 +69,7 @@ public enum SchematicFormat {
 
 		final Candidates<SchematicFormat> candidates = new Candidates<>();
 		guessSpongeFormat(candidates, nbt);
+		guessLitematicaFormat(candidates, nbt);
 		guessSchematicaFormat(candidates, nbt);
 
 		final SchematicFormat guess = candidates.best().orElse(SchematicFormat.UNKNOWN);
@@ -76,8 +78,8 @@ public enum SchematicFormat {
 	}
 
 	private static void guessSpongeFormat(Candidates<SchematicFormat> candidates, @NonNull CompoundTag rootTag) {
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_VERSION)) {
-			final int version = rootTag.getInt(SpongeSchematicParser.NBT_VERSION);
+		if (rootTag.containsKey(SpongeParser.NBT_VERSION)) {
+			final int version = rootTag.getInt(SpongeParser.NBT_VERSION);
 			switch (version) {
 				case 1:
 					candidates.increment(SchematicFormat.SPONGE_V1, 5);
@@ -91,7 +93,7 @@ public enum SchematicFormat {
 			candidates.exclude(SchematicFormat.SPONGE_V2);
 			candidates.exclude(SchematicFormat.SPONGE_V3);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_DATA_VERSION)) {
+		if (rootTag.containsKey(SpongeParser.NBT_DATA_VERSION)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
@@ -99,52 +101,69 @@ public enum SchematicFormat {
 			candidates.exclude(SchematicFormat.SPONGE_V2);
 			candidates.exclude(SchematicFormat.SPONGE_V3);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_WIDTH)) {
+		if (rootTag.containsKey(SpongeParser.NBT_WIDTH)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_HEIGHT)) {
+		if (rootTag.containsKey(SpongeParser.NBT_HEIGHT)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_LENGTH)) {
+		if (rootTag.containsKey(SpongeParser.NBT_LENGTH)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_PALETTE)) {
+		if (rootTag.containsKey(SpongeParser.NBT_PALETTE)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_PALETTE_MAX)) {
+		if (rootTag.containsKey(SpongeParser.NBT_PALETTE_MAX)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_BLOCK_DATA)) {
+		if (rootTag.containsKey(SpongeParser.NBT_BLOCK_DATA)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_BIOME_DATA)) {
+		if (rootTag.containsKey(SpongeParser.NBT_BIOME_DATA)) {
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_TILE_ENTITIES)) {
+		if (rootTag.containsKey(SpongeParser.NBT_TILE_ENTITIES)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_BLOCK_ENTITIES)) {
+		if (rootTag.containsKey(SpongeParser.NBT_BLOCK_ENTITIES)) {
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_V3_BLOCKS)) {
+		if (rootTag.containsKey(SpongeParser.NBT_V3_BLOCKS)) {
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_V3_BIOMES)) {
+		if (rootTag.containsKey(SpongeParser.NBT_V3_BIOMES)) {
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
 		}
-		if (rootTag.containsKey(SpongeSchematicParser.NBT_METADATA)) {
+		if (rootTag.containsKey(SpongeParser.NBT_METADATA)) {
 			candidates.increment(SchematicFormat.SPONGE_V1, 1);
 			candidates.increment(SchematicFormat.SPONGE_V2, 1);
 			candidates.increment(SchematicFormat.SPONGE_V3, 1);
+		}
+	}
+
+	private static void guessLitematicaFormat(Candidates<SchematicFormat> candidates, @NonNull CompoundTag nbt) {
+		if (nbt.containsKey(LitematicaParser.NBT_MINECRAFT_DATA_VERSION)) {
+			candidates.increment(SchematicFormat.LITEMATICA, 1);
+		}
+		if (nbt.containsKey(LitematicaParser.NBT_VERSION)) {
+			candidates.increment(SchematicFormat.LITEMATICA, 1);
+		}
+		if (nbt.containsKey(LitematicaParser.NBT_METADATA)) {
+			candidates.increment(SchematicFormat.LITEMATICA, 1);
+		}
+		if (nbt.containsKey(LitematicaParser.NBT_REGIONS)) {
+			candidates.increment(SchematicFormat.LITEMATICA, 2);
+		} else {
+			candidates.exclude(SchematicFormat.LITEMATICA);
 		}
 	}
 

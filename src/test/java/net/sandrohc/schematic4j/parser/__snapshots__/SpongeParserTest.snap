@@ -1,9 +1,9 @@
-net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot1=[
+net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot1=[
   {
     "biomes" : [ ],
     "blockEntities" : [
       {
-        "extra" : {
+        "data" : {
           "CookingTimes" : [
             0,
             0,
@@ -2432,27 +2432,19 @@ net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot1=[
     "dataVersion" : 2860,
     "entities" : [
       {
-        "extra" : {
-          "Extra" : {
-            "CustomName" : "Sheep",
-            "CustomNameVisible" : 1,
-            "Fire" : -20,
-            "Motion" : [
-              0.00203,
-              0.00203,
-              1.0
-            ],
-            "NoGravity" : 0,
-            "Rotation" : [
-              45.0,
-              189.3
-            ]
-          },
-          "Id" : "minecraft:creeper",
-          "Pos" : [
-            15.0043293,
-            40.452,
-            68.000321
+        "data" : {
+          "CustomName" : "Sheep",
+          "CustomNameVisible" : 1,
+          "Fire" : -20,
+          "Motion" : [
+            0.00203,
+            0.00203,
+            1.0
+          ],
+          "NoGravity" : 0,
+          "Rotation" : [
+            45.0,
+            189.3
           ]
         },
         "name" : "minecraft:creeper",
@@ -2490,12 +2482,12 @@ net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot1=[
 ]
 
 
-net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot2=[
+net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot2=[
   {
     "biomes" : [ ],
     "blockEntities" : [
       {
-        "extra" : {
+        "data" : {
           "CookingTimes" : [
             0,
             0,
@@ -16437,12 +16429,12 @@ net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot2=[
 ]
 
 
-net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot3=[
+net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot3=[
   {
     "biomes" : [ ],
     "blockEntities" : [
       {
-        "extra" : {
+        "data" : {
           "CookingTimes" : [
             0,
             0,
@@ -30364,27 +30356,19 @@ net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot3=[
     "dataVersion" : 3465,
     "entities" : [
       {
-        "extra" : {
-          "Data" : {
-            "CustomName" : "Sheep",
-            "CustomNameVisible" : 1,
-            "Fire" : -20,
-            "Motion" : [
-              0.00203,
-              0.00203,
-              1.0
-            ],
-            "NoGravity" : 0,
-            "Rotation" : [
-              45.0,
-              189.3
-            ]
-          },
-          "Id" : "minecraft:creeper",
-          "Pos" : [
-            15.0043293,
-            40.452,
-            68.000321
+        "data" : {
+          "CustomName" : "Sheep",
+          "CustomNameVisible" : 1,
+          "Fire" : -20,
+          "Motion" : [
+            0.00203,
+            0.00203,
+            1.0
+          ],
+          "NoGravity" : 0,
+          "Rotation" : [
+            45.0,
+            189.3
           ]
         },
         "name" : "minecraft:creeper",
@@ -30422,12 +30406,12 @@ net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot3=[
 ]
 
 
-net.sandrohc.schematic4j.parser.SpongeSchematicParserTest.snapshot4=[
+net.sandrohc.schematic4j.parser.SpongeParserTest.snapshot4=[
   {
     "biomes" : [ ],
     "blockEntities" : [
       {
-        "extra" : {
+        "data" : {
           "ContentVersion" : 1,
           "CookingTimes" : [
             0,

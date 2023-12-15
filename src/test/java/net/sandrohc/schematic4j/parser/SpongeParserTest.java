@@ -7,6 +7,8 @@ import au.com.origin.snapshots.junit5.SnapshotExtension;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.ParsingException;
@@ -19,14 +21,14 @@ import static net.sandrohc.schematic4j.parser.TestUtils.nbtFromResource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SnapshotExtension.class)
-public class SpongeSchematicParserTest {
+public class SpongeParserTest {
 
 	private Expect expect;
 
 	@Test
 	public void parses() throws ParsingException {
 		final CompoundTag nbt = nbtFromResource("/schematics/sponge/v2/issue-1.schem");
-		final Schematic schem = new SpongeSchematicParser().parse(nbt);
+		final Schematic schem = new SpongeParser().parse(nbt);
 		assertThat(schem).isNotNull().isInstanceOf(SpongeSchematic.class);
 
 		final SoftAssertions softly = new SoftAssertions();
@@ -48,23 +50,34 @@ public class SpongeSchematicParserTest {
 		softly.assertAll();
 	}
 
+	/**
+	 * Check if the schematics too big for snapshot still parse without errors.
+	 */
+	@ParameterizedTest
+	@ValueSource(strings = {"/schematics/sponge/v2/interieur-exterieur-chunk-project.schem"})
+	public void parsesNoSnapshot(String file) throws ParsingException {
+		final CompoundTag nbt = nbtFromResource(file);
+		final Schematic schem = new SpongeParser().parse(nbt);
+		assertThat(schem).isNotNull().isInstanceOf(SpongeSchematic.class);
+	}
+
 	@Test
 	public void snapshot1() throws ParsingException {
-		assertSchematic(expect, "/schematics/sponge/v2/issue-1.schem", new SpongeSchematicParser());
+		assertSchematic(expect, "/schematics/sponge/v2/issue-1.schem", new SpongeParser());
 	}
 
 	@Test
 	public void snapshot2() throws ParsingException {
-		assertSchematic(expect, "/schematics/sponge/v2/green-cottage.schem", new SpongeSchematicParser());
+		assertSchematic(expect, "/schematics/sponge/v2/green-cottage.schem", new SpongeParser());
 	}
 
 	@Test
 	public void snapshot3() throws ParsingException {
-		assertSchematic(expect, "/schematics/sponge/v3/sponge-v3.schem", new SpongeSchematicParser());
+		assertSchematic(expect, "/schematics/sponge/v3/sponge-v3.schem", new SpongeParser());
 	}
 
 	@Test
 	public void snapshot4() throws ParsingException {
-		assertSchematic(expect, "/schematics/sponge/v1/sponge-v1.schem", new SpongeSchematicParser());
+		assertSchematic(expect, "/schematics/sponge/v1/sponge-v1.schem", new SpongeParser());
 	}
 }

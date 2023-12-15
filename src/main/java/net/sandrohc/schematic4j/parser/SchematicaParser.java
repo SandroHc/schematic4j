@@ -46,17 +46,7 @@ public class SchematicaParser implements Parser {
 	public static final String NBT_HEIGHT = "Height";
 	public static final String NBT_MAPPING_SCHEMATICA = "SchematicaMapping";
 	public static final String NBT_TILE_ENTITIES = "TileEntities";
-	public static final String NBT_TILE_ENTITIES_ID = "id";
-	public static final String NBT_TILE_ENTITIES_X = "x";
-	public static final String NBT_TILE_ENTITIES_Y = "y";
-	public static final String NBT_TILE_ENTITIES_Z = "z";
 	public static final String NBT_ENTITIES = "Entities";
-	public static final String NBT_ENTITIES_ID = "id";
-	public static final String NBT_ENTITIES_POS = "Pos";
-	public static final String NBT_ENTITIES_TILE_X = "TileX";
-	public static final String NBT_ENTITIES_TILE_Y = "TileY";
-	public static final String NBT_ENTITIES_TILE_Z = "TileZ";
-	public static final String NBT_EXTENDED_METADATA = "ExtendedMetadata";
 
 	public static final String DEFAULT_BLOCK_NAME = "minecraft:unknown";
 
@@ -160,84 +150,40 @@ public class SchematicaParser implements Parser {
 		log.debug("Loaded {} blocks", width * height * length);
 	}
 
-	private void parseBlockEntities(CompoundTag root, Builder builder) throws ParsingException {
-		final Optional<ListTag<CompoundTag>> blockEntitiesListTag = getCompoundList(root, NBT_TILE_ENTITIES);
-		if (!blockEntitiesListTag.isPresent()) {
+	private void parseBlockEntities(CompoundTag root, Builder builder) {
+		final ListTag<CompoundTag> blockEntitiesTag = getCompoundList(root, NBT_TILE_ENTITIES).orElse(null);
+		if (blockEntitiesTag == null) {
 			log.trace("No block entities found");
 			return;
 		}
 
 		log.trace("Parsing block entities");
-		final ListTag<CompoundTag> blockEntitiesTag = blockEntitiesListTag.get();
 		final SchematicBlockEntity[] blockEntities = new SchematicBlockEntity[blockEntitiesTag.size()];
 
 		int i = 0;
-		for (CompoundTag blockEntity : blockEntitiesTag) {
-			final String id = getStringOrThrow(blockEntity, NBT_TILE_ENTITIES_ID);
-
-			final int posX = getIntOrThrow(blockEntity, NBT_TILE_ENTITIES_X);
-			final int posY = getIntOrThrow(blockEntity, NBT_TILE_ENTITIES_Y);
-			final int posZ = getIntOrThrow(blockEntity, NBT_TILE_ENTITIES_Z);
-
-			final Map<String, Object> extra = blockEntity.entrySet().stream()
-					.filter(tag -> !tag.getKey().equals(NBT_TILE_ENTITIES_ID) &&
-							!tag.getKey().equals(NBT_TILE_ENTITIES_X) &&
-							!tag.getKey().equals(NBT_TILE_ENTITIES_Y) &&
-							!tag.getKey().equals(NBT_TILE_ENTITIES_Z))
-					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
-
-			blockEntities[i] = new SchematicBlockEntity(id, SchematicBlockPos.from(posX, posY, posZ), extra);
-			i++;
+		for (CompoundTag blockEntityTag : blockEntitiesTag) {
+			final SchematicBlockEntity blockEntity = SchematicBlockEntity.fromNbt(blockEntityTag);
+			blockEntities[i++] = blockEntity;
 		}
 
 		log.debug("Loaded {} block entities", blockEntities.length);
 		builder.blockEntities(blockEntities);
 	}
 
-	private void parseEntities(CompoundTag root, Builder builder) throws ParsingException {
-		final Optional<ListTag<CompoundTag>> entitiesListTag = getCompoundList(root, NBT_ENTITIES);
-		if (!entitiesListTag.isPresent()) {
+	private void parseEntities(CompoundTag root, Builder builder) {
+		final ListTag<CompoundTag> entitiesTag = getCompoundList(root, NBT_ENTITIES).orElse(null);
+		if (entitiesTag == null) {
 			log.trace("No entities found");
 			return;
 		}
 
 		log.trace("Parsing entities");
-		final ListTag<CompoundTag> entitiesTag = entitiesListTag.get();
 		final SchematicEntity[] entities = new SchematicEntity[entitiesTag.size()];
 
 		int i = 0;
-		for (CompoundTag entity : entitiesTag) {
-			final String id = getStringOrThrow(entity, NBT_ENTITIES_ID);
-
-			// Position in the world
-			final int posX = getInt(entity, NBT_ENTITIES_TILE_X).orElse(0);
-			final int posY = getInt(entity, NBT_ENTITIES_TILE_Y).orElse(0);
-			final int posZ = getInt(entity, NBT_ENTITIES_TILE_Z).orElse(0);
-
-			// Position inside the block
-			final double[] subPos = {0, 0, 0};
-			getDoubleList(entity, NBT_ENTITIES_POS).ifPresent(subPosTag -> {
-				subPos[0] = subPosTag.get(0).asDouble();
-				subPos[1] = subPosTag.get(1).asDouble();
-				subPos[2] = subPosTag.get(2).asDouble();
-			});
-
-			SchematicPosDouble pos = SchematicPosDouble.from(
-					posX + subPos[0],
-					posY + subPos[1],
-					posZ + subPos[2]
-			);
-
-			final Map<String, Object> extra = entity.entrySet().stream()
-					.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) &&
-							!tag.getKey().equals(NBT_ENTITIES_POS) &&
-							!tag.getKey().equals(NBT_ENTITIES_TILE_X) &&
-							!tag.getKey().equals(NBT_ENTITIES_TILE_Y) &&
-							!tag.getKey().equals(NBT_ENTITIES_TILE_Z))
-					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
-
-			entities[i] = new SchematicEntity(id, pos, extra);
-			i++;
+		for (final CompoundTag entityTag : entitiesTag) {
+			final SchematicEntity entity = SchematicEntity.fromNbt(entityTag);
+			entities[i++] = entity;
 		}
 
 		log.debug("Loaded {} entities", entities.length);

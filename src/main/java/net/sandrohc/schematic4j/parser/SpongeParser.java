@@ -28,7 +28,6 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
-import net.sandrohc.schematic4j.schematic.types.SchematicPosDouble;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 
 import static java.util.stream.Collectors.toMap;
@@ -38,23 +37,25 @@ import static net.sandrohc.schematic4j.utils.TagUtils.getByteArrayOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompound;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompoundList;
 import static net.sandrohc.schematic4j.utils.TagUtils.getCompoundOrThrow;
-import static net.sandrohc.schematic4j.utils.TagUtils.getDoubleList;
 import static net.sandrohc.schematic4j.utils.TagUtils.getInt;
 import static net.sandrohc.schematic4j.utils.TagUtils.getIntArray;
 import static net.sandrohc.schematic4j.utils.TagUtils.getIntOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.getShortOrThrow;
-import static net.sandrohc.schematic4j.utils.TagUtils.getStringOrThrow;
 import static net.sandrohc.schematic4j.utils.TagUtils.unwrap;
 
 /**
  * Parses Sponge Schematic files (<i>.schem</i>).
  * <p>
  * The SCHEM format replaced the .SCHEMATIC format in versions 1.13+ of Minecraft Java Edition.
- * <p>
- * Specification:<br>
- * - <a href="https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md">https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md</a>
+ *
+ * <h2>Specification</h2>
+ * <ul>
+ *     <li><a href="https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-1.md">Version 1</a></li>
+ *     <li><a href="https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md">Version 2</a></li>
+ *     <li><a href="https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-3.md">Version 3</a></li>
+ * </ul>
  */
-public class SpongeSchematicParser implements Parser {
+public class SpongeParser implements Parser {
 
 	public static final String NBT_VERSION = "Version";
 	public static final String NBT_DATA_VERSION = "DataVersion";
@@ -85,7 +86,7 @@ public class SpongeSchematicParser implements Parser {
 	public static final String NBT_V3_BIOMES = "Biomes";
 	public static final String NBT_V3_DATA = "Data";
 
-	private static final Logger log = LoggerFactory.getLogger(SpongeSchematicParser.class);
+	private static final Logger log = LoggerFactory.getLogger(SpongeParser.class);
 
 	@Override
 	public @NonNull Schematic parse(@Nullable CompoundTag nbt) throws ParsingException {
@@ -107,7 +108,7 @@ public class SpongeSchematicParser implements Parser {
 		parseOffset(nbt, builder);
 		parseBlocks(nbt, builder, version);
 		parseBlockEntities(nbt, builder, version);
-		parseEntities(nbt, builder, version);
+		parseEntities(nbt, builder);
 		parseBiomes(nbt, builder, version);
 
 		return builder.build();
@@ -254,7 +255,7 @@ public class SpongeSchematicParser implements Parser {
 		}
 	}
 
-	protected void parseBlockEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
+	protected void parseBlockEntities(CompoundTag root, Builder builder, int version) {
 		final CompoundTag blocksTag = getBlocksTag(root, version);
 		final String blockEntitiesTagName = version == 1 ? NBT_TILE_ENTITIES : NBT_BLOCK_ENTITIES;
 		final Optional<ListTag<CompoundTag>> blockEntitiesListTag = getCompoundList(blocksTag, blockEntitiesTagName);
@@ -269,16 +270,16 @@ public class SpongeSchematicParser implements Parser {
 		final SchematicBlockEntity[] blockEntities = new SchematicBlockEntity[blockEntitiesTag.size()];
 
 		int i = 0;
-		for (CompoundTag blockEntity : blockEntitiesTag) {
-			final String id = getStringOrThrow(blockEntity, NBT_BLOCK_ENTITIES_ID);
-			final int[] pos = getIntArray(blockEntity, NBT_BLOCK_ENTITIES_POS).orElseGet(() -> new int[]{0, 0, 0});
-
-			final Map<String, Object> extra = blockEntity.entrySet().stream()
-					.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) &&
-							!tag.getKey().equals(NBT_ENTITIES_POS))
+		for (CompoundTag blockEntityTag : blockEntitiesTag) {
+			final String id = blockEntityTag.getString(NBT_BLOCK_ENTITIES_ID);
+			final SchematicBlockPos pos = getIntArray(blockEntityTag, NBT_BLOCK_ENTITIES_POS)
+					.map(SchematicBlockPos::from)
+					.orElseGet(() -> new SchematicBlockPos(0, 0, 0));
+			final Map<String, Object> data = blockEntityTag.entrySet().stream()
+					.filter(tag -> !tag.getKey().equals(NBT_ENTITIES_ID) && !tag.getKey().equals(NBT_ENTITIES_POS))
 					.collect(toMap(Entry::getKey, e -> unwrap(e.getValue()), (a, b) -> b, TreeMap::new));
 
-			blockEntities[i] = new SchematicBlockEntity(id, SchematicBlockPos.from(pos), extra);
+			blockEntities[i] = new SchematicBlockEntity(id, pos, data);
 			i++;
 		}
 
@@ -286,36 +287,37 @@ public class SpongeSchematicParser implements Parser {
 		log.debug("Loaded {} block entities", blockEntities.length);
 	}
 
-	protected void parseEntities(CompoundTag root, Builder builder, int version) throws ParsingException {
-		final Optional<ListTag<CompoundTag>> entitiesListTag = getCompoundList(root, NBT_ENTITIES);
-		if (!entitiesListTag.isPresent()) {
+	@SuppressWarnings("unchecked")
+	protected void parseEntities(CompoundTag root, Builder builder) {
+		final ListTag<CompoundTag> entitiesTag = getCompoundList(root, NBT_ENTITIES).orElse(null);
+		if (entitiesTag == null) {
 			log.trace("No entities found");
 			return;
 		}
 
 		log.trace("Parsing entities");
-		final ListTag<CompoundTag> entitiesTag = entitiesListTag.get();
 		final SchematicEntity[] entities = new SchematicEntity[entitiesTag.size()];
 
 		int i = 0;
-		for (CompoundTag entity : entitiesTag) {
-			final String id = getStringOrThrow(entity, NBT_ENTITIES_ID);
+		for (CompoundTag entityTag : entitiesTag) {
+			final SchematicEntity entity = SchematicEntity.fromNbt(entityTag);
+			if (entity != null) {
+				// Entity NBT stored in v2
+				final Object entityExtra = entity.data.get(NBT_ENTITIES_EXTRA);
+				if (entityExtra instanceof Map<?, ?>) {
+					entity.data.remove(NBT_ENTITIES_EXTRA);
+					entity.data.putAll(((Map<String, ?>) entityExtra));
+				}
 
-			final double[] pos = {0, 0, 0};
-			getDoubleList(entity, NBT_ENTITIES_POS).ifPresent(posTag -> {
-				pos[0] = posTag.get(0).asDouble();
-				pos[1] = posTag.get(1).asDouble();
-				pos[2] = posTag.get(2).asDouble();
-			});
+				// Entity NBT stored in v3
+				final Object entityData = entity.data.get(NBT_V3_DATA);
+				if (entityData instanceof Map<?, ?>) {
+					entity.data.remove(NBT_V3_DATA);
+					entity.data.putAll(((Map<String, ?>) entityData));
+				}
+			}
 
-			final Map<String, Object> extra = new TreeMap<>();
-			final String extraTagName = version >= 3 ? NBT_V3_DATA : NBT_ENTITIES_EXTRA;
-			getCompound(entity, extraTagName).ifPresent(extraTag -> {
-				entity.entrySet().forEach(e -> extra.put(e.getKey(), unwrap(e.getValue())));
-			});
-
-			entities[i] = new SchematicEntity(id, SchematicPosDouble.from(pos), extra);
-			i++;
+			entities[i++] = entity;
 		}
 
 		builder.entities(entities);
@@ -335,7 +337,7 @@ public class SpongeSchematicParser implements Parser {
 		final short length = getShortOrThrow(root, NBT_LENGTH);
 		final CompoundTag biomesTag = getBiomesTag(root, version);
 
-		// Load the (optional) palette
+		// Load the palette
 		final String biomePaletteKey = version >= 3 ? NBT_PALETTE : NBT_BIOME_PALETTE;
 		final CompoundTag palette = getCompoundOrThrow(biomesTag, biomePaletteKey);
 		log.trace("Biome palette size: {}", palette.size());

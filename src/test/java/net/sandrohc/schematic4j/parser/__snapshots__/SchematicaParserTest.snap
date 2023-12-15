@@ -2,7 +2,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
   {
     "blockEntities" : [
       {
-        "extra" : {
+        "data" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -14,7 +14,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -26,7 +26,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -38,7 +38,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Text1" : "{\"text\":\"\"}",
           "Text2" : "{\"text\":\"\"}",
           "Text3" : "{\"text\":\"\"}",
@@ -52,7 +52,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "BurnTime" : 0,
           "CookTime" : 0,
           "CookTimeTotal" : 0,
@@ -67,7 +67,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -79,7 +79,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -91,7 +91,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -103,7 +103,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -115,7 +115,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -127,7 +127,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -139,7 +139,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -151,7 +151,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Text1" : "{\"text\":\"\"}",
           "Text2" : "{\"text\":\"\"}",
           "Text3" : "{\"text\":\"\"}",
@@ -165,7 +165,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -177,7 +177,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -189,7 +189,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },
@@ -201,7 +201,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Items" : [ ],
           "Lock" : ""
         },
@@ -213,7 +213,7 @@ net.sandrohc.schematic4j.parser.SchematicaParserTest.snapshot1=[
         }
       },
       {
-        "extra" : {
+        "data" : {
           "Data" : 0,
           "Item" : "minecraft:air"
         },

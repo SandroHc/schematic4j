@@ -5,6 +5,8 @@ import au.com.origin.snapshots.junit5.SnapshotExtension;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.ParsingException;
@@ -34,6 +36,17 @@ public class SchematicaParserTest {
 		softly.assertThat(schem.length()).isEqualTo(101);
 		softly.assertThat(((SchematicaSchematic) schem).materials()).isEqualTo(SchematicaSchematic.MATERIAL_ALPHA);
 		softly.assertAll();
+	}
+
+	/**
+	 * Check if the schematics too big for snapshot still parse without errors.
+	 */
+	@ParameterizedTest
+	@ValueSource(strings = {"/schematics/schematica/12727.schematic"})
+	public void parsesNoSnapshot(String file) throws ParsingException {
+		final CompoundTag nbt = nbtFromResource(file);
+		final Schematic schem = new SchematicaParser().parse(nbt);
+		assertThat(schem).isNotNull().isInstanceOf(SchematicaSchematic.class);
 	}
 
 	@Test

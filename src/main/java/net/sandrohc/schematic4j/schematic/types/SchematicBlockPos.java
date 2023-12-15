@@ -2,6 +2,12 @@ package net.sandrohc.schematic4j.schematic.types;
 
 import java.util.Comparator;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import net.sandrohc.schematic4j.nbt.tag.CompoundTag;
+import net.sandrohc.schematic4j.nbt.tag.Tag;
+
 public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
 	public final int x;
 	public final int y;
@@ -27,6 +33,17 @@ public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
 
 	public static SchematicBlockPos from(int[] pos) {
 		return from(pos[0], pos[1], pos[2]);
+	}
+
+	public static @Nullable SchematicBlockPos from(Tag<?> nbtTag) {
+		if (!(nbtTag instanceof CompoundTag)) {
+			return null;
+		}
+		final CompoundTag nbt = ((CompoundTag) nbtTag);
+		final int x = nbt.getInt("x");
+		final int y = nbt.getInt("y");
+		final int z = nbt.getInt("z");
+		return new SchematicBlockPos(x, y, z);
 	}
 
 	public static SchematicBlockPos from(SchematicBlockPos other) {
@@ -71,7 +88,7 @@ public class SchematicBlockPos implements Comparable<SchematicBlockPos> {
 	}
 
 	@Override
-	public int compareTo(SchematicBlockPos o) {
+	public int compareTo(@NonNull SchematicBlockPos o) {
 		return Comparator.nullsLast(
 				Comparator.<SchematicBlockPos>comparingInt(obj -> obj.x)
 						.thenComparingInt(obj -> obj.y)

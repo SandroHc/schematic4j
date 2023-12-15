@@ -4,15 +4,19 @@ Java parser for the .schem/.schematic/.litematic Minecraft formats. 🗺
 
 ## Supported formats
 
-| Format                            | Extension  | Links                                                                    |
-|-----------------------------------|------------|--------------------------------------------------------------------------|
-| [Sponge Schematic Format][sponge] | .schem     | Spec: [v1][sponge-spec-v1] • [v2][sponge-spec-v2] • [v3][sponge-spec-v3] |
-| [Schematica][schematica]          | .schematic | [Spec][schematica-spec]                                                  |
+| Format                     | Extension  | Links                                                                    |
+|----------------------------|------------|--------------------------------------------------------------------------|
+| [Sponge Schematic][sponge] | .schem     | Spec: [v1][sponge-spec-v1] • [v2][sponge-spec-v2] • [v3][sponge-spec-v3] |
+| [Litematica][litematica]   | .litematic | [Spec][litematica-spec] • [Discussion][litematica-discussion]            |
+| [Schematica][schematica]   | .schematic | [Spec][schematica-spec]                                                  |
 
 [sponge]: https://github.com/SpongePowered/Schematic-Specification
 [sponge-spec-v1]: https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-1.md
 [sponge-spec-v2]: https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-2.md
 [sponge-spec-v3]: https://github.com/SpongePowered/Schematic-Specification/blob/master/versions/schematic-3.md
+[litematica]: https://github.com/maruohon/litematica
+[litematica-spec]: https://github.com/maruohon/litematica/blob/pre-rewrite/fabric/1.20.x/src/main/java/fi/dy/masa/litematica/schematic/LitematicaSchematic.java
+[litematica-discussion]: https://github.com/maruohon/litematica/issues/53#issuecomment-520279558
 [schematica]: https://curseforge.com/minecraft/mc-mods/schematica
 [schematica-spec]: https://minecraft.fandom.com/wiki/Schematic_file_format
 

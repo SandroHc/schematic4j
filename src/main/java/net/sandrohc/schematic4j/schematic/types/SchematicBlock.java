@@ -8,6 +8,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class SchematicBlock extends SchematicNamed {
 
+	public static final SchematicBlock AIR = new SchematicBlock("minecraft:air");
+
 	public final @NonNull String block;
 	public final @NonNull Map<String, String> states;
 

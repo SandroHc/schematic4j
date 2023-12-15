@@ -17,6 +17,8 @@ import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
+import static net.sandrohc.schematic4j.schematic.types.SchematicBlock.AIR;
+
 /**
  * A Sponge schematic. Read more about it at <a href="https://github.com/SpongePowered/Schematic-Specification">https://github.com/SpongePowered/Schematic-Specification</a>.
  */
@@ -122,7 +124,7 @@ public class SpongeSchematic implements Schematic {
 	@Override
 	public @Nullable SchematicBlock block(int x, int y, int z) {
 		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
-			throw new ArrayIndexOutOfBoundsException(String.format("position out of bounds: %d, %d, %d", x, y, z));
+			return AIR; // outside bounds
 		}
 
 		return blocks[x][y][z];
@@ -158,7 +160,7 @@ public class SpongeSchematic implements Schematic {
 	@Override
 	public @Nullable SchematicBiome biome(int x, int y, int z) {
 		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
-			throw new ArrayIndexOutOfBoundsException(String.format("position out of bounds: %d, %d, %d", x, y, z));
+			return new SchematicBiome("minecraft:air"); // outside bounds
 		}
 
 		return biomes[x][y][z];

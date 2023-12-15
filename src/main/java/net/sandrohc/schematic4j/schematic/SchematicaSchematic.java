@@ -14,6 +14,8 @@ import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicItem;
 import net.sandrohc.schematic4j.utils.iterators.Arr3DIterator;
 
+import static net.sandrohc.schematic4j.schematic.types.SchematicBlock.AIR;
+
 /**
  * A Schematica schematic. Read more about it at <a href="https://minecraft.fandom.com/wiki/Schematic_file_format">https://minecraft.fandom.com/wiki/Schematic_file_format</a>
  * <br>
@@ -83,8 +85,9 @@ public class SchematicaSchematic implements Schematic {
 
 	@Override
 	public @Nullable SchematicBlock block(int x, int y, int z) {
-		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length))
-			throw new ArrayIndexOutOfBoundsException("invalid position");
+		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
+			return AIR; // outside bounds
+		}
 
 		return blocks[x][y][z];
 	}
