@@ -1,5 +1,7 @@
 # Schematic4j
 
+[![Latest version](https://img.shields.io/maven-central/v/net.sandrohc/schematic4j?label=version)](https://central.sonatype.com/artifact/net.sandrohc/schematic4j)
+
 Java parser for the .schem/.schematic/.litematic Minecraft formats. 🗺
 
 ## Supported formats
@@ -31,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.sandrohc:schematic4j:1.0.1'
+    implementation 'net.sandrohc:schematic4j:1.1.0'
 }
 ```
 
@@ -40,7 +42,7 @@ If using Maven (`pom.xml`):
 <dependency>
     <groupId>net.sandrohc</groupId>
     <artifactId>schematic4j</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -58,9 +60,9 @@ Schematic schematic = SchematicLoader.load("/path/to/your.schematic");
 schematic.name();
 schematic.width();
 schematic.height();
-schematic.lenght();
+schematic.length();
 schematic.block(0, 0, 0).name;
-schematic.blocks().next();
-schematic.blockEntities().next();
-schematic.entities().next();
+schematic.blocks().collect(Collectors.toList());
+schematic.blockEntities().collect(Collectors.toList());
+schematic.entities().collect(Collectors.toList());
 ```
