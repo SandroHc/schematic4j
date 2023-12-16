@@ -2,8 +2,8 @@ package net.sandrohc.schematic4j.schematic;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -11,7 +11,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.SchematicFormat;
-import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.types.Pair;
 import net.sandrohc.schematic4j.schematic.types.SchematicBiome;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
@@ -26,12 +25,10 @@ import static net.sandrohc.schematic4j.schematic.types.SchematicBlock.AIR;
  */
 public class SpongeSchematic implements Schematic {
 
-	public static final int[] DEFAULT_OFFSET = {0, 0, 0};
-
 	/**
 	 * The Sponge Schematic format version being used.
 	 **/
-	public int version;
+	public int version = 1;
 
 	/**
 	 * Specifies the data version of Minecraft that was used to create the schematic.
@@ -45,7 +42,7 @@ public class SpongeSchematic implements Schematic {
 	/**
 	 * The optional metadata about the schematic.
 	 */
-	public @NonNull Metadata metadata;
+	public @NonNull Metadata metadata = new Metadata();
 
 	/**
 	 * The width (the size of the area in the X-axis) of the schematic.
@@ -68,49 +65,39 @@ public class SpongeSchematic implements Schematic {
 	 * not provided is [0, 0, 0]. Example: If a player is pasting from 1, 2, 3, and the offset is 4, 5, 6, then the
 	 * first block should be placed at 5, 7, 9
 	 */
-	public int @NonNull [] offset;
+	public @NonNull SchematicBlockPos offset = SchematicBlockPos.ZERO;
 
 	/**
-	 * The unpacked block data.
+	 * The unpacked block data indices.
 	 */
-	public @NonNull SchematicBlock[][][] blocks;
+	public int @NonNull [] blocks = new int[0];
+
+	/**
+	 * The unpacked block data indices.
+	 */
+	public SchematicBlock @NonNull [] blockPalette = new SchematicBlock[0];
 
 	/**
 	 * The block/tile entity data.
 	 */
-	public @NonNull SchematicBlockEntity[] blockEntities;
+	public SchematicBlockEntity @NonNull [] blockEntities = new SchematicBlockEntity[0];
 
 	/**
 	 * The entity data.
 	 */
-	public @NonNull SchematicEntity[] entities;
+	public SchematicEntity @NonNull [] entities = new SchematicEntity[0];
 
 	/**
-	 * The tile entity data.
+	 * The unpacked biome data.
 	 */
-	public @NonNull SchematicBiome[][][] biomes;
+	public int @NonNull [] biomes = new int[0];
 
 	/**
-	 * The biome height. In older versions of the specification, only 2D biome data was supported.
+	 * The biome palette data.
 	 */
-	public int biomeHeight;
+	public @NonNull SchematicBiome[] biomePalette = new SchematicBiome[0];
 
-	public SpongeSchematic(int version, @Nullable Integer dataVersion, @Nullable Metadata metadata, int width,
-						   int height, int length, int[] offset, @NonNull SchematicBlock[][][] blocks,
-						   @NonNull SchematicBlockEntity[] blockEntities, @NonNull SchematicEntity[] entities,
-						   @NonNull SchematicBiome[][][] biomes) {
-		this.version = version;
-		this.dataVersion = dataVersion;
-		this.metadata = metadata != null ? metadata : new Metadata();
-		this.width = width;
-		this.height = height;
-		this.length = length;
-		this.offset = offset != null ? offset : DEFAULT_OFFSET;
-		this.blocks = blocks;
-		this.blockEntities = blockEntities;
-		this.entities = entities;
-		this.biomes = biomes;
-		this.biomeHeight = biomes.length > 0 ? biomes[0].length : 0;
+	public SpongeSchematic() {
 	}
 
 	@Override
@@ -142,17 +129,19 @@ public class SpongeSchematic implements Schematic {
 	}
 
 	@Override
-	public int[] offset() {
+	public @NonNull SchematicBlockPos offset() {
 		return offset;
 	}
 
 	@Override
 	public @NonNull SchematicBlock block(int x, int y, int z) {
-		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
+		final int blockIndex = posToIndex(x, y, z);
+		if (blockIndex < 0 || blockIndex >= blocks.length) {
 			return AIR; // outside bounds
 		}
 
-		return blocks[x][y][z];
+		final int paletteIndex = blocks[blockIndex];
+		return blockPalette[paletteIndex];
 	}
 
 	/**
@@ -160,8 +149,17 @@ public class SpongeSchematic implements Schematic {
 	 *
 	 * @return The raw block data
 	 */
-	public @NonNull SchematicBlock[][][] blockData() {
+	public int @NonNull [] blockData() {
 		return blocks;
+	}
+
+	/**
+	 * The raw block palette.
+	 *
+	 * @return The raw block palette
+	 */
+	public SchematicBlock @NonNull [] blockPalette() {
+		return blockPalette;
 	}
 
 	@Override
@@ -188,17 +186,24 @@ public class SpongeSchematic implements Schematic {
 	 *
 	 * @return The raw block data
 	 */
-	public @NonNull SchematicEntity[] entityData() {
+	public SchematicEntity @NonNull [] entityData() {
 		return entities;
 	}
 
 	@Override
 	public @NonNull SchematicBiome biome(int x, int y, int z) {
-		if ((x < 0 || x >= width) || (y < 0 || y >= biomeHeight) || (z < 0 || z >= length)) {
+		// 3D biome data is only available starting in v3. Flatten the y coordinate for older versions
+		if (version <= 2) {
+			y = 0;
+		}
+
+		final int biomeIndex = posToIndex(x, y, z);
+		if (biomeIndex < 0 || biomeIndex >= biomes.length) {
 			return SchematicBiome.AIR; // outside bounds
 		}
 
-		return biomes[x][y][z];
+		final int paletteIndex = biomes[biomeIndex];
+		return biomePalette[paletteIndex];
 	}
 
 	/**
@@ -208,12 +213,9 @@ public class SpongeSchematic implements Schematic {
 	 */
 	@Override
 	public @NonNull Stream<Pair<SchematicBlockPos, SchematicBiome>> biomes() {
-		return IntStream.range(0, width * length * biomeHeight).mapToObj(index -> {
-			int x = index % width;
-			int z = (index / width) % length;
-			int y = (index / (width * length)) % biomeHeight;
-			SchematicBlockPos pos = new SchematicBlockPos(x, y, z);
-			SchematicBiome biome = biome(x, y, z);
+		return IntStream.range(0, biomes.length).mapToObj(index -> {
+			SchematicBlockPos pos = indexToPos(index);
+			SchematicBiome biome = biomePalette[biomes[index]];
 			return new Pair<>(pos, biome);
 		});
 	}
@@ -221,10 +223,19 @@ public class SpongeSchematic implements Schematic {
 	/**
 	 * The raw biome data.
 	 *
-	 * @return The raw block data
+	 * @return The raw biome data
 	 */
-	public @NonNull SchematicBiome[][][] biomeData() {
+	public int @NonNull [] biomeData() {
 		return biomes;
+	}
+
+	/**
+	 * The raw biome palette.
+	 *
+	 * @return The raw biome palette
+	 */
+	public SchematicBiome @NonNull [] biomePalette() {
+		return biomePalette;
 	}
 
 	@Override
@@ -280,6 +291,17 @@ public class SpongeSchematic implements Schematic {
 		return metadata();
 	}
 
+	public int posToIndex(int x, int y, int z) {
+		return x + (z * width) + (y * width * length);
+	}
+
+	public @NonNull SchematicBlockPos indexToPos(int index) {
+		final int x = index % width;
+		final int z = (index / width) % length;
+		final int y = index / (width * length);
+		return new SchematicBlockPos(x, y, z);
+	}
+
 	@Override
 	public String toString() {
 		return "SchematicSponge[" +
@@ -313,24 +335,14 @@ public class SpongeSchematic implements Schematic {
 		/**
 		 * An array of mod IDs.
 		 */
-		public @NonNull String[] requiredMods;
+		public String @NonNull [] requiredMods = new String[0];
 
 		/**
 		 * Extra metadata not represented in the specification.
 		 */
-		public @NonNull Map<String, Object> extra;
-
-		public Metadata(@Nullable String name, @Nullable String author, @Nullable LocalDateTime date,
-						@NonNull String[] requiredMods, @NonNull Map<String, Object> extra) {
-			this.name = name;
-			this.author = author;
-			this.date = date;
-			this.requiredMods = requiredMods;
-			this.extra = Collections.unmodifiableMap(extra);
-		}
+		public @NonNull Map<String, Object> extra = new TreeMap<>();
 
 		public Metadata() {
-			this(null, null, null, new String[0], Collections.emptyMap());
 		}
 
 		@Override
@@ -342,96 +354,6 @@ public class SpongeSchematic implements Schematic {
 					", requiredMods=" + Arrays.toString(requiredMods) +
 					", extra=" + extra +
 					']';
-		}
-	}
-
-	public static class Builder {
-		private Integer version;
-		private Integer dataVersion;
-		private Metadata metadata;
-		private Integer width;
-		private Integer height;
-		private Integer length;
-		private int[] offset = DEFAULT_OFFSET;
-		private SchematicBlock[][][] blocks = new SchematicBlock[0][0][0];
-		private SchematicBlockEntity[] blockEntities = new SchematicBlockEntity[0];
-		private SchematicEntity[] entities = new SchematicEntity[0];
-		private SchematicBiome[][][] biomes = new SchematicBiome[0][0][0];
-
-		public Builder() {
-		}
-
-		public Builder version(Integer version) {
-			this.version = version;
-			return this;
-		}
-
-		public Builder dataVersion(Integer dataVersion) {
-			this.dataVersion = dataVersion;
-			return this;
-		}
-
-		public Builder metadata(Metadata metadata) {
-			this.metadata = metadata;
-			return this;
-		}
-
-		public Builder width(int width) {
-			this.width = width;
-			return this;
-		}
-
-		public Builder height(int height) {
-			this.height = height;
-			return this;
-		}
-
-		public Builder length(int length) {
-			this.length = length;
-			return this;
-		}
-
-		public Builder offset(int[] offset) {
-			if (offset.length != 3)
-				throw new IllegalArgumentException("offset must have exactly three values");
-
-			this.offset = offset;
-			return this;
-		}
-
-		public Builder blocks(@NonNull SchematicBlock[][][] blocks) {
-			this.blocks = blocks;
-			return this;
-		}
-
-		public Builder blockEntities(@NonNull SchematicBlockEntity[] blockEntities) {
-			this.blockEntities = blockEntities;
-			return this;
-		}
-
-		public Builder entities(@NonNull SchematicEntity[] entities) {
-			this.entities = entities;
-			return this;
-		}
-
-		public Builder biomes(@NonNull SchematicBiome[][][] biomes) {
-			this.biomes = biomes;
-			return null;
-		}
-
-		public SpongeSchematic build() {
-			if (version == null)
-				throw new SchematicBuilderException("version must be set");
-			if (width == null)
-				throw new SchematicBuilderException("width must be set");
-			if (height == null)
-				throw new SchematicBuilderException("height must be set");
-			if (length == null)
-				throw new SchematicBuilderException("length must be set");
-			if (blocks == null)
-				throw new SchematicBuilderException("blocks must be set");
-
-			return new SpongeSchematic(version, dataVersion, metadata, width, height, length, offset, blocks, blockEntities, entities, biomes);
 		}
 	}
 }

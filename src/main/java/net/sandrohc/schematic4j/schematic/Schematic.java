@@ -61,7 +61,7 @@ public interface Schematic {
 	 *
 	 * @return the schematic offset from the origin
 	 */
-	int[] offset();
+	@NonNull SchematicBlockPos offset();
 
 	/**
 	 * The block at the specified position.
@@ -243,7 +243,8 @@ public interface Schematic {
 	 */
 	@Deprecated
 	default int[] getOffset() {
-		return offset();
+		final SchematicBlockPos offset = offset();
+		return new int[]{offset.x, offset.y, offset.z};
 	}
 
 	/**

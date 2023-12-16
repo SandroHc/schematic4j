@@ -1,15 +1,17 @@
 package net.sandrohc.schematic4j.schematic;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import net.sandrohc.schematic4j.SchematicFormat;
-import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlock;
 import net.sandrohc.schematic4j.schematic.types.SchematicBlockEntity;
+import net.sandrohc.schematic4j.schematic.types.SchematicBlockPos;
 import net.sandrohc.schematic4j.schematic.types.SchematicEntity;
 import net.sandrohc.schematic4j.schematic.types.SchematicItem;
 
@@ -37,37 +39,47 @@ public class SchematicaSchematic implements Schematic {
 	/**
 	 * The schematic width, the X axis.
 	 */
-	public final int width;
+	public int width;
 
 	/**
 	 * The schematic height, the Y axis.
 	 */
-	public final int height;
+	public int height;
 
 	/**
 	 * The schematic length, the Z axis.
 	 */
-	public final int length;
+	public int length;
+
+	/**
+	 * The unpacked list of block IDs.
+	 */
+	public int @NonNull [] blockIds = new int[0];
+
+	/**
+	 * The unpacked list of block metadata (used as discriminator before Minecraft's 1.7 block ID overhaul).
+	 */
+	public int @NonNull [] blockMetadata = new int[0];
 
 	/**
 	 * The unpacked list of blocks.
 	 */
-	public final @NonNull SchematicBlock[][][] blocks;
+	public String @NonNull [] blockPalette = new String[0];
 
 	/**
 	 * The list of block/tile entities.
 	 */
-	public final @NonNull SchematicBlockEntity[] blockEntities;
+	public @NonNull SchematicBlockEntity @NonNull [] blockEntities = new SchematicBlockEntity[0];
 
 	/**
 	 * The list of entities.
 	 */
-	public final @NonNull SchematicEntity[] entities;
+	public @NonNull SchematicEntity @NonNull [] entities = new SchematicEntity[0];
 
 	/**
 	 * The schematic icon, if available.
 	 */
-	public final @Nullable SchematicItem icon;
+	public @Nullable SchematicItem icon;
 
 	/**
 	 * The schematic materials, if available.
@@ -79,20 +91,9 @@ public class SchematicaSchematic implements Schematic {
 	 *     <li>{@link SchematicaSchematic#MATERIAL_STRUCTURE MATERIAL_STRUCTURE}</li>
 	 * </ul>
 	 */
-	public final @Nullable String materials;
+	public @Nullable String materials;
 
-	public SchematicaSchematic(int width, int height, int length, @NonNull SchematicBlock[][][] blocks,
-							   @NonNull SchematicBlockEntity[] blockEntities, @NonNull SchematicEntity[] entities,
-							   @Nullable SchematicItem icon, @Nullable String materials) {
-
-		this.width = width;
-		this.height = height;
-		this.length = length;
-		this.blocks = blocks;
-		this.blockEntities = blockEntities;
-		this.entities = entities;
-		this.icon = icon;
-		this.materials = materials;
+	public SchematicaSchematic() {
 	}
 
 	@Override
@@ -116,26 +117,57 @@ public class SchematicaSchematic implements Schematic {
 	}
 
 	@Override
-	public int[] offset() {
-		return new int[]{0, 0, 0};
+	public @NonNull SchematicBlockPos offset() {
+		return SchematicBlockPos.ZERO;
 	}
 
 	@Override
 	public @NonNull SchematicBlock block(int x, int y, int z) {
-		if ((x < 0 || x >= width) || (y < 0 || y >= height) || (z < 0 || z >= length)) {
+		final int blockIndex = posToIndex(x, y, z);
+		if (blockIndex < 0 || blockIndex >= blockIds.length) {
 			return AIR; // outside bounds
 		}
 
-		return blocks[x][y][z];
+		final int blockId = blockIds[blockIndex];
+		String blockName = blockPalette[blockId];
+		if (blockName == null) {
+			blockName = "minecraft:legacy_id_" + blockId;
+		}
+
+		final int metadata = blockMetadata[blockIndex];
+		final Map<String, String> states = new TreeMap<>();
+		if (metadata != 0) {
+			states.put("metadata", String.valueOf(metadata));
+		}
+
+		return new SchematicBlock(blockName, states);
 	}
 
 	/**
-	 * The raw block data.
+	 * The raw block ID data.
 	 *
 	 * @return The raw block data
 	 */
-	public @NonNull SchematicBlock[][][] blockData() {
-		return blocks;
+	public int @NonNull [] blockIdData() {
+		return blockIds;
+	}
+
+	/**
+	 * The raw block metadata.
+	 *
+	 * @return The raw block data
+	 */
+	public int @NonNull [] blockMetadata() {
+		return blockMetadata;
+	}
+
+	/**
+	 * The raw block palette.
+	 *
+	 * @return The raw block palette
+	 */
+	public String @NonNull [] blockPalette() {
+		return blockPalette;
 	}
 
 	@Override
@@ -187,81 +219,24 @@ public class SchematicaSchematic implements Schematic {
 		return materials;
 	}
 
+	public int posToIndex(int x, int y, int z) {
+		return x + (z * width) + (y * width * length);
+	}
+
+	public @NonNull SchematicBlockPos indexToPos(int index) {
+		final int x = index % width;
+		final int z = (index / width) % length;
+		final int y = index / (width * length);
+		return new SchematicBlockPos(x, y, z);
+	}
+
 	@Override
 	public String toString() {
 		return "SchematicSchematica[" +
 				"name=" + name() +
-				", icon=" + icon +
 				", width=" + width +
 				", height=" + height +
 				", length=" + length +
 				']';
-	}
-
-	public static class Builder {
-		private Integer width;
-		private Integer height;
-		private Integer length;
-		private SchematicBlock[][][] blocks = new SchematicBlock[0][0][0];
-		private SchematicBlockEntity[] blockEntities = new SchematicBlockEntity[0];
-		private SchematicEntity[] entities = new SchematicEntity[0];
-		private SchematicItem icon;
-		private String materials;
-
-		public Builder() {
-		}
-
-		public Builder icon(SchematicItem icon) {
-			this.icon = icon;
-			return this;
-		}
-
-		public Builder width(int width) {
-			this.width = width;
-			return this;
-		}
-
-		public Builder height(int height) {
-			this.height = height;
-			return this;
-		}
-
-		public Builder length(int length) {
-			this.length = length;
-			return this;
-		}
-
-		public Builder blocks(@NonNull SchematicBlock[][][] blocks) {
-			this.blocks = blocks;
-			return this;
-		}
-
-		public Builder blockEntities(@NonNull SchematicBlockEntity[] blockEntities) {
-			this.blockEntities = blockEntities;
-			return this;
-		}
-
-		public Builder entities(@NonNull SchematicEntity[] entities) {
-			this.entities = entities;
-			return this;
-		}
-
-		public Builder materials(String materials) {
-			this.materials = materials;
-			return this;
-		}
-
-		public SchematicaSchematic build() {
-			if (width == null)
-				throw new SchematicBuilderException("width must be set");
-			if (height == null)
-				throw new SchematicBuilderException("height must be set");
-			if (length == null)
-				throw new SchematicBuilderException("length must be set");
-			if (blocks == null)
-				throw new SchematicBuilderException("blocks must be set");
-
-			return new SchematicaSchematic(width, height, length, blocks, blockEntities, entities, icon, materials);
-		}
 	}
 }
