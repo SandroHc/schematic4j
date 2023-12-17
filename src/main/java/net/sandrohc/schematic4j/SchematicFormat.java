@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import net.sandrohc.schematic4j.builder.SchematicBuilder;
+import net.sandrohc.schematic4j.builder.SpongeSchematicBuilder;
+import net.sandrohc.schematic4j.exception.NoBuilderFoundException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
@@ -20,29 +23,31 @@ import net.sandrohc.schematic4j.parser.SchematicaParser;
 import net.sandrohc.schematic4j.parser.SpongeParser;
 
 public enum SchematicFormat {
-	SPONGE_V1("schem", SpongeParser::new),
-	SPONGE_V2("schem", SpongeParser::new),
-	SPONGE_V3("schem", SpongeParser::new),
-	LITEMATICA("litematic", LitematicaParser::new),
-	SCHEMATICA("schematic", SchematicaParser::new),
+	SPONGE_V1("schem", SpongeParser::new, SpongeSchematicBuilder::new),
+	SPONGE_V2("schem", SpongeParser::new, SpongeSchematicBuilder::new),
+	SPONGE_V3("schem", SpongeParser::new, SpongeSchematicBuilder::new),
+	LITEMATICA("litematic", LitematicaParser::new, null),
+	SCHEMATICA("schematic", SchematicaParser::new, null),
 	UNKNOWN;
 
 	private static final Logger log = LoggerFactory.getLogger(SchematicFormat.class);
 
 	public final String fileExtension;
 	private final Supplier<Parser> parserGenerator;
+	private final Supplier<SchematicBuilder> builderGenerator;
 
-	SchematicFormat(String fileExtension, Supplier<Parser> parserGenerator) {
+	SchematicFormat(String fileExtension, Supplier<Parser> parserGenerator, Supplier<SchematicBuilder> builder) {
 		this.fileExtension = fileExtension;
 		this.parserGenerator = parserGenerator;
+		this.builderGenerator = builder;
 	}
 
 	SchematicFormat(String fileExtension) {
-		this(fileExtension, null);
+		this(fileExtension, null, null);
 	}
 
 	SchematicFormat() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	public Parser createParser() throws NoParserFoundException {
@@ -50,6 +55,13 @@ public enum SchematicFormat {
 			throw new NoParserFoundException(this);
 
 		return parserGenerator.get();
+	}
+
+	public SchematicBuilder createBuilder() throws NoBuilderFoundException {
+		if (builderGenerator == null)
+			throw new NoBuilderFoundException(this);
+
+		return builderGenerator.get();
 	}
 
 	/**

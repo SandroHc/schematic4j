@@ -1,6 +1,6 @@
 package net.sandrohc.schematic4j.exception;
 
-public class SchematicBuilderException extends IllegalArgumentException {
+public class SchematicBuilderException extends Exception {
 
 	public SchematicBuilderException() {
 	}
