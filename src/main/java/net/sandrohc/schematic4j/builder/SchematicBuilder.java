@@ -2,16 +2,16 @@ package net.sandrohc.schematic4j.builder;
 
 import net.sandrohc.schematic4j.SchematicFormat;
 import net.sandrohc.schematic4j.exception.NoBuilderFoundException;
-import net.sandrohc.schematic4j.nbt.io.NamedTag;
+import net.sandrohc.schematic4j.exception.SchematicBuilderException;
 import net.sandrohc.schematic4j.schematic.Schematic;
 import net.sandrohc.schematic4j.schematic.types.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 /**
@@ -22,16 +22,17 @@ public abstract class SchematicBuilder {
     protected SchematicBuilder() {}
 
     protected SchematicFormat format;
-
     protected String name;
     protected String author;
-    protected int width;
-    protected int height;
-    protected int length;
+    protected Integer width;
+    protected Integer height;
+    protected Integer length;
     protected SchematicBlockPos offset = SchematicBlockPos.ZERO;
     protected SchematicBlock[][][] blocks = new SchematicBlock[][][]{};
     protected List<SchematicBlockEntity> blockEntities = new ArrayList<>();
     protected List<SchematicEntity> entities = new ArrayList<>();
+
+    private static final Logger log = LoggerFactory.getLogger(SchematicBuilder.class);
 
     /**
      * Initializes a builder for a schematic. You can use this function to generate a schematic file.
@@ -159,30 +160,31 @@ public abstract class SchematicBuilder {
     }
 
     /**
-     * Exports the schematic into a {@link Schematic} object.
+     * Builds the schematic into a {@link Schematic} object.
      */
-    public abstract Schematic build();
+    public final Schematic build() throws SchematicBuilderException {
+        if (width == null || height == null || length == null) {
+            throw new SchematicBuilderException("Dimensions missing");
+        }
+        if (name == null) {
+            log.warn("Name is null");
+            name = "Unnamed";
+        }
+        if (author == null) {
+            log.warn("Author is null");
+            name = "Unknown";
+        }
+        if (width * height * length != blocks.length * 3) {
+            throw new SchematicBuilderException("Schematic size does not match block size");
+        }
+
+        return toSchematic();
+    }
 
     /**
-     * Exports the schematic to a file.
-     * @param path The file path.
+     * Builds the schematic into a {@link Schematic} object.
      */
-    public abstract void exportToFile(String path);
-
-    /**
-     * Exports the schematic to the specified output stream.
-     */
-    public abstract void exportToOutputStream(OutputStream os);
-
-    /**
-     * Exports the schematic to a byte array.
-     */
-    public abstract byte[] exportToByteArray();
-
-    /**
-     * Exports the schematic to NBT data.
-     */
-    public abstract NamedTag exportToNBT();
+    protected abstract Schematic toSchematic();
 
     public final static class SchematicNamedBuilder<T extends SchematicNamed> {
 

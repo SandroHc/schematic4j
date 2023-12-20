@@ -13,7 +13,7 @@ public class SpongeSchematicBuilder extends SchematicBuilder {//TODO
     private SpongeSchematic.Metadata metadata;
 
     @Override
-    public Schematic build() {//TODO
+    public Schematic toSchematic() {//TODO
         SpongeSchematic schematic = new SpongeSchematic();
 
         schematic.version = version;
@@ -27,26 +27,6 @@ public class SpongeSchematicBuilder extends SchematicBuilder {//TODO
         //schematic.blockPalette
 
         return schematic;
-    }
-
-    @Override
-    public void exportToFile(String path) {
-
-    }
-
-    @Override
-    public void exportToOutputStream(OutputStream os) {
-
-    }
-
-    @Override
-    public byte[] exportToByteArray() {
-        return new byte[0];
-    }
-
-    @Override
-    public NamedTag exportToNBT() {
-        return null;
     }
 
     /**

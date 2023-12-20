@@ -7,6 +7,8 @@ import java.util.TreeMap;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import net.sandrohc.schematic4j.builder.SchematicExporter;
+import net.sandrohc.schematic4j.builder.SpongeSchematicExporter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -251,6 +253,11 @@ public class SpongeSchematic implements Schematic {
 	@Override
 	public @Nullable LocalDateTime date() {
 		return metadata.date;
+	}
+
+	@Override
+	public SchematicExporter export() {
+		return new SpongeSchematicExporter(this);
 	}
 
 	/**
