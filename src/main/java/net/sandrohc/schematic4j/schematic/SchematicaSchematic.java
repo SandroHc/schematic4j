@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import net.sandrohc.schematic4j.builder.SchematicExporter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -201,6 +202,11 @@ public class SchematicaSchematic implements Schematic {
 	@Override
 	public @Nullable SchematicItem icon() {
 		return icon;
+	}
+
+	@Override
+	public SchematicExporter export() {
+		throw new UnsupportedOperationException("Not implemented yet");
 	}
 
 	/**

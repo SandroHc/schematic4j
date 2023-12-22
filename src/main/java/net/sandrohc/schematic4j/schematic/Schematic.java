@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import net.sandrohc.schematic4j.builder.SchematicExporter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -331,4 +332,9 @@ public interface Schematic {
 	default String getName() {
 		return name();
 	}
+
+	/**
+	 * Export the schematic.
+	 */
+	SchematicExporter export();
 }

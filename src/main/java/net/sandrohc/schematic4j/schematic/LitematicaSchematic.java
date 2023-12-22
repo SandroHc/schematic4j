@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import net.sandrohc.schematic4j.builder.SchematicExporter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -139,6 +140,11 @@ public class LitematicaSchematic implements Schematic {
 	@Override
 	public @Nullable LocalDateTime date() {
 		return metadata.timeCreated;
+	}
+
+	@Override
+	public SchematicExporter export() {
+		throw new UnsupportedOperationException("Not implemented yet");
 	}
 
 	/**
