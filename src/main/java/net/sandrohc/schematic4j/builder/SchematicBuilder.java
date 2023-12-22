@@ -24,11 +24,8 @@ public abstract class SchematicBuilder {
     protected SchematicFormat format;
     protected String name;
     protected String author;
-    protected Integer width;
-    protected Integer height;
-    protected Integer length;
     protected SchematicBlockPos offset = SchematicBlockPos.ZERO;
-    protected SchematicBlock[][][] blocks = new SchematicBlock[][][]{};
+    protected SchematicBlockContainer blocks = new SchematicBlockContainer();
     protected List<SchematicBlockEntity> blockEntities = new ArrayList<>();
     protected List<SchematicEntity> entities = new ArrayList<>();
 
@@ -63,43 +60,6 @@ public abstract class SchematicBuilder {
     }
 
     /**
-     * Sets the dimensions of the schematic.
-     * @param width Schematic width (X axis)
-     * @param height Schematic height (Y axis)
-     * @param length Schematic length (Z axis)
-     */
-    public final <R extends SchematicBuilder> R dimensions(int width, int height, int length) {
-        this.width = width;
-        this.height = height;
-        this.length = length;
-        return (R) this;
-    }
-
-    /**
-     * Sets the schematic width (X axis).
-     */
-    public final <R extends SchematicBuilder> R width(int width) {
-        this.width = width;
-        return (R) this;
-    }
-
-    /**
-     * Sets the schematic height (Y axis).
-     */
-    public final <R extends SchematicBuilder> R height(int height) {
-        this.height = height;
-        return (R) this;
-    }
-
-    /**
-     * Sets the schematic length (Z axis).
-     */
-    public final <R extends SchematicBuilder> R length(int length) {
-        this.length = length;
-        return (R) this;
-    }
-
-    /**
      * Sets the schematic's offset.
      */
     public SchematicBuilder offset(int x, int y, int z) {
@@ -121,16 +81,18 @@ public abstract class SchematicBuilder {
      */
     public SchematicNamedBuilder<SchematicBlock> block(String block) {
         return new SchematicNamedBuilder<>(new SchematicBlock(block), (sblock, pos) -> {
-            blocks[pos.x][pos.y][pos.z] = sblock;
+            blocks.put(pos, sblock);
             return this;
         });
     }
 
     /**
-     * Defines the blocks inside the schematic.
+     * Adds a bunch of blocks at once to the schematic.
      */
-    public <R extends SchematicBuilder> R blocks(SchematicBlock[][][] blocks) {
-        this.blocks = blocks;
+    public <R extends SchematicBuilder> R blocks(Map<SchematicBlockPos, SchematicBlock> blocks) {
+        blocks.forEach((pos, block) -> {
+            this.blocks.put(pos, block);
+        });
         return (R) this;
     }
 
@@ -163,9 +125,6 @@ public abstract class SchematicBuilder {
      * Builds the schematic into a {@link Schematic} object.
      */
     public final Schematic build() throws SchematicBuilderException {
-        if (width == null || height == null || length == null) {
-            throw new SchematicBuilderException("Dimensions missing");
-        }
         if (name == null) {
             log.warn("Name is null");
             name = "Unnamed";
@@ -173,9 +132,6 @@ public abstract class SchematicBuilder {
         if (author == null) {
             log.warn("Author is null");
             name = "Unknown";
-        }
-        if (width * height * length != blocks.length * 3) {
-            throw new SchematicBuilderException("Schematic size does not match block size");
         }
 
         return toSchematic();
@@ -189,7 +145,6 @@ public abstract class SchematicBuilder {
     public final static class SchematicNamedBuilder<T extends SchematicNamed> {
 
         private final T obj;
-        private SchematicBlockPos pos;
         private final BiFunction<T, SchematicBlockPos, ? extends SchematicBuilder> registerer;
 
         private SchematicNamedBuilder(T obj, BiFunction<T, SchematicBlockPos, ? extends SchematicBuilder> registerer) {
@@ -200,16 +155,16 @@ public abstract class SchematicBuilder {
         /**
          * Adds this block to the schematic at the specified location.
          */
-        public <R extends SchematicBuilder> R at(int x, int y, int z) {
-            this.pos = new SchematicBlockPos(x, y, z);
-            return (R) registerer.apply(obj, pos);
+        public <R extends SchematicBuilder> R at(int x, int y, int z) throws SchematicBuilderException {
+            return at(new SchematicBlockPos(x, y, z));
         }
 
         /**
          * Adds this block to the schematic at the specified location.
          */
-        public <R extends SchematicBuilder> R at(SchematicBlockPos pos) {
-            this.pos = pos;
+        public <R extends SchematicBuilder> R at(SchematicBlockPos pos) throws SchematicBuilderException {
+            if (pos.x < 0 || pos.y < 0 || pos.z < 0)
+                throw new SchematicBuilderException("Positions cannot be negative. Use an offset instead.");
             return (R) registerer.apply(obj, pos);
         }
     }
@@ -217,9 +172,7 @@ public abstract class SchematicBuilder {
     public final static class SchematicEntityBuilder {
 
         private final SchematicEntity entity;
-        private SchematicEntityPos pos;
         private final BiFunction<SchematicEntity, SchematicEntityPos, ? extends SchematicBuilder> registerer;
-        private Map<String, Object> nbt = new HashMap<>();
 
         private SchematicEntityBuilder(SchematicEntity entity,
                                       BiFunction<SchematicEntity, SchematicEntityPos, ? extends SchematicBuilder> registerer) {
@@ -231,23 +184,23 @@ public abstract class SchematicBuilder {
          * Sets the entity's NBT data (e.g. a wolf's owner).
          */
         public SchematicEntityBuilder nbt(Map<String, Object> nbt) {
-            this.nbt = nbt;
+            entity.data = nbt;
             return this;
         }
 
         /**
          * Adds this entity to the schematic at the specified location.
          */
-        public <R extends SchematicBuilder> R at(float x, float y, float z) {
-            this.pos = new SchematicEntityPos(x, y, z);
-            return (R) registerer.apply(entity, pos);
+        public <R extends SchematicBuilder> R at(float x, float y, float z) throws SchematicBuilderException {
+            return at(new SchematicEntityPos(x, y, z));
         }
 
         /**
          * Adds this entity to the schematic at the specified location.
          */
-        public <R extends SchematicBuilder> R at(SchematicEntityPos pos) {
-            this.pos = pos;
+        public <R extends SchematicBuilder> R at(SchematicEntityPos pos) throws SchematicBuilderException {
+            if (pos.x < 0 || pos.y < 0 || pos.z < 0)
+                throw new SchematicBuilderException("Positions cannot be negative. Use an offset instead.");
             return (R) registerer.apply(entity, pos);
         }
     }
